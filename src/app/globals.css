@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-color: #4e2b10;
+  --off-black: #090705ec;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    
   }
 }
 
@@ -18,4 +17,11 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.title-gradient {
+  background: linear-gradient(0deg, #ce9261, #4e2b10);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

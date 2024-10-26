@@ -1,10 +1,11 @@
 import Header from "@/components/Header";
+import Jumbotron from "@/components/Jumbotron";
 
 export default function Home() {
   return (
     <main>
       <Header />
-      <p>Hi there from the homescreen</p>
+      <Jumbotron />
     </main>
   );
 }
