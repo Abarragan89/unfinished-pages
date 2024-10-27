@@ -10,5 +10,5 @@ export const titleFont = Changa({
 export const bodyFont = Roboto({
     subsets: ['latin'],
     display: 'swap',
-    weight: ['300', '500', '700']
+    weight: ['300', '400', '500', '700', '900']
 })

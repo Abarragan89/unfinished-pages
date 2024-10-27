@@ -3,13 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #4e2b10;
+  --brown500: #4e2b10;
+  --brown300: #85491b;
+  --brown100: #ce7c3d;
   --off-black: #090705ec;
+  --gray-300: rgb(229, 222, 222);
+  --gray-100: rgb(250, 244, 244);
+  --off-white: rgb(252, 250, 246);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    
   }
 }
 
@@ -19,9 +23,97 @@
   }
 }
 
-.title-gradient {
-  background: linear-gradient(0deg, #ce9261, #4e2b10);
+.custom-title-gradient {
+  background: linear-gradient(0deg, var(--brown100), var(--brown500));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+html {
+  background-color: var(--off-white);
+}
+
+/* CSS */
+.custom-large-btn {
+  align-self: center;
+  background-color: transparent;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-color: var(--brown500);
+  border-width: 2px;
+  color: var(--brown500);
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: 0.75rem;
+  text-decoration: none;
+  transition: all 200ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.custom-large-btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.custom-large-btn:active {
+  background-color: #4e2b10;
+  color: var(--gray-300);
+}
+
+.custom-card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+}
+
+
+/* CSS */
+.custom-small-btn {
+  appearance: none;
+  background-color: var(--off-black);
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: var(--off-white);
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  padding: 7px 14px;
+  width: fit-content;
+  display: block;
+  font-size: .95rem;
+  text-align: center;
+  text-decoration: none;
+  transition: all 235ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.custom-small-btn:disabled {
+  pointer-events: none;
+}
+
+.custom-small-btn:hover {
+  background-color: var(--brown500);
+}
+
+.custom-small-btn:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
