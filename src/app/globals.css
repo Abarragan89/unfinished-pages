@@ -3,13 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --brown500: #4e2b10;
-  --brown300: #85491b;
-  --brown100: #ce7c3d;
-  --off-black: #090705ec;
+  --brown-500: #4e2b10;
+  --brown-300: #85491b;
+  --brown-100: #ce7c3d;
+  --gray-600: rgb(142, 137, 137);
+  --gray-500: rgb(178, 173, 173);
   --gray-300: rgb(229, 222, 222);
   --gray-100: rgb(250, 244, 244);
+  --paper-color: rgb(178, 165, 106);
   --off-white: rgb(252, 250, 246);
+  --off-black: #090705ec;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,7 +27,7 @@
 }
 
 .custom-title-gradient {
-  background: linear-gradient(0deg, var(--brown100), var(--brown500));
+  background: linear-gradient(0deg, var(--brown-100), var(--brown-500));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -44,9 +47,9 @@ html {
   background-size: 4px 3px;
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
-  border-color: var(--brown500);
+  border-color: var(--brown-500);
   border-width: 2px;
-  color: var(--brown500);
+  color: var(--brown-500);
   box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   box-sizing: border-box;
   cursor: pointer;
@@ -78,9 +81,10 @@ html {
 }
 
 .custom-card-shadow {
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  /* box-shadow:
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
 }
-
 
 /* CSS */
 .custom-small-btn {
@@ -92,13 +96,13 @@ html {
   cursor: pointer;
   display: inline-block;
   font-weight: 500;
-  padding: 7px 14px;
+  padding: 6px 20px;
   width: fit-content;
   display: block;
-  font-size: .95rem;
+  font-size: 0.95rem;
   text-align: center;
   text-decoration: none;
-  transition: all 235ms cubic-bezier(.23, 1, 0.32, 1);
+  transition: all 235ms cubic-bezier(0.23, 1, 0.32, 1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -109,11 +113,33 @@ html {
 }
 
 .custom-small-btn:hover {
-  background-color: var(--brown500);
+  background-color: var(--brown-500);
 }
 
 .custom-small-btn:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+/* Embla slider styles */
+.embla {
+  overflow: hidden;
+  max-width: 1130px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  border-radius: 6px;
+  border: 1px solid var(--brown-300);
+  background-color: var(--gray-100);
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 330px;
 }
 
