@@ -4,7 +4,7 @@ import { BlogTopic } from "../../../types/blogtopics";
 
 export default function TopicCard({ title, description, imgSrc }: BlogTopic) {
     return (
-        <article className="relative flex-col items-center justify-center w-[320px] mx-3 mb-[50px] bg-white rounded-sm border border-[var(--gray-300)]">
+        <Link href={`/category/${title.toLowerCase().replace(' ', '-')}`} className="relative flex-col items-center justify-center w-[320px] mx-3 mb-[50px] bg-white rounded-sm border border-[var(--gray-300)] custom-card-shadows">
             <Image
                 src={imgSrc}
                 width={1920}
@@ -15,10 +15,12 @@ export default function TopicCard({ title, description, imgSrc }: BlogTopic) {
             <div className=" border-t-0 rounded-b-sm p-4 pt-2">
                 <h3 className="uppercase font-medium text-[var(--brown-500)] text-[1.05rem]">{title}</h3>
                 <p className="my-2 text-[.9rem]">{description}</p>
-                <div className="flex justify-center">
+
+                {/* <div className="flex justify-center">
                     <Link href="/" className="custom-small-btn mt-5">View Blogs</Link>
-                </div>
+                </div> */}
+                
             </div>
-        </article>
+        </Link>
     )
 }

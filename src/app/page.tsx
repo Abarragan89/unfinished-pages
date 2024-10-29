@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <main>
       <Jumbotron />
-      {/* <div className="relative top-[-80px]"> */}
+      <div className="relative top-[-65px]">
       <CardSection heading="Featured Blogs">
         <Carousel>
           <BlogCard />
@@ -72,24 +72,22 @@ export default function Home() {
           <BlogCard />
         </Carousel>
       </CardSection>
-      {/* </div> */}
-      <hr className="w-[85%] mx-auto mt-[70px]" />
-      {/* <section className="mt-[30px]"> */}
-      <CardSection heading="Blog Topics">
-        {/* <SubheadingTitle  /> */}
-        <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
-          {blogTopics.map((topic, index) => (
-            <TopicCard
-              key={index}
-              title={topic.title}
-              description={topic.description}
-              imgSrc={topic.imgSrc}
-              alt={topic.alt}
-              link={topic.link}
-            />
-          ))}
-        </div>
-      </CardSection>
+      </div>
+      {/* <section className="relative top-[80px]"> */}
+        <CardSection heading="Blog Topics">
+          <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
+            {blogTopics.map((topic, index) => (
+              <TopicCard
+                key={index}
+                title={topic.title}
+                description={topic.description}
+                imgSrc={topic.imgSrc}
+                alt={topic.alt}
+                link={topic.link}
+              />
+            ))}
+          </div>
+        </CardSection>
       {/* </section> */}
     </main>
   );
