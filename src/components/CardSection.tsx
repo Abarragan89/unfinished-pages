@@ -1,11 +1,11 @@
-import React from "react";
+import SubheadingTitle from "./Headings/SubheadingTitle"
 
 export default function CardSection({ children, heading }: { children: React.ReactNode, heading: string }) {
 
     return (
-        <section className="relative mx-10 py-[20px]">
-            <h3 className="text-center text-3xl rounded-sm custom-title-gradient mb-5">{heading}</h3>
-            <div className=" flex flex-wrap justify-center bg-[var(--gray-200)]">
+        <section className="max-w-[1180px] w-[100%] mx-auto mt-10 py-3 custom-card-section-shadow rounded-[6px] border border-[var(--gray-300)] bg-[var(--gray-100)]">
+            <SubheadingTitle title={heading} />
+            <div className=" flex flex-wrap justify-center">
                 {children}
             </div>
         </section>

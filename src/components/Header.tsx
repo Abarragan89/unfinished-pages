@@ -10,6 +10,7 @@ export default function Header() {
                 width={40}
                 height={40}
                 alt="company logo"
+                priority
             />
             <Navigation />
         </header>

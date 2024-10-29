@@ -1,13 +1,22 @@
 'use client'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay'
+import { EmblaCarouselType } from 'embla-carousel'
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 
-export default function Carousel({ children, heading }: { children: React.ReactNode, heading: string }) {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, }, [Autoplay({ stopOnInteraction: true })])
+export default function Carousel({ children }: { children: React.ReactNode }) {
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, }, [Autoplay({ stopOnInteraction: true, delay: 6500 })])
+    const [centerIndex, setCenterIndex] = useState(0);
 
+    const logSlidesInView = useCallback((emblaApi: EmblaCarouselType) => {
+        console.log(emblaApi.selectedScrollSnap())
+    }, [])
+
+    useEffect(() => {
+        if (emblaApi) emblaApi.on('slidesInView', logSlidesInView)
+    }, [emblaApi, logSlidesInView])
     const scrollPrev = useCallback(() => {
         if (emblaApi) emblaApi.scrollPrev()
     }, [emblaApi])
@@ -19,18 +28,17 @@ export default function Carousel({ children, heading }: { children: React.ReactN
     return (
         <>
             <div className="embla">
-                <h3 className="text-center text-3xl rounded-sm custom-title-gradient mb-5">{heading}</h3>
                 <div className="embla__viewport" ref={emblaRef}>
                     <div className="embla__container">
                         {/* EACH CHILD MUST HAVE embla__slide CLASSNAME */}
                         {children}
                     </div>
                 </div>
-                <div className='flex justify-center'>
-                    <button className="embla__prev mt-3 text-[2rem] text-[var(--brown-500)]" onClick={scrollPrev}>
+                <div className='flex justify-between w-[180px] mx-auto'>
+                    <button className="embla__prev mt-4 text-[2.2rem] text-[var(--brown-500)]" onClick={scrollPrev}>
                         <IoIosArrowBack />
                     </button>
-                    <button className="embla__next mt-3 text-[2rem] text-[var(--brown-500)]" onClick={scrollNext}>
+                    <button className="embla__next mt-4 text-[2.2rem] text-[var(--brown-500)]" onClick={scrollNext}>
                         <IoIosArrowForward />
                     </button>
                 </div>

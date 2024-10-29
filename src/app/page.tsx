@@ -5,6 +5,7 @@ import BlogCard from "@/components/Cards/BlogCard";
 import CardSection from "@/components/CardSection";
 import Carousel from "@/components/Carousel";
 import { BlogTopic } from "../../types/blogtopics";
+import SubheadingTitle from "@/components/Headings/SubheadingTitle";
 
 
 export default function Home() {
@@ -58,10 +59,10 @@ export default function Home() {
 
   return (
     <main>
-      <Header />
       <Jumbotron />
-      <section className="relative top-[-80px]">
-        <Carousel heading="Featured Blogs">
+      {/* <div className="relative top-[-80px]"> */}
+      <CardSection heading="Featured Blogs">
+        <Carousel>
           <BlogCard />
           <BlogCard />
           <BlogCard />
@@ -70,19 +71,26 @@ export default function Home() {
           <BlogCard />
           <BlogCard />
         </Carousel>
-      </section>
-      <CardSection heading="Topics">
-        {blogTopics.map((topic, index) => (
-          <TopicCard
-            key={index}
-            title={topic.title}
-            description={topic.description}
-            imgSrc={topic.imgSrc}
-            alt={topic.alt}
-            link={topic.link}
-          />
-        ))}
       </CardSection>
+      {/* </div> */}
+      <hr className="w-[85%] mx-auto mt-[70px]" />
+      {/* <section className="mt-[30px]"> */}
+      <CardSection heading="Blog Topics">
+        {/* <SubheadingTitle  /> */}
+        <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
+          {blogTopics.map((topic, index) => (
+            <TopicCard
+              key={index}
+              title={topic.title}
+              description={topic.description}
+              imgSrc={topic.imgSrc}
+              alt={topic.alt}
+              link={topic.link}
+            />
+          ))}
+        </div>
+      </CardSection>
+      {/* </section> */}
     </main>
   );
 }
