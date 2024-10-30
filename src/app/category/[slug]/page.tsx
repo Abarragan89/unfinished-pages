@@ -1,13 +1,8 @@
-
-import { CiHeart } from "react-icons/ci";
-import { BiMessageRounded } from "react-icons/bi";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { FaHeart } from "react-icons/fa"; // Solid Heart
-import { IoShareOutline } from "react-icons/io5";
 import Image from "next/image"
-import SubheadingTitle from "@/components/Headings/SubheadingTitle";
+import MainHeading from "@/components/Headings/MainHeading";
 import { BlogTopic } from "../../../../types/blogtopics";
 import BlogCard from "@/components/Cards/BlogCard";
+import { titleFont } from "@/app/fonts";
 
 export default function Page({ params }: { params: { slug: string } }) {
 
@@ -60,19 +55,20 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] rounded-md">
-            <Image
-                src={`/images/categories/${params.slug}.png`}
-                width={1920}
-                height={600}
-                alt="Image of thing, should replace with data"
-                className="block mx-auto opacity-[.75]"
-                priority
-            />
-            <div className="mt-[20px]">
-                <SubheadingTitle title={params.slug.toUpperCase()}/>
-            </div>
+            <header className="relative">
+                <Image
+                    src={`/images/categories/${params.slug}.png`}
+                    width={1920}
+                    height={600}
+                    alt="Image of thing, should replace with data"
+                    className="opacity-[.9]"
+                    priority
+                />
+                <div className={`absolute top-[33%] w-full`}>
+                    <MainHeading title={params.slug.toUpperCase()} />
+                </div>
+            </header>
             {/* This is the related posts in the same category */}
-            {/* <section className="mt-[30px]"> */}
             <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
                 {blogTopics.map((topic, index) => (
                     <div className="mb-[30px]" key={index}>
@@ -80,7 +76,6 @@ export default function Page({ params }: { params: { slug: string } }) {
                     </div>
                 ))}
             </div>
-            {/* </section> */}
         </main>
     )
 }

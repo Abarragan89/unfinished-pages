@@ -7,7 +7,7 @@ import { FiMessageCircle } from "react-icons/fi";
 export default function BlogCard() {
     return (
         <Link href={`/blog/${'the only way ot look in the way'.toLowerCase().replace(' ', '-')}`} className="embla__slide">
-            <div className="embla__slide-inner custom-card-shadows flex-col w-[320px] mx-[20px] pb-2 rounded-sm bg-white">
+            <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
                 {/* Your slide content here */}
                 <Image
                     src={"/images/topicCardImgs/philosophy.jpg"}
