@@ -60,35 +60,35 @@ export default function Home() {
   return (
     <main>
       <Jumbotron />
-      <div className="relative top-[-65px]">
-      <CardSection heading="Featured Blogs">
-        <Carousel>
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-        </Carousel>
-      </CardSection>
-      </div>
-      {/* <section className="relative top-[80px]"> */}
-        <CardSection heading="Blog Topics">
-          <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
-            {blogTopics.map((topic, index) => (
-              <TopicCard
-                key={index}
-                title={topic.title}
-                description={topic.description}
-                imgSrc={topic.imgSrc}
-                alt={topic.alt}
-                link={topic.link}
-              />
-            ))}
-          </div>
+      <div className="relative top-[-60px]">
+        <CardSection heading="Featured Blogs">
+          <Carousel>
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+          </Carousel>
         </CardSection>
-      {/* </section> */}
+      </div>
+
+      <hr className="bg-black mb-[60px] w-[80%] mx-auto"></hr>
+      <CardSection heading="Blog Topics">
+        <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
+          {blogTopics.map((topic, index) => (
+            <TopicCard
+              key={index}
+              title={topic.title}
+              description={topic.description}
+              imgSrc={topic.imgSrc}
+              alt={topic.alt}
+              link={topic.link}
+            />
+          ))}
+        </div>
+      </CardSection>
     </main>
   );
 }

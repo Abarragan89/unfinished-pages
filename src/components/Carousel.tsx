@@ -28,7 +28,7 @@ export default function Carousel({ children }: { children: React.ReactNode }) {
     return (
         <>
             <div className="embla">
-                <div className="embla__viewport" ref={emblaRef}>
+                <div className="embla__viewport mt-[20px]" ref={emblaRef}>
                     <div className="embla__container">
                         {/* EACH CHILD MUST HAVE embla__slide CLASSNAME */}
                         {children}

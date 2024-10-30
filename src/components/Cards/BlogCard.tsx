@@ -32,11 +32,6 @@ export default function BlogCard() {
                 <div className="flex-column justify-between rounded-b-sm p-2 px-3">
                     <h3 className="font-medium text-[var(--brown-500)] text-[1.025rem]">Meditate my anger away? Or do I just sit in it? Moving away from the norm</h3>
                     <p className="mt-2 text-[.9rem]">Ethics, Metaphysics, Epistemology, and everything in between. Fox News is the most trusted news source the only one we are looking into is the best one</p>
-
-                    {/* <Link href="/" className="custom-small-btn mt-5 relative bottom-[12px]">Read</Link> */}
-                    {/* <div className="flex justify-center">
-                    <Link href="/" className="mt-3 text-center underline text-[var(--brown-500)] hover:text-[var(--brown-100)] text-[.98rem]">Read</Link>
-                </div> */}
                 </div>
             </div>
         </Link>
