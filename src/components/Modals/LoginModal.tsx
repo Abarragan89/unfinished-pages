@@ -1,5 +1,6 @@
 'use client';
 import { useSearchParams } from "next/navigation";
+import { Suspense } from 'react'
 import ModalWrapper from "./ModalWrapper";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
@@ -13,7 +14,7 @@ export const LoginModal = () => {
     const showModal = params.get('showModal')
 
     return (
-        <>
+        <Suspense>
             {showModal === 'login' &&
                 <ModalWrapper
                     title='none'
@@ -47,7 +48,7 @@ export const LoginModal = () => {
 
                 </ModalWrapper>
             }
-        </>
+        </Suspense>
     )
 }
 
