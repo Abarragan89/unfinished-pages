@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     children: React.ReactNode;
-    title: String;
+    title: string;
 
 }
 const ModalWrapper = ({ children, title }: Props) => {
