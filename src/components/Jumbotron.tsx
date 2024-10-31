@@ -1,5 +1,6 @@
 import { titleFont } from "@/app/fonts"
 import LgBtn from "./Buttons/LgBtn"
+import LoginButton from "./Buttons/LoginButton"
 
 export default function Jumbotron() {
     return (
@@ -9,8 +10,8 @@ export default function Jumbotron() {
                 <h1 className={`${titleFont.className} custom-title-gradient font-medium leading-tight text-[5.5rem] sm:text-[6.5rem]`}>Pages</h1>
                 <h2 className={`text-[1.1rem] opacity-[0.9] w-[90%] sm:w-[70%] mt-3 text-[var(--brown-500)] tracking-wider`}>Short arguments with myself. Leave with more questions than answers.</h2>
                 <div className="mt-8 flex justify-between w-[205px]">
-                    <LgBtn text="Sign Up" dark={true} />
-                    <LgBtn text="Login" />
+                    <LoginButton text="Sign Up" />
+                    <LoginButton text="Login"/>
                 </div>
             </div>
         </section>

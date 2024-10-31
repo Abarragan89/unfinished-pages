@@ -1,5 +1,5 @@
-export default function LgBtn({ text, dark }: { text: string, dark?: boolean }) {
+export default function LgBtn({ text }: { text: string }) {
     return (
-        <button className={`custom-large-btn ${dark ? 'custom-large-btn-dark' : ''}`}>{text}</button>
+        <button className={`custom-large-btn`}>{text}</button>
     )
 }

@@ -12,6 +12,15 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        dropDown: {
+          '0%': { transform: 'translateY(-1000px)' },
+          '100%': { transform: 'translateY(0px)' },
+        }
+      },
+      animation: {
+        dropDown: 'dropDown .35s ease-in-out'
+      }
     },
   },
   plugins: [],

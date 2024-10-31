@@ -6,6 +6,8 @@ import CardSection from "@/components/CardSection";
 import Carousel from "@/components/Carousel";
 import { BlogTopic } from "../../types/blogtopics";
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";
+import LoginModal from "@/components/Modals/LoginModal";
+import LoginButton from "@/components/Buttons/LoginButton";
 
 
 export default function Home() {
@@ -59,8 +61,9 @@ export default function Home() {
 
   return (
     <main>
+      <LoginModal />
       <Jumbotron />
-      <div className="relative top-[-60px]">
+      {/* <div className="relative top-[-60px]"> */}
         <CardSection heading="Featured Blogs">
           <Carousel>
             <BlogCard />
@@ -68,12 +71,9 @@ export default function Home() {
             <BlogCard />
             <BlogCard />
             <BlogCard />
-            <BlogCard />
-            <BlogCard />
           </Carousel>
         </CardSection>
-      </div>
-
+      {/* </div> */}
       <hr className="bg-black mb-[60px] w-[80%] mx-auto"></hr>
       <CardSection heading="Blog Topics">
         <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
