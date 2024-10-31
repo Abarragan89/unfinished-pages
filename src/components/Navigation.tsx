@@ -13,11 +13,10 @@ export default function Navigation() {
                     </Link>
                 </li>
                 <li className={liStyle}>Write</li>
-                <li className={liStyle}>Blogs</li>
                 <li className={liStyle}>About</li>
                 <li>
                     <Image
-                        className="rounded-[50px]"
+                        className="rounded-[50px] hover:cursor-pointer"
                         src={"/images/defaultProfilePic.png"}
                         width={30}
                         height={30}
