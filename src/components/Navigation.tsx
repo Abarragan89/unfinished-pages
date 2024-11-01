@@ -25,7 +25,6 @@ export default function Navigation() {
                         <button onClick={() => signOut()}>Sign out</button>
                     </li>
                 }
-
                 <li>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer"
