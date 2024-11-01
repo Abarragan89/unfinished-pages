@@ -14,7 +14,7 @@
     "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
     "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
     "production:build": "npx prisma generate && npx prisma migrate deploy && next build",
-    "postinstall": "prisma generate"
+    "postinstall": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.2",
