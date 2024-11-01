@@ -3,7 +3,7 @@ import { bodyFont } from "./fonts";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { SessionProvider } from 'next-auth/react';
+import { NextAuthProvider } from "@/components/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "Unfinished Pages",
@@ -20,11 +20,11 @@ export default function RootLayout({
       <body
         className={`antialiased text-[var(--off-black)] ${bodyFont.className}`}
       >
-        {/* <SessionProvider> */}
+        <NextAuthProvider>
           <Header />
           {children}
           <Footer />
-        {/* </SessionProvider> */}
+        </NextAuthProvider>
       </body>
     </html>
   );

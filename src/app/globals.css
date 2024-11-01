@@ -40,12 +40,7 @@ html {
 .custom-large-btn {
   align-self: center;
   background-color: transparent;
-  background-image: none;
-  background-position: 0 90%;
-  background-repeat: repeat no-repeat;
-  background-size: 4px 3px;
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
-  border-style: solid;
   border-color: var(--brown-500);
   border-width: 2px;
   color: var(--brown-500);
@@ -53,10 +48,10 @@ html {
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 23px;
   outline: none;
-  padding: 0.75rem;
+  padding: 8px 15px;
   text-decoration: none;
   transition: all 200ms ease-in-out;
   border-bottom-left-radius: 15px 255px;
@@ -152,13 +147,9 @@ html {
 }
 
 /* Input Styles */
-.custom-dark-input {
+.input-browser-reset {
   background-color: var(--off-white);
-  width: 150px;
-  padding: 2px;
   color: var(--brown-500);
-  padding: 3px 10px 3px 30px;
-  font-size: 0.93rem;
   border-radius: 4px;
   outline: none;
   box-shadow: none;
@@ -167,11 +158,11 @@ html {
   appearance: none;
 }
 
-.custom-dark-input:focus {
+.input-browser-reset:focus {
   border-color: #333;
 }
 
-.custom-dark-input::placeholder {
+.input-browser-reset::placeholder {
   color: var(--brown-300);
   opacity: 1;
   font-style: italic;

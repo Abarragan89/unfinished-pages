@@ -2,8 +2,7 @@
 import Navigation from "./Navigation"
 import Image from "next/image"
 import Link from "next/link"
-import SearchInput from "./FormInputs/SearchInput"
-import { SessionProvider } from "next-auth/react"
+import SearchInput from './FormInputs/SearchInput'
 
 export default function Header() {
     return (
@@ -19,11 +18,9 @@ export default function Header() {
                         priority
                     />
                 </Link>
-                <SearchInput />
+                <SearchInput placeholder="Search Blogs" />
             </div>
-            <SessionProvider>
-                <Navigation />
-            </SessionProvider>
+            <Navigation />
         </header>
     )
 }

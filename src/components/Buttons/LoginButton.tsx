@@ -8,6 +8,7 @@ export default function LoginButton({ text }: { text: string }) {
                 href='/?showModal=login'
                 title='login'
                 className='custom-large-btn'
+                scroll={false}
             >
                 {text}
             </Link>

@@ -1,19 +1,13 @@
-import Header from "@/components/Header";
 import Jumbotron from "@/components/Jumbotron";
 import TopicCard from "@/components/Cards/TopicCard";
 import BlogCard from "@/components/Cards/BlogCard";
 import CardSection from "@/components/CardSection";
 import Carousel from "@/components/Carousel";
 import { BlogTopic } from "../../types/blogtopics";
-import SubheadingTitle from "@/components/Headings/SubheadingTitle";
 import LoginModal from "@/components/Modals/LoginModal";
-import LoginButton from "@/components/Buttons/LoginButton";
 import { Suspense } from 'react'
 
-
-
 export default function Home() {
-
 
   const blogTopics: BlogTopic[] = [
     {
@@ -67,7 +61,7 @@ export default function Home() {
         <LoginModal />
       </Suspense>
       <Jumbotron />
-      <div className="mt-[60px]">
+      <div className="mt-[60px]" id="featured-blogs">
         <CardSection heading="Featured Blogs">
           <Carousel>
             <BlogCard />
