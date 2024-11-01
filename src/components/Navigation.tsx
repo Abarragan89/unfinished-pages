@@ -8,7 +8,6 @@ import { Session } from "../../types/users";
 export default function Navigation() {
 
     const session: Session = useSession();
-    console.log(console.log('sessions', session))
 
     const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer hover:text-[var(--brown-100)]"
 

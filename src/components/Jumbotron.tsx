@@ -1,6 +1,5 @@
 import { titleFont } from "@/app/fonts"
-import Link from "next/link"
-import LoginButton from "./Buttons/LoginButton"
+import JumboCallToAction from "./JumboCallToAction"
 
 export default function Jumbotron() {
     return (
@@ -9,16 +8,7 @@ export default function Jumbotron() {
                 <h1 className={`${titleFont.className} custom-title-gradient font-medium leading-none text-[5.8rem] sm:text-[6.6rem]`}>Unfinished</h1>
                 <h1 className={`${titleFont.className} custom-title-gradient font-medium leading-tight text-[5.5rem] sm:text-[6.5rem]`}>Pages</h1>
                 <h2 className={`text-[1.1rem] opacity-[0.9] w-[90%] sm:w-[70%] mt-3 text-[var(--brown-500)] tracking-wider`}>Short arguments with myself. Leave with more questions than answers.</h2>
-                <div className="mt-8 flex justify-between w-[180px]">
-                    <Link
-                        href='#featured-blogs'
-                        title='read'
-                        className='custom-large-btn'
-                    >
-                        Read
-                    </Link>
-                    <LoginButton text="Login" />
-                </div>
+                <JumboCallToAction />
             </div>
         </section>
     )
