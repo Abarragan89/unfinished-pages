@@ -67,17 +67,17 @@ export default function Home() {
         <LoginModal />
       </Suspense>
       <Jumbotron />
-      {/* <div className="relative top-[-60px]"> */}
-      <CardSection heading="Featured Blogs">
-        <Carousel>
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-        </Carousel>
-      </CardSection>
-      {/* </div> */}
+      <div className="mt-[60px]">
+        <CardSection heading="Featured Blogs">
+          <Carousel>
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+          </Carousel>
+        </CardSection>
+      </div>
       <hr className="bg-black mb-[60px] w-[80%] mx-auto"></hr>
       <CardSection heading="Blog Topics">
         <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">

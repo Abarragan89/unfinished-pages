@@ -1,6 +1,12 @@
+"use client";
 import Image from "next/image"
 import Link from "next/link"
+import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react";
 export default function Navigation() {
+
+    const session = useSession();
+    console.log(console.log('sessions', session))
 
     const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer hover:text-[var(--brown-100)]"
 
@@ -14,10 +20,16 @@ export default function Navigation() {
                 </li>
                 <li className={liStyle}>Write</li>
                 <li className={liStyle}>About</li>
+                {session?.status === 'authenticated' &&
+                    <li className={liStyle}>
+                        <button onClick={() => signOut()}>Sign out</button>
+                    </li>
+                }
+
                 <li>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer"
-                        src={"/images/defaultProfilePic.png"}
+                        src={session?.data?.user?.image ? session.data?.user.image : "/images/defaultProfilePic.png"}
                         width={30}
                         height={30}
                         alt={"profile pic of user"}
@@ -27,3 +39,6 @@ export default function Navigation() {
         </nav>
     )
 }
+
+
+

@@ -1,7 +1,9 @@
+"use client";
 import Navigation from "./Navigation"
 import Image from "next/image"
 import Link from "next/link"
 import SearchInput from "./FormInputs/SearchInput"
+import { SessionProvider } from "next-auth/react"
 
 export default function Header() {
     return (
@@ -19,7 +21,9 @@ export default function Header() {
                 </Link>
                 <SearchInput />
             </div>
-            <Navigation />
+            <SessionProvider>
+                <Navigation />
+            </SessionProvider>
         </header>
     )
 }
