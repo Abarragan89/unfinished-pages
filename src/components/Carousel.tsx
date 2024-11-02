@@ -8,7 +8,6 @@ import { IoIosArrowForward } from "react-icons/io";
 
 export default function Carousel({ children }: { children: React.ReactNode }) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, }, [Autoplay({ stopOnInteraction: true, delay: 6500 })])
-    const [centerIndex, setCenterIndex] = useState(0);
 
     const logSlidesInView = useCallback((emblaApi: EmblaCarouselType) => {
         console.log(emblaApi.selectedScrollSnap())

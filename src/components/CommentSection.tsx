@@ -1,8 +1,4 @@
-import Image from "next/image"
-import { FaHeart } from "react-icons/fa"; // solid heart
-import { CiHeart } from "react-icons/ci"; // outline heart
 import SubheadingTitle from "./Headings/SubheadingTitle";
-import { IoIosArrowDown } from "react-icons/io";
 import SingleComment from "./SingleComment";
 
 

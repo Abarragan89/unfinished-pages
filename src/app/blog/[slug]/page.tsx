@@ -1,8 +1,5 @@
-
-import { CiHeart } from "react-icons/ci";
 import { BiMessageRounded } from "react-icons/bi";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { FaHeart } from "react-icons/fa"; // Solid Heart
 import { IoShareOutline } from "react-icons/io5";
 import Image from "next/image"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";

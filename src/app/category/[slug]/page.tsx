@@ -2,7 +2,6 @@ import Image from "next/image"
 import MainHeading from "@/components/Headings/MainHeading";
 import { BlogTopic } from "../../../../types/blogtopics";
 import BlogCard from "@/components/Cards/BlogCard";
-import { titleFont } from "@/app/fonts";
 
 export default function Page({ params }: { params: { slug: string } }) {
 

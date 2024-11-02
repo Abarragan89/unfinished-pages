@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
-import { CiMail } from "react-icons/ci";
 import { IoIosMail } from "react-icons/io";
 
 export default function LoginForm() {
@@ -34,7 +33,8 @@ export default function LoginForm() {
                 {/* Login Button For Email */}
                 <form>
                     <div className="relative">
-                        <input className="input-browser-reset text-[1.02rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
+                        <input onChange={(e) => setUserEmail(e.target.value)} 
+                        className="input-browser-reset text-[1.02rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
                         <IoIosMail size={35} className="rounded-md absolute top-[-2px] text-[var(--brown-500)]" />
                     </div>
                     <button
