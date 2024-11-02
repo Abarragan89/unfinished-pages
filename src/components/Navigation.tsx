@@ -18,7 +18,7 @@ export default function Navigation() {
     const [showTopicsSubMenu, setShowTopicsSubMenu] = useState<boolean>(false);
 
     const topicsMenuRef = useRef<HTMLLIElement | null>(null);
-    const avatarMenuRef = useRef<HTMLLIElement | null>(null);
+    const avatarMenuRef = useRef<HTMLDivElement | null>(null);
 
     const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer"
 
@@ -71,7 +71,7 @@ export default function Navigation() {
                 <div className="mx-[15px]">
                     <SearchInput placeholder="Search Blogs" />
                 </div>
-                <li ref={avatarMenuRef}>
+                <li>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
                         src={session?.data?.user?.image ? session.data?.user.image : "/images/defaultProfilePic.png"}
@@ -83,7 +83,7 @@ export default function Navigation() {
                 </li>
                 {/* Menu when user clicks on Avatar */}
                 {showAvatarMenu &&
-                    <AvatarMenu onClose={closeMenu} />
+                    <AvatarMenu onClose={closeMenu} elementRef={avatarMenuRef} />
                 }
             </ul>
         </nav>
