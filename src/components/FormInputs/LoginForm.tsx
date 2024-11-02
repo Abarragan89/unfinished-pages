@@ -6,7 +6,16 @@ import { IoIosMail } from "react-icons/io";
 
 export default function LoginForm() {
 
-    const [userEmail, setUserEmail] = useState<string>('')
+    const [userEmail, setUserEmail] = useState<string>('');
+
+    function submitEmailLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        e.preventDefault();
+        signIn("email", {
+            email: userEmail,
+            callbackUrl: "/"
+
+        })
+    }
 
     return (
         <div className='flex justify-center items-center mt-[10px]'>
@@ -18,7 +27,7 @@ export default function LoginForm() {
                             callbackUrl: "/"
                         })}
                         type="button"
-                        className="flex items-center justify-center text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none focus:ring-[#4285F4]/50 dark:focus:ring-[#4285F4]/55 rounded-sm text-center pe-3"
+                        className="flex items-center justify-center text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none focus:ring-[#4285F4]/50 dark:focus:ring-[#4285F4]/55 rounded-sm text-center text-[.95rem] pe-3 whitespace-nowrap"
                     >
                         <FcGoogle size={30} className="mr-3 bg-white rounded-l-md" />
                         Sign in with Google
@@ -33,16 +42,12 @@ export default function LoginForm() {
                 {/* Login Button For Email */}
                 <form>
                     <div className="relative">
-                        <input onChange={(e) => setUserEmail(e.target.value)} 
-                        className="input-browser-reset text-[1.02rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
-                        <IoIosMail size={35} className="rounded-md absolute top-[-2px] text-[var(--brown-500)]" />
+                        <input onChange={(e) => setUserEmail(e.target.value)}
+                            className="input-browser-reset text-[.925rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
+                        <IoIosMail size={34} className="rounded-md absolute top-[-2px] text-[var(--brown-500)]" />
                     </div>
                     <button
-                        onClick={() => signIn("email", {
-                            email: userEmail,
-                            callbackUrl: "/"
-
-                        })}
+                        onClick={(e) => submitEmailLogin(e)}
                         type="submit"
                         className="custom-small-btn mx-auto mt-3"
                     >

@@ -2,10 +2,10 @@
 import { useState } from "react";
 import Image from "next/image"
 import Link from "next/link"
-import { signOut } from "next-auth/react"
 import { useSession } from "next-auth/react";
 import { Session } from "../../types/users";
 import AvatarMenu from "./Menus/AvatarMenu";
+import SearchInput from "./FormInputs/SearchInput";
 
 export default function Navigation() {
 
@@ -20,18 +20,10 @@ export default function Navigation() {
     return (
         <nav>
             <ul className="relative flex w-full justify-between items-center">
-                <li className={liStyle}>
-                    <Link href={"/"}>
-                        Home
-                    </Link>
-                </li>
-                <li className={liStyle}>Write</li>
-                <li className={liStyle}>About</li>
-                {session?.status === 'authenticated' &&
-                    <li className={liStyle}>
-                        <button onClick={() => signOut()}>Sign out</button>
-                    </li>
-                }
+                <li className={liStyle}>Topics</li>
+                <div className="mx-[15px]">
+                <SearchInput placeholder="Search Blogs"/>
+                </div>
                 <li>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
