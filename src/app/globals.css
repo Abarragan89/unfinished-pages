@@ -6,6 +6,7 @@
   --brown-500: #4e2b10;
   --brown-300: #85491b;
   --brown-100: #ce7c3d;
+  --gray-700: rgb(122, 118, 118);
   --gray-600: rgb(142, 137, 137);
   --gray-500: rgb(178, 173, 173);
   --gray-300: rgb(229, 222, 222);
@@ -111,10 +112,10 @@ html {
   cursor: pointer;
   display: inline-block;
   font-weight: 500;
-  padding: 5px 15px;
+  padding: 4px 13px;
   width: fit-content;
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   text-align: center;
   text-decoration: none;
   user-select: none;

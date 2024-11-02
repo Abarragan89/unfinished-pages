@@ -11,7 +11,7 @@ const ModalWrapper = ({ children, title }: Props) => {
 
     return (
         <div onClick={() => router.back()} className="z-50 fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <div onClick={(e) => e.stopPropagation()} className="relative bg-gray-200 p-4 rounded-md max-w-md w-full mb-[100px] animate-dropDown">
+            <div onClick={(e) => e.stopPropagation()} className="relative bg-[var(--paper-color)] p-[25px_50px] rounded-md w-[88%] xs:w-fit mb-[100px] animate-dropDown">
                 {title !== 'none' &&
                     <h2 className="text-[1.35rem] font-bold mb-4 text-center text-[var(--dark-text-color)]">{title}</h2>
                 }
