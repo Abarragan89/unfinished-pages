@@ -20,11 +20,11 @@ const config: Config = {
         slideInFromRight: {
           '0%': { transform: 'translatex(500px)' },
           '100%': { transform: 'translatex(0px)' },
-        }
+        },
       },
       animation: {
         dropDown: 'dropDown .35s ease-in-out',
-        slideInFromRight: 'slideInFromRight .3s ease-in-out'
+        slideInFromRight: 'slideInFromRight .3s ease-in-out',
       },
       screens: {
         'xs': '480px'

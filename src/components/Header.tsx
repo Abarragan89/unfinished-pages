@@ -18,7 +18,6 @@ export default function Header() {
                         priority
                     />
                 </Link>
-                {/* <SearchInput placeholder="Search Blogs" /> */}
             </div>
             <Navigation />
         </header>

@@ -1,30 +1,77 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image"
-import Link from "next/link"
+// import Link from "next/link"
 import { useSession } from "next-auth/react";
 import { Session } from "../../types/users";
 import AvatarMenu from "./Menus/AvatarMenu";
 import SearchInput from "./FormInputs/SearchInput";
+import { FaSortDown } from "react-icons/fa";
+import { FaCaretUp } from "react-icons/fa";
+import TopicsSubMenu from "./Menus/TopicsSubMenu";
+
 
 export default function Navigation() {
 
     const session: Session = useSession();
-    const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false)
-    const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer hover:text-[var(--brown-100)]"
+    const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
+    const [showTopicsSubMenu, setShowTopicsSubMenu] = useState<boolean>(false);
+
+    const topicsMenuRef = useRef<HTMLLIElement | null>(null);
+    const avatarMenuRef = useRef<HTMLLIElement | null>(null);
+
+    const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer"
 
     function closeMenu() {
         setShowAvatarMenu(prev => !prev)
     }
 
+
+    // Handle clicks outside of the menu
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                topicsMenuRef.current &&
+                !topicsMenuRef.current.contains(event.target as Node)
+            ) {
+                setShowTopicsSubMenu(false);
+            }
+            if (
+                avatarMenuRef.current &&
+                !avatarMenuRef.current.contains(event.target as Node)
+            ) {
+                setShowAvatarMenu(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
-        <nav>
+        <nav className="relative z-50">
             <ul className="relative flex w-full justify-between items-center">
-                <li className={liStyle}>Topics</li>
+                <li
+                    ref={topicsMenuRef}
+                    className={`${liStyle} flex relative`}
+                    onClick={() => setShowTopicsSubMenu(prev => !prev)}
+                >
+                    <p>Topics</p>
+                    {
+                        showTopicsSubMenu ?
+                            <>
+                                <FaCaretUp size={21} className="pb-[3px]" />
+                                <TopicsSubMenu />
+                            </>
+                            :
+                            <FaSortDown size={21} className="pb-[3px]" />
+                    }
+                </li>
                 <div className="mx-[15px]">
-                <SearchInput placeholder="Search Blogs"/>
+                    <SearchInput placeholder="Search Blogs" />
                 </div>
-                <li>
+                <li ref={avatarMenuRef}>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
                         src={session?.data?.user?.image ? session.data?.user.image : "/images/defaultProfilePic.png"}
