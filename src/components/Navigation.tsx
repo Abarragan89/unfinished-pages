@@ -17,7 +17,7 @@ export default function Navigation() {
     const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
     const [showTopicsSubMenu, setShowTopicsSubMenu] = useState<boolean>(false);
 
-    const topicsMenuRef = useRef<HTMLLIElement | null>(null);
+    const topicsMenuRef = useRef<HTMLDivElement | null>(null);
     const avatarMenuRef = useRef<HTMLDivElement | null>(null);
 
     const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer"
@@ -53,7 +53,6 @@ export default function Navigation() {
         <nav className="relative z-50">
             <ul className="relative flex w-full justify-between items-center">
                 <li
-                    ref={topicsMenuRef}
                     className={`${liStyle} flex relative`}
                     onClick={() => setShowTopicsSubMenu(prev => !prev)}
                 >
@@ -62,7 +61,7 @@ export default function Navigation() {
                         showTopicsSubMenu ?
                             <>
                                 <FaCaretUp size={21} className="pb-[3px]" />
-                                <TopicsSubMenu />
+                                <TopicsSubMenu elementRef={topicsMenuRef} />
                             </>
                             :
                             <FaSortDown size={21} className="pb-[3px]" />
