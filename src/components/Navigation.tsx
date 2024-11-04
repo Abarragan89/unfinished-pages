@@ -17,8 +17,8 @@ export default function Navigation() {
     const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
     const [showTopicsSubMenu, setShowTopicsSubMenu] = useState<boolean>(false);
 
-    const topicsMenuRef = useRef<HTMLDivElement | null>(null);
-    const avatarMenuRef = useRef<HTMLDivElement | null>(null);
+    const topicsMenuRef = useRef<HTMLLIElement | null>(null);
+    const avatarMenuRef = useRef<HTMLLIElement | null>(null);
 
     const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer"
 
@@ -53,6 +53,7 @@ export default function Navigation() {
         <nav className="relative z-50">
             <ul className="relative flex w-full justify-between items-center">
                 <li
+                    ref={topicsMenuRef}
                     className={`${liStyle} flex relative`}
                     onClick={() => setShowTopicsSubMenu(prev => !prev)}
                 >
@@ -61,7 +62,7 @@ export default function Navigation() {
                         showTopicsSubMenu ?
                             <>
                                 <FaCaretUp size={21} className="pb-[3px]" />
-                                <TopicsSubMenu elementRef={topicsMenuRef} />
+                                <TopicsSubMenu />
                             </>
                             :
                             <FaSortDown size={21} className="pb-[3px]" />
@@ -70,7 +71,7 @@ export default function Navigation() {
                 <div className="mx-[15px]">
                     <SearchInput placeholder="Search Blogs" />
                 </div>
-                <li>
+                <li ref={avatarMenuRef}>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
                         src={session?.data?.user?.image ? session.data?.user.image : "/images/defaultProfilePic.png"}
@@ -79,11 +80,11 @@ export default function Navigation() {
                         alt={"profile pic of user"}
                         onClick={closeMenu}
                     />
+                    {/* Menu when user clicks on Avatar */}
+                    {showAvatarMenu &&
+                        <AvatarMenu onClose={closeMenu} />
+                    }
                 </li>
-                {/* Menu when user clicks on Avatar */}
-                {showAvatarMenu &&
-                    <AvatarMenu onClose={closeMenu} elementRef={avatarMenuRef} />
-                }
             </ul>
         </nav>
     )

@@ -7,13 +7,12 @@ import { MdOutlineComputer } from "react-icons/md";
 import { RiGovernmentLine } from "react-icons/ri";
 
 
-export default function TopicsSubMenu({ elementRef }: { elementRef: React.MutableRefObject<HTMLDivElement | null> }) {
+export default function TopicsSubMenu() {
 
     const liStyles = 'text-black flex hover:cursor-pointer hover:text-[var(--brown-100)] mb-4 text-left'
 
     return (
         <div
-            ref={elementRef}
             className="absolute animate-growIn top-[42px] left-[-5px] p-[20px_20px_5px_20px] w-[180px] rounded-b-md border-l custom-avatar-menu-shadow bg-[var(--off-white)]"
         >
             <ul>

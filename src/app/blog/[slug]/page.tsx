@@ -1,13 +1,12 @@
-import { BiMessageRounded } from "react-icons/bi";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { IoShareOutline } from "react-icons/io5";
 import Image from "next/image"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";
 import { BlogTopic } from "../../../../types/blogtopics";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
+import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar";
 
 export default function Page({ params }: { params: { slug: string } }) {
+
 
     const blogTopics: BlogTopic[] = [
         {
@@ -57,7 +56,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">
             <h1 className="max-w-[700px] mx-auto text-[2rem] leading-[2.2rem] md:text-5xl md:leading-[3.5rem] mb-[18px] font-[700]">How do I manage my time? Focus on career or family?</h1>
-            
+
             {/* author readtime date and author profile pic  */}
             <section className="flex max-w-[700px] mx-auto mb-[40px]">
                 <Image
@@ -74,15 +73,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             </section>
 
             {/* This will be the likes/comment button bar */}
-            <section className="flex items-center mx-auto mb-[40px] justify-between py-[5px] max-w-[700px] my-5 px-4 text-[var(--gray-500)] border-t border-b border-[var(--paper-color)]">
-                <div className="flex items-center text-[var(--gray-500)">
-                    <IoMdHeartEmpty className="text-[1.5rem] mr-[2px] hover:cursor-pointer" />
-                    <p className="mr-5 text-[.95rem]">93</p>
-                    <BiMessageRounded className="text-[1.5rem] mr-[2px] hover:cursor-pointer" />
-                    <p className="text-[.95rem]">15</p>
-                </div>
-                <IoShareOutline className="text-[1.55rem] text-[var(--gray-500) hover:cursor-pointer" />
-            </section>
+            <BlogLikeCommentBar />
 
             {/* This is the Image */}
             <Image

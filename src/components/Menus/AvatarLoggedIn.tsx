@@ -12,7 +12,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
     return (
         <>
             <p className='text-center text-[1.1rem] text-[var(--brown-500)]'>Logged In As:</p>
-            <p className='text-center text-[.85rem] text-[var(--gray-700)] mb-2 tracking-tight'>{sessionData?.data?.user?.email}</p>
+            <p className='text-center text-[.85rem] text-[var(--gray-700)] mb-2 tracking-tight no-underline'>{sessionData?.data?.user?.email}</p>
             <hr className='border-[var(--gray-500)] mb-4'></hr>
             <ul className="text-center ml-3">
                 <li className={listElStyles}>
@@ -23,12 +23,9 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
                     <IoIosNotifications size={20} />
                     <Link href='/' className="ml-3">Notifications</Link>
                 </li>
-                {/* <li className={listElStyles}>
-                    <Link href='/'>Messages</Link>
-                </li> */}
                 <li className={listElStyles}>
                     <HiPencilSquare size={20} />
-                    <Link href='/' className="ml-3">Write</Link>
+                    <Link href='/createBlog' className="ml-3">Write</Link>
                 </li>
                 <li className={listElStyles}>
                     <GoSignOut size={20} />

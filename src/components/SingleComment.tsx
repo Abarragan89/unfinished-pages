@@ -5,10 +5,27 @@ import Image from "next/image"
 import { CiHeart } from "react-icons/ci"; // outline heart
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FiChevronLeft } from "react-icons/fi";
+// import { useSession } from "next-auth/react";
+import { Session } from "../../types/users";
 
-export default function SingleComment() {
+export default function SingleComment({ session }: {session: Session}) {
+
+    // const session: Session = useSession();
 
     const [showReplies, setShowReplies] = useState<boolean>(false)
+
+    
+    function showLoginModal(): void {
+        alert("show login modal")
+    }
+    function showAddCommentReplyModal(): void {
+        alert('show add comment replay modal')
+    }
+
+    function addLike(): void {
+        alert('you added a like')
+    }
+
 
     return (
         <div className="mb-7">
@@ -26,7 +43,10 @@ export default function SingleComment() {
                         <p className="leading-none text-[.95rem] text-[var(--gray-500)]">2 days ago</p>
                     </div>
                     <div className="flex items-center text-[var(--gray-600)]">
-                        <CiHeart size={23} />
+                        <CiHeart
+                            onClick={session.status === 'authenticated' ? addLike : showLoginModal}
+                            size={23}
+                            className="hover:cursor-pointer" />
                         <p className="text-[.93rem]">93</p>
                     </div>
                 </div>
@@ -41,7 +61,12 @@ export default function SingleComment() {
                     <p className="text-[.9rem]">(82)</p>
                     {showReplies ? <FiChevronLeft size={18} /> : <IoChevronDownOutline />}
                 </div>
-                <p className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]">Reply</p>
+                <p
+                    onClick={session.status === 'authenticated' ? showAddCommentReplyModal : showLoginModal}
+                    className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]"
+                >
+                    Reply
+                </p>
             </div>
 
             {/* Replies */}
