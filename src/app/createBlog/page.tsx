@@ -14,6 +14,7 @@ import HeadingTwo from '@/components/SlateRenderers/HeadingTwo';
 import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
 import AddImageModal from '@/components/Modals/AddImageModal';
+import Image from '@/components/SlateRenderers/Image';
 
 // import Button Icons for ToolBar
 import { FaItalic } from "react-icons/fa";
@@ -23,12 +24,10 @@ import { FaList } from "react-icons/fa";
 import { FaListOl } from "react-icons/fa6";
 import { CiImageOn } from "react-icons/ci";
 
-
-
-
 // Slate Typescript
 type CustomElement =
     | { type: 'paragraph'; children: CustomText[] }
+    | { type: 'image'; children: CustomText[]; url: string }
     | { type: 'code'; children: CustomText[] }
     | { type: 'numbered-list'; children: { type: 'list-item'; children: CustomText[] }[] }
     | { type: 'list-item'; children: CustomText[] }
@@ -44,11 +43,25 @@ declare module 'slate' {
     }
 }
 
+type MarkState = {
+    bold: boolean;
+    italic: boolean;
+    underline: boolean;
+};
+
 export default function CreateBlog() {
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [imageURL, setImageUrl] = useState<string>('');
-    const [chosenTool, setChosenTool] = useState<string>('')
+    const [imageAlt, setImageAlt] = useState<string>('');
+    const [chosenMark, setChosenMark] = useState<string>('')
+    const [chosenElement, setChosenElement] = useState<string>('')
+    const [chosenMarks, setChosenMarks] = useState<MarkState>({
+        bold: false,
+        italic: false,
+        underline: false
+    })
+
 
     const initialValue: Descendant[] = [
         {
@@ -57,21 +70,11 @@ export default function CreateBlog() {
         }
     ]
 
-    const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+    // Create the editor
+    const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
 
+    // @ts-ignore
     const renderElement = useCallback(props => {
-        // Aligning was not working, but Decided that I don't need it anyways.
-        // let align: string = '';
-        // console.log(props.element?.children[0]?.center)
-        // if (props.element.children[0].center) {
-        //     align = 'center'
-        // }
-        // if (props.element.children[0].left) {
-        //     align = 'left'
-        // }
-        // if (props.element.children[0].right) {
-        //     align = 'right'
-        // }
         switch (props.element.type) {
             case 'code':
                 return <CodeBlock {...props} />
@@ -92,6 +95,36 @@ export default function CreateBlog() {
         }
     }, []);
 
+    function withImages(editor: ReactEditor) {
+        const { isVoid, insertBreak } = editor;
+
+        // Define images as void elements
+        editor.isVoid = element => element.type === 'image' || isVoid(element);
+
+        // Custom behavior for the Enter key after an image
+        editor.insertBreak = () => {
+            const { selection } = editor;
+
+            if (selection) {
+                const [parentNode] = Editor.parent(editor, selection);
+                // @ts-ignore
+                if (parentNode.type === 'image') {
+                    // If the current block is an image, insert a paragraph block below it
+                    Transforms.insertNodes(editor, {
+                        type: 'paragraph',
+                        children: [{ text: '' }],
+                    });
+                    return;
+                }
+            }
+
+            // Default break behavior
+            insertBreak();
+        };
+
+        return editor;
+    };
+
     const insertImage = (editor: ReactEditor, url: string) => {
         const image: CustomElement = {
             type: 'image',
@@ -105,24 +138,15 @@ export default function CreateBlog() {
             children: [{ text: '' }],
         })
     }
-
-    // Component to render image elements
-    const Image = ({ attributes, children, element }: any) => {
-        return (
-            <div {...attributes}>
-                <div>
-                    <img src={(element as CustomElement).url} alt="Slate Image" className='mx-auto' />
-                </div>
-                {children}
-            </div>
-        )
-    }
-
+    // @ts-ignore
     const renderLeaf = useCallback(props => {
         return <Leaf {...props} />
     }, [])
-
+    // @ts-ignore
     const toggleBlock = (editor, format: string) => {
+        // set status to change UI change in ToolBar
+        format === chosenElement ? setChosenElement('') : setChosenElement(format)
+        // check if it is already active in this format
         const isActive = isBlockActive(
             editor,
             format,
@@ -141,10 +165,12 @@ export default function CreateBlog() {
         let newProperties: Partial<SlateElement>
         if (TEXT_ALIGN_TYPES.includes(format)) {
             newProperties = {
+                // @ts-ignore
                 align: isActive ? undefined : format,
             }
         } else {
             newProperties = {
+                // @ts-ignore
                 type: isActive ? 'paragraph' : isList ? 'list-item' : format,
             }
         }
@@ -152,11 +178,20 @@ export default function CreateBlog() {
 
         if (!isActive && isList) {
             const block = { type: format, children: [] }
+            // @ts-ignore
             Transforms.wrapNodes(editor, block)
         }
     }
-
+    // @ts-ignore
     const toggleMark = (editor, format) => {
+        // set status to change UI change in ToolBar
+        format === chosenMark ? setChosenMark('') : setChosenMark(format)
+        setChosenMarks((prev) => ({
+            ...prev, // Spread the previous state
+            [format]: !prev[format], // Update the specific property
+        }));
+
+        // check if it is already active in this format
         const isActive = isMarkActive(editor, format)
         if (isActive) {
             Editor.removeMark(editor, format)
@@ -165,6 +200,9 @@ export default function CreateBlog() {
         }
     }
 
+
+    console.log(chosenMarks)
+    // @ts-ignore
     const isBlockActive = (editor, format, blockType = 'type') => {
         const { selection } = editor
         if (!selection) return false
@@ -174,93 +212,113 @@ export default function CreateBlog() {
                 match: n =>
                     !Editor.isEditor(n) &&
                     SlateElement.isElement(n) &&
+                    // @ts-ignore
                     n[blockType] === format,
             })
         )
         return !!match
     }
-
+    // @ts-ignore
     const isMarkActive = (editor, format) => {
         const marks = Editor.marks(editor)
+        // @ts-ignore
         return marks ? marks[format] === true : false
     }
 
-    const ToolBarButtonStyles = 'w-full py-[1px] px-1'
+    const ToolBarButtonStyles = 'w-full p-1 h-[30px]'
 
     return (
         <main className='pt-10'>
             <AddImageModal
                 onClickHandler={() => insertImage(editor, imageURL)}
                 setImageUrl={setImageUrl}
-                editor={editor}
+                setImageAlt={setImageAlt}
             />
             <section className='w-[80%] mx-auto max-w-[800px]'>
                 <Slate
                     editor={editor} initialValue={initialValue}>
-                    <div className='flex bg-[var(--gray-100)] rounded-t p-[5px] border border-[var(--gray-600)]'>
+                    <div className='flex items-center bg-[var(--gray-100)] rounded-t border border-[var(--gray-600)]'>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'bold' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenMarks?.bold ? 'bg-[var(--paper-color)]' : ''} rounded-tl-sm`}
                             onMouseDown={(e) => { e.preventDefault(); toggleMark(editor, 'bold') }}>
                             <FaBold className='mx-auto' />
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'italic' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenMarks?.italic ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleMark(editor, 'italic') }}>
                             <FaItalic className='mx-auto' />
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'underline' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenMarks?.underline ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleMark(editor, 'underline') }}>
                             <FaUnderline className='mx-auto' />
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'heading-one' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenElement === 'heading-one' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'heading-one') }}>
                             H1
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'heading-two' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenElement === 'heading-two' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'heading-two') }}>H2</button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'numbered-list' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenElement === 'numbered-list' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'numbered-list') }}>
                             <FaListOl className='mx-auto' />
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'bulleted-list' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenElement === 'bulleted-list' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'bulleted-list') }}>
                             <FaList className='mx-auto' />
                         </button>
                         <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'code' ? 'bg-[var(--paper-color)]' : ''}`}
+                            className={`${ToolBarButtonStyles} ${chosenElement === 'code' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'code') }}>
                             <div className='flex justify-center'>
                                 <p>&lt;</p>
                                 <p>&gt;</p>
                             </div>
                         </button>
-                        <Link href={"/createBlog/?showModal=addImage"}>
-                            <button
-                                className={`${ToolBarButtonStyles} ${chosenTool === 'code' ? 'bg-[var(--paper-color)]' : ''}`}
-                                onMouseDown={(e) => {
-                                    e.preventDefault();
-                                    // insertImage(editor, url)
-                                }}>
-                                <CiImageOn className='mx-auto' />
-                            </button>
+                        <Link href={"/createBlog/?showModal=addImage"}
+                            className={`${ToolBarButtonStyles}`}>
+                            <CiImageOn size={20} className='mx-auto' />
                         </Link>
-                        <button
+                        {/* <button
                             className={`${ToolBarButtonStyles} ${chosenTool === 'code' ? 'bg-[var(--paper-color)]' : ''}`}
                             onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'code') }}>
                             Save
-                        </button>
+                        </button> */}
                     </div>
                     <Editable
                         renderElement={renderElement}
                         renderLeaf={renderLeaf}
                         spellCheck
                         autoFocus
-                        className='h-[50vh] border border-[var(--gray-600)] border-t-0 p-[15px] rounded-b focus:outline-none overflow-y-scroll overflow-x-hidden'
+                        className='h-[50vh] border border-[var(--gray-600)] border-t-0 p-[15px] rounded-b focus:outline-none overflow-y-scroll overflow-x-hidden break-normal'
+                        onKeyDown={(event) => {
+                            if (event.metaKey || event.ctrlKey) {
+                                switch (event.key.toLowerCase()) {
+                                    case 'b':
+                                        event.preventDefault();
+                                        toggleMark(editor, 'bold');
+                                        break;
+                                    case 'i':
+                                        event.preventDefault();
+                                        toggleMark(editor, 'italic');
+                                        break;
+                                    case 'u':
+                                        event.preventDefault();
+                                        toggleMark(editor, 'underline');
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            if (event.key === 'Tab') {
+                                event.preventDefault();
+                                Transforms.insertText(editor, '    ');
+                            }
+                        }}
                     />
                 </Slate>
             </section>
@@ -270,11 +328,8 @@ export default function CreateBlog() {
 
 
 // To Do:
-// 1. Upload Images
-    // pressing enter makes another image
-// 2. Add hot keys to edit
-// 3. Disable Tab in Editor
 // 4. finalize Styles
+// show which tool is chosen (everything except)
 // 5. Add Title input
 // 6. Add description Input
 // 7. Add keywords (meta tags and searchable)
