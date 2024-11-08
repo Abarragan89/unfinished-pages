@@ -17,15 +17,15 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
             <ul className="text-center ml-3">
                 <li className={listElStyles}>
                     <LuNewspaper size={20} />
-                    <Link href='/' className="ml-3">Blogs</Link>
+                    <Link href='/' onClick={onClose} className="ml-3">Blogs</Link>
                 </li>
                 <li className={listElStyles}>
                     <IoIosNotifications size={20} />
-                    <Link href='/' className="ml-3">Notifications</Link>
+                    <Link href='/' onClick={onClose} className="ml-3">Notifications</Link>
                 </li>
                 <li className={listElStyles}>
                     <HiPencilSquare size={20} />
-                    <Link href='/createBlog' className="ml-3">Write</Link>
+                    <Link href='/createBlog' onClick={onClose} className="ml-3">Write</Link>
                 </li>
                 <li className={listElStyles}>
                     <GoSignOut size={20} />

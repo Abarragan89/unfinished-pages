@@ -27,7 +27,7 @@ export default function Navigation() {
     }
 
 
-    // Handle clicks outside of the menu
+    // Handle clicks outside of the menu to close menu
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (

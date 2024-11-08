@@ -61,7 +61,7 @@ export default function Home() {
         <LoginModal />
       </Suspense>
       <Jumbotron />
-      <div className="mt-[60px]" id="featured-blogs">
+      <div className="my-[60px]" id="featured-blogs">
         <CardSection heading="Featured Blogs">
           <Carousel>
             <BlogCard />
@@ -72,7 +72,6 @@ export default function Home() {
           </Carousel>
         </CardSection>
       </div>
-      <hr className="bg-black mb-[60px] w-[80%] mx-auto"></hr>
       <CardSection heading="Blog Topics">
         <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
           {blogTopics.map((topic, index) => (
