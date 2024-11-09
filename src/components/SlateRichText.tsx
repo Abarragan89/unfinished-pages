@@ -47,23 +47,12 @@ declare module 'slate' {
     }
 }
 
-type MarkState = {
-    bold: boolean;
-    italic: boolean;
-    underline: boolean;
-};
-
 export default function SlateRichText() {
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [imageURL, setImageUrl] = useState<string>('');
     const [imageAlt, setImageAlt] = useState<string>('');
     const [chosenElement, setChosenElement] = useState<string>('')
-    // const [chosenMarks, setChosenMarks] = useState<MarkState>({
-    //     bold: false,
-    //     italic: false,
-    //     underline: false
-    // })
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
@@ -86,7 +75,7 @@ export default function SlateRichText() {
     //     },
     // ]
 
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
         switch (props.element.type) {
             case 'code':
@@ -119,7 +108,7 @@ export default function SlateRichText() {
 
             if (selection) {
                 const [parentNode] = Editor.parent(editor, selection);
-                // @ts-expect-error
+                // @ts-expect-error: Slate Rich Text Error
                 if (parentNode.type === 'image') {
                     // If the current block is an image, insert a paragraph block below it
                     Transforms.insertNodes(editor, {
@@ -149,11 +138,11 @@ export default function SlateRichText() {
             children: [{ text: '' }],
         })
     }
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const renderLeaf = useCallback(props => {
         return <Leaf {...props} />
     }, [])
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const toggleBlock = (editor, format: string) => {
         // set status to change UI change in ToolBar
         format === chosenElement ? setChosenElement('') : setChosenElement(format)
@@ -176,12 +165,12 @@ export default function SlateRichText() {
         let newProperties: Partial<SlateElement>
         if (TEXT_ALIGN_TYPES.includes(format)) {
             newProperties = {
-                // @ts-expect-error
+                // @ts-expect-error: Slate Rich Text Error
                 align: isActive ? undefined : format,
             }
         } else {
             newProperties = {
-                // @ts-expect-error
+                // @ts-expect-error: Slate Rich Text Error
                 type: isActive ? 'paragraph' : isList ? 'list-item' : format,
             }
         }
@@ -189,11 +178,11 @@ export default function SlateRichText() {
 
         if (!isActive && isList) {
             const block = { type: format, children: [] }
-            // @ts-expect-error
+            // @ts-expect-error: Slate Rich Text Error
             Transforms.wrapNodes(editor, block)
         }
     }
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const toggleMark = (editor, format) => {
         // check if it is already active in this format
         const isActive = isMarkActive(editor, format)
@@ -204,7 +193,7 @@ export default function SlateRichText() {
         }
     }
 
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const isBlockActive = (editor, format, blockType = 'type') => {
         const { selection } = editor
         if (!selection) return false
@@ -214,16 +203,16 @@ export default function SlateRichText() {
                 match: n =>
                     !Editor.isEditor(n) &&
                     SlateElement.isElement(n) &&
-                    // @ts-expect-error
+                    // @ts-expect-error: Slate Rich Text Error
                     n[blockType] === format,
             })
         )
         return !!match
     }
-    // @ts-expect-error
+    // @ts-expect-error: Slate Rich Text Error
     const isMarkActive = (editor, format) => {
         const marks = Editor.marks(editor)
-        // @ts-expect-error
+        // @ts-expect-error: Slate Rich Text Error
         return marks ? marks[format] === true : false
     }
 

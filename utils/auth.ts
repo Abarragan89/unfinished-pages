@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
         },
         session: async ({ session, token }) => {
             if (session?.user) {
-                // @ts-expect-error
+                // @ts-expect-error: Slate Rich Text Error
                 session.user.id = token.sub; // token.sub === user.id
             }
             return session;
