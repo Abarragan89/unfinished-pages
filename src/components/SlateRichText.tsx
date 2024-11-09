@@ -145,7 +145,11 @@ export default function SlateRichText() {
     // @ts-expect-error: Slate Rich Text Error
     const toggleBlock = (editor, format: string) => {
         // set status to change UI change in ToolBar
-        format === chosenElement ? setChosenElement('') : setChosenElement(format)
+        if (format === chosenElement) {
+            setChosenElement('')
+        } else {
+            setChosenElement(format)
+        }
         // check if it is already active in this format
         const isActive = isBlockActive(
             editor,
