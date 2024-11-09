@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Element as SlateElement, Descendant createEditor, BaseEditor } from 'slate'
+import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import Link from 'next/link';
