@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Element as SlateElement, createEditor, BaseEditor } from 'slate'
+import { Editor, Transforms, Element as SlateElement, Descendant createEditor, BaseEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import Link from 'next/link';
@@ -57,23 +57,23 @@ export default function SlateRichText() {
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
 
-    const initialValue = useMemo(
-        () =>
-            JSON.parse(localStorage.getItem('content') as string) || [
-                {
-                    type: 'paragraph',
-                    children: [{ text: 'A line of text in a paragraph.' }],
-                },
-            ],
-        []
-    )
+    // const initialValue = useMemo(
+    //     () =>
+    //         JSON.parse(localStorage.getItem('content') as string) || [
+    //             {
+    //                 type: 'paragraph',
+    //                 children: [{ text: 'A line of text in a paragraph.' }],
+    //             },
+    //         ],
+    //     []
+    // )
 
-    // const initialValue = [
-    //     {
-    //         type: 'paragraph',
-    //         children: [{ text: '' }],
-    //     },
-    // ]
+    const initialValue: Descendant[] = [
+        {
+            type: 'paragraph',
+            children: [{ text: '' }],
+        },
+    ]
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
