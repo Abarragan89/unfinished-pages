@@ -1,13 +1,15 @@
-import { JSX, ClassAttributes, HTMLAttributes, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
+import { RenderElementProps } from "slate-react";
 
+// Define the type for your component's props
+type SlateProps = RenderElementProps
 
-export default function HeadingTwo(props: { attributes: JSX.IntrinsicAttributes & ClassAttributes<HTMLHeadingElement> & HTMLAttributes<HTMLHeadingElement>; children: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) {
+export default function HeadingTwo({ children, attributes} : SlateProps) {
     return (
         <h2
-            {...props.attributes}
+            {...attributes}
             className="text-[1.5rem] font-[500]"
         >
-            {props.children}
+            {children}
         </h2>
     )
 }

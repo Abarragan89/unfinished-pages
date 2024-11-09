@@ -80,7 +80,7 @@
 //     // Create the editor
 //     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
 
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const renderElement = useCallback(props => {
 //         switch (props.element.type) {
 //             case 'code':
@@ -114,7 +114,7 @@
 
 //             if (selection) {
 //                 const [parentNode] = Editor.parent(editor, selection);
-//                 // @ts-ignore
+//                 // @ts-expect-error
 //                 if (parentNode.type === 'image') {
 //                     // If the current block is an image, insert a paragraph block below it
 //                     Transforms.insertNodes(editor, {
@@ -145,11 +145,11 @@
 //             children: [{ text: '' }],
 //         })
 //     }
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const renderLeaf = useCallback(props => {
 //         return <Leaf {...props} />
 //     }, [])
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const toggleBlock = (editor, format: string) => {
 //         // set status to change UI change in ToolBar
 //         format === chosenElement ? setChosenElement('') : setChosenElement(format)
@@ -172,12 +172,12 @@
 //         let newProperties: Partial<SlateElement>
 //         if (TEXT_ALIGN_TYPES.includes(format)) {
 //             newProperties = {
-//                 // @ts-ignore
+//                 // @ts-expect-error
 //                 align: isActive ? undefined : format,
 //             }
 //         } else {
 //             newProperties = {
-//                 // @ts-ignore
+//                 // @ts-expect-error
 //                 type: isActive ? 'paragraph' : isList ? 'list-item' : format,
 //             }
 //         }
@@ -185,15 +185,15 @@
 
 //         if (!isActive && isList) {
 //             const block = { type: format, children: [] }
-//             // @ts-ignore
+//             // @ts-expect-error
 //             Transforms.wrapNodes(editor, block)
 //         }
 //     }
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const toggleMark = (editor, format) => {
 //         setChosenMarks((prev) => ({
 //             ...prev, // Spread the previous state
-//             // @ts-ignore
+//             // @ts-expect-error
 //             [format]: !prev[format], // Update the specific property
 //         }));
 
@@ -208,7 +208,7 @@
 
 
 //     console.log(chosenMarks)
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const isBlockActive = (editor, format, blockType = 'type') => {
 //         const { selection } = editor
 //         if (!selection) return false
@@ -218,16 +218,16 @@
 //                 match: n =>
 //                     !Editor.isEditor(n) &&
 //                     SlateElement.isElement(n) &&
-//                     // @ts-ignore
+//                     // @ts-expect-error
 //                     n[blockType] === format,
 //             })
 //         )
 //         return !!match
 //     }
-//     // @ts-ignore
+//     // @ts-expect-error
 //     const isMarkActive = (editor, format) => {
 //         const marks = Editor.marks(editor)
-//         // @ts-ignore
+//         // @ts-expect-error
 //         return marks ? marks[format] === true : false
 //     }
 

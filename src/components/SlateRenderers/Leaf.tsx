@@ -1,4 +1,12 @@
-export default function Leaf(props: any) {
+import { RenderLeafProps } from 'slate-react';
+
+interface CustomLeaf {
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+}
+
+export default function Leaf(props: RenderLeafProps & { leaf: CustomLeaf }) {
     return (
         <span
             {...props.attributes}

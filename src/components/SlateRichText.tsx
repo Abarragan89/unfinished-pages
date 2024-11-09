@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Range, Element as SlateElement, createEditor, BaseEditor } from 'slate'
+import { Editor, Transforms, Element as SlateElement, createEditor, BaseEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import Link from 'next/link';
@@ -14,7 +14,7 @@ import HeadingTwo from '@/components/SlateRenderers/HeadingTwo';
 import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
 import AddImageModal from '@/components/Modals/AddImageModal';
-import Image from '@/components/SlateRenderers/Image';
+import ImageRender from './SlateRenderers/ImageRender';
 // import Button Icons for ToolBar
 
 import { CiImageOn } from "react-icons/ci";
@@ -59,11 +59,11 @@ export default function SlateRichText() {
     const [imageURL, setImageUrl] = useState<string>('');
     const [imageAlt, setImageAlt] = useState<string>('');
     const [chosenElement, setChosenElement] = useState<string>('')
-    const [chosenMarks, setChosenMarks] = useState<MarkState>({
-        bold: false,
-        italic: false,
-        underline: false
-    })
+    // const [chosenMarks, setChosenMarks] = useState<MarkState>({
+    //     bold: false,
+    //     italic: false,
+    //     underline: false
+    // })
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
@@ -86,7 +86,7 @@ export default function SlateRichText() {
     //     },
     // ]
 
-    // @ts-ignore
+    // @ts-expect-error
     const renderElement = useCallback(props => {
         switch (props.element.type) {
             case 'code':
@@ -102,7 +102,7 @@ export default function SlateRichText() {
             case 'heading-two':
                 return <HeadingTwo {...props} />
             case 'image':
-                return <Image {...props} />
+                return <ImageRender {...props} />
             default:
                 return <DefaultBlock {...props} />
         }
@@ -119,7 +119,7 @@ export default function SlateRichText() {
 
             if (selection) {
                 const [parentNode] = Editor.parent(editor, selection);
-                // @ts-ignore
+                // @ts-expect-error
                 if (parentNode.type === 'image') {
                     // If the current block is an image, insert a paragraph block below it
                     Transforms.insertNodes(editor, {
@@ -149,11 +149,11 @@ export default function SlateRichText() {
             children: [{ text: '' }],
         })
     }
-    // @ts-ignore
+    // @ts-expect-error
     const renderLeaf = useCallback(props => {
         return <Leaf {...props} />
     }, [])
-    // @ts-ignore
+    // @ts-expect-error
     const toggleBlock = (editor, format: string) => {
         // set status to change UI change in ToolBar
         format === chosenElement ? setChosenElement('') : setChosenElement(format)
@@ -176,12 +176,12 @@ export default function SlateRichText() {
         let newProperties: Partial<SlateElement>
         if (TEXT_ALIGN_TYPES.includes(format)) {
             newProperties = {
-                // @ts-ignore
+                // @ts-expect-error
                 align: isActive ? undefined : format,
             }
         } else {
             newProperties = {
-                // @ts-ignore
+                // @ts-expect-error
                 type: isActive ? 'paragraph' : isList ? 'list-item' : format,
             }
         }
@@ -189,18 +189,12 @@ export default function SlateRichText() {
 
         if (!isActive && isList) {
             const block = { type: format, children: [] }
-            // @ts-ignore
+            // @ts-expect-error
             Transforms.wrapNodes(editor, block)
         }
     }
-    // @ts-ignore
+    // @ts-expect-error
     const toggleMark = (editor, format) => {
-        setChosenMarks((prev) => ({
-            ...prev, // Spread the previous state
-            // @ts-ignore
-            [format]: !prev[format], // Update the specific property
-        }));
-
         // check if it is already active in this format
         const isActive = isMarkActive(editor, format)
         if (isActive) {
@@ -210,7 +204,7 @@ export default function SlateRichText() {
         }
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     const isBlockActive = (editor, format, blockType = 'type') => {
         const { selection } = editor
         if (!selection) return false
@@ -220,16 +214,16 @@ export default function SlateRichText() {
                 match: n =>
                     !Editor.isEditor(n) &&
                     SlateElement.isElement(n) &&
-                    // @ts-ignore
+                    // @ts-expect-error
                     n[blockType] === format,
             })
         )
         return !!match
     }
-    // @ts-ignore
+    // @ts-expect-error
     const isMarkActive = (editor, format) => {
         const marks = Editor.marks(editor)
-        // @ts-ignore
+        // @ts-expect-error
         return marks ? marks[format] === true : false
     }
 

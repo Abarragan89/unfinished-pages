@@ -1,6 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import EmailProvider  from "next-auth/providers/email";
+import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 
@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         }),
         EmailProvider({
             server: process.env.EMAIL_SERVER,
-            from: 'Unfinshed Pages', 
+            from: 'Unfinshed Pages',
         })
     ],
     secret: process.env.NEXTAUTH_SECRET,
@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
         },
         session: async ({ session, token }) => {
             if (session?.user) {
-                // @ts-ignore
+                // @ts-expect-error
                 session.user.id = token.sub; // token.sub === user.id
             }
             return session;

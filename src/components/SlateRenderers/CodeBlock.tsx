@@ -1,11 +1,14 @@
-import React from 'react'
+import { RenderElementProps } from "slate-react";
 
-export default function CodeBlock(props: { attributes: React.JSX.IntrinsicAttributes & React.ClassAttributes<HTMLPreElement> & React.HTMLAttributes<HTMLPreElement>; children: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined }) {
+// Define the type for your component's props
+type SlateProps = RenderElementProps
+
+export default function CodeBlock({ attributes, children} : SlateProps) {
     return (
-        <pre {...props.attributes}
+        <pre {...attributes}
             className='bg-[var(--gray-500)] py-[2px] px-[5px]'
         >
-            <code>{props.children}</code>
+            <code>{children}</code>
         </pre>
     )
 }

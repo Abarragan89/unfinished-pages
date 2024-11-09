@@ -1,12 +1,14 @@
-import { JSX, ClassAttributes, OlHTMLAttributes, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
+import { RenderElementProps } from "slate-react";
 
-export default function NumberedList(props: { attributes: JSX.IntrinsicAttributes & ClassAttributes<HTMLOListElement> & OlHTMLAttributes<HTMLOListElement>; children: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) {
+// Define the type for your component's props
+type SlateProps = RenderElementProps
+export default function NumberedList({ children, attributes }: SlateProps) {
     return (
-        <ol  
+        <ol
             className="list-decimal ml-[35px]"
-        {...props.attributes}
+            {...attributes}
         >
-            {props.children}
+            {children}
         </ol>
     )
 }
