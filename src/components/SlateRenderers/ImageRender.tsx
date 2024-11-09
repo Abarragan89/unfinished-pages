@@ -9,7 +9,7 @@ export default function ImageRender({ children, attributes, element }: SlateProp
         <div {...attributes}>
             <div>
                 {/* @ts-expect-error: Slate Rich Text Error */}
-                <Image src={element.url} alt="Slate Image" className='mx-auto' />
+                <Image src={element.url} alt="Slate Image" className='mx-auto' width={350} height={275} />
             </div>
             {children}
         </div>

@@ -57,6 +57,7 @@ export default function SlateRichText() {
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
 
+
     // const initialValue = useMemo(
     //     () =>
     //         JSON.parse(localStorage.getItem('content') as string) || [
@@ -74,6 +75,8 @@ export default function SlateRichText() {
             children: [{ text: '' }],
         },
     ]
+
+    const [content, setContent] = useState<Descendant[]>(initialValue); // initialValue is the starting content structure
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
@@ -222,7 +225,7 @@ export default function SlateRichText() {
 
     const toolBarButtonStyles = 'p-1 h-[30px] mx-1 opacity-[.4] hover:opacity-[1]'
     const toolBarItemChosen: React.CSSProperties = {
-        boxShadow: "0 0 10px 0 rgba(0,0,0,0.25) inset",
+        boxShadow: "0px 4px 8px -2px rgba(9, 30, 66, 0.25), 0px 0px 0px 1px rgba(9, 30, 66, 0.08)",
         borderRadius: "4px",
         opacity: 1
     };
@@ -276,6 +279,33 @@ export default function SlateRichText() {
         )
     }
 
+
+    const handleChange = (newValue: Descendant[]) => {
+        setContent(newValue); // Save content to state on every change
+    };
+
+    const saveContent = async () => {
+
+        console.log('content', content)
+        // try {
+        //     const response = await fetch('/api/save-content', {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(content), // Save JSON representation to the backend
+        //     });
+
+        //     if (!response.ok) {
+        //         throw new Error('Failed to save content');
+        //     }
+        //     alert('Content saved successfully!');
+        // } catch (error) {
+        //     console.error(error);
+        //     alert('Error saving content');
+        // }
+    };
+
+
+
     return (
         <section className='mt-5'>
             <AddImageModal
@@ -285,19 +315,10 @@ export default function SlateRichText() {
             />
             <section className='w-[80%] mx-auto max-w-[800px]'>
                 <Slate
-                    editor={editor} initialValue={initialValue}
-                    onChange={value => {
-                        const isAstChange = editor.operations.some(
-                            op => 'set_selection' !== op.type
-                        )
-                        if (isAstChange) {
-                            // Save the value to Local Storage.
-                            const content = JSON.stringify(value)
-                            localStorage.setItem('content', content)
-                        }
-                    }}
+                    editor={editor} initialValue={content}
+                    onChange={handleChange}
                 >
-                    <menu className='bg-[var(--gray-100)] rounded-t border border-[var(--gray-600)] px-5 py-[10px]'>
+                    <menu className='flex justify-between bg-[var(--gray-100)] rounded-t border border-[var(--gray-600)] px-5 py-[10px]'>
                         <div className='flex max-w-[350px] items-center'>
                             <MarkButton iconType="bold" />
                             <MarkButton iconType="italic" />
@@ -311,12 +332,13 @@ export default function SlateRichText() {
                                 className={`${toolBarButtonStyles}`}>
                                 <CiImageOn size={20} className='mx-auto' />
                             </Link>
-                            {/* <button
-                            className={`${ToolBarButtonStyles} ${chosenTool === 'code' ? toolBarItemChosen : ''}`}
-                            onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, 'code') }}>
-                            Save
-                        </button> */}
                         </div>
+                        <button
+                            className='custom-small-btn'
+                            onClick={saveContent}
+                        >
+                            Save
+                        </button>
                     </menu>
                     <Editable
                         renderElement={renderElement}
@@ -356,9 +378,7 @@ export default function SlateRichText() {
 }
 
 // To Do:
-// 4. finalize Styles
 // show which tool is chosen (everything except)
-// if the selection is not bold, underline, or italic, then set bold to not bold (Bug it can lead to bold being off UI but on Typing)
 // 5. Add Title input
 // 6. Add description Input
 // 6. add tags or categoies it belongs to
