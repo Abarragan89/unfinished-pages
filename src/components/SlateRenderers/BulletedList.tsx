@@ -1,12 +1,15 @@
-import { JSX, ClassAttributes, OlHTMLAttributes, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
+import { RenderElementProps } from "slate-react";
+import { JSX } from "react";
 
-export default function BulletedList(props: { attributes: JSX.IntrinsicAttributes & ClassAttributes<HTMLOListElement> & OlHTMLAttributes<HTMLOListElement>; children: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) {
+// Define the type for your component's props
+type BulletedListProps = RenderElementProps & {
+    // You can add any other custom props specific to your component here if needed
+};
+
+export default function BulletedList({ attributes, children }: BulletedListProps) {
     return (
-        <ul  
-            className="list-disc ml-[35px]"
-        {...props.attributes}
-        >
-            {props.children}
+        <ul className="list-disc ml-[35px]" {...attributes}>
+            {children}
         </ul>
-    )
+    );
 }
