@@ -4,7 +4,8 @@ import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, 
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import Link from 'next/link';
-
+import axios
+ from 'axios';
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
 import DefaultBlock from '@/components/SlateRenderers/DefaultBlock';
@@ -287,6 +288,13 @@ export default function SlateRichText() {
     const saveContent = async () => {
 
         console.log('content', content)
+        axios({
+            method: 'post',
+            url: '/api/blogRoutes',
+            data: content
+        });
+
+
         // try {
         //     const response = await fetch('/api/save-content', {
         //         method: 'POST',

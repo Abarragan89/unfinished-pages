@@ -21,6 +21,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  blogs         Blog[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   createdAt DateTime @default(now())
@@ -74,3 +75,39 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@id([userId, credentialID])
 }
+
+
+model Blog {
+  id String @id @default(cuid())
+  title String
+  description String?
+  keyWords String?
+  isPublished Boolean @default(false)
+  content BlogContentBlock[]
+  userId   String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BlogContentBlock {
+  id String @id @default(cuid())
+  blogId String
+  type String
+  children ContentBlockText[]
+  url String?
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
+}
+
+model ContentBlockText {
+  id String @id @default(cuid())
+  text String
+  bold Boolean?
+  underline Boolean?
+  italic Boolean?
+  contentBlockId String
+  contentBlock BlogContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+}
+
+
+// const blogContentBlocks = await prisma.blogContentBlock.findMany({
+//   where: { blogId },
+// });
