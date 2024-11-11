@@ -2,12 +2,8 @@
 import { useState } from "react";
 import ModalWrapper from "./ModalWrapper";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 
 export default function CreateBlog() {
-
-    const session = useSession();
-    console.log('session', session)
     const [blogTitle, setBlogTitle] = useState<string>('')
     const [blogTitleCount, setBlogTitleCount] = useState<number>(0)
 

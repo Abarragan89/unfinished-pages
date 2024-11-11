@@ -59,11 +59,7 @@ export const authOptions: NextAuthOptions = {
                 return false;
             }
         },
-        session: async ({ session, token }) => {
-            if (session?.user) {
-                // @ts-expect-error: Slate Rich Text Error
-                session.user.id = token.sub; // token.sub === user.id
-            }
+        session: async ({ session }) => {
             return session;
         },
     }

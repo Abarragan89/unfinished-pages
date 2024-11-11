@@ -12,7 +12,8 @@ export async function POST(request: NextRequest) {
         const newBlog = await prisma.blog.create({
             data: {
                 title,
-                userId
+                userId,
+                date: new Date()
             }
         });
         return NextResponse.json({ message: 'Blog created successfully', blog: newBlog });
@@ -34,14 +35,20 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+    console.log('HITTING THE GET ROUTE!!!!!!!!!!!!!!!!!!!!!!!')
     try {
-        const content = await request.json();
-        console.log('conetnt in backend ', content)
+        const userId = request.headers.get('x-user-id');
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
+        }
+        const blogs = await prisma.blog.findMany();
+        console.log('blogs in route ', blogs);
+
+        return NextResponse.json({ data: blogs })
     } catch (error) {
         console.error('Error saving Blog Content ', error);
         return NextResponse.json({ error: 'failed to parse blog content' })
     }
-    return Response.json(request)
 }
 
 

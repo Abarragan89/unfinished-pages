@@ -4,6 +4,7 @@ import { getToken } from 'next-auth/jwt';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
+    console.log('running middleware')
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
     // If no token is found, deny access
     if (!token) {
@@ -17,5 +18,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/api/authorRoutes', '/editBlog/:path*']
+    matcher: ['/api/authorRoutes', '/editBlog/:path*', '/myBlogs']
 }

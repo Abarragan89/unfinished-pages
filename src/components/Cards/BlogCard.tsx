@@ -3,19 +3,20 @@ import { FaRegHeart } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
 import { BlogData } from "../../../types/blog";
 
-export default function BlogCard({ 
+export default function BlogCard({
     title,
     description,
     date,
     likes,
     dislikes,
+    pictureURL,
     id
 }: BlogData) {
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
             {/* Your slide content here */}
             <Image
-                src={"/images/topicCardImgs/philosophy.jpg"}
+                src={pictureURL ? pictureURL : "/images/blogs/fillerImg.png"}
                 width={1920}
                 height={1280}
                 alt="Busts of Greek philosophers"

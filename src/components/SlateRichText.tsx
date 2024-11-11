@@ -382,18 +382,3 @@ export default function SlateRichText() {
         </section >
     )
 }
-
-// To Do:
-// show which tool is chosen (everything except)
-// 5. Add Title input
-// 6. Add description Input
-// 6. add tags or categoies it belongs to
-// 7. Add keywords (meta tags and searchable)
-// 8. Save Data
-// 9. Render data on Draft mode
-// 10. Render data on Blog page
-// 11. Show user their own blogs
-// 12 make blogs editable
-// 13. TEST
-// 14 Make 20 blogs
-// 15. Google Ads

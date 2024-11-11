@@ -3,66 +3,40 @@ import BlogCard from "@/components/Cards/BlogCard"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle"
 import { HiPencilSquare } from "react-icons/hi2";
 import CreateBlog from "@/components/Modals/CreateBlog";
+import { prisma } from "../../../utils/prisma";
+import { headers } from 'next/headers'
+import { formatDate } from "../../../utils/formatDate";
 
-export default function page() {
+export default async function page() {
+    const headersList = headers()
+    const userId = headersList.get('x-user-id')
 
-    const blogData = [
-        {
-            id: '1',
-            title: 'Boost Your Creativity with These Proven Techniques',
-            description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
-            date: 'September 12, 2023',
-            likes: 53,
-            dislikes: 11
-        },
-        {
-            id: '2',
-            title: 'Mastering the Art of Productivity: Tips for Daily Success',
-            description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
-            date: 'August 29, 2024',
-            likes: 120,
-            dislikes: 25
-        },
-        {
-            id: '3',
-            title: 'Healthy Living Hacks: Simple Changes for a Better Life',
-            description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
-            date: 'July 12, 2023',
-            likes: 892,
-            dislikes: 30
-        },
-        {
-            id: '4',
-            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-            date: 'Decemeber 25, 2024',
-            likes: 2,
-            dislikes: 1
-        }
-    ]
+    const blogs = await prisma.blog.findMany({ where: { userId: userId as string } });
 
+    console.log('blogs', blogs)
 
     return (
         <main className="pt-[30px]">
             <CreateBlog />
             <SubheadingTitle title="My Blogs" />
             <div className="absolute right-[25px] top-[80px]">
-                <Link href={'/myBlogs?showModal=createBlog'} className="flex custom-small-btn">
-                    <HiPencilSquare size={18} />
+                <Link href={'/myBlogs?showModal=createBlog'} className="flex items-center custom-small-btn">
+                    <HiPencilSquare size={16} />
                     <span className="ml-2">Write</span>
                 </Link>
             </div>
             <section className="flex flex-wrap justify-around max-w-[1200px] mx-auto ">
-                {blogData.map((blog) => {
+                {blogs.map((blog) => {
                     return (
-                        <Link key={blog.id} href={`/blog/${blog.title}`}
+                        <Link key={blog.id} href={`/editBlog/${blog.id}`}
                             className="my-[20px]"
                         >
                             <BlogCard
                                 id={blog.id}
                                 title={blog.title}
-                                description={blog.description}
-                                date={blog.date}
+                                pictureURL={blog.pictureURL as string}
+                                description={blog.description as string}
+                                date={formatDate(blog.date.toString())}
                                 likes={blog.likes}
                                 dislikes={blog.dislikes}
                             />
@@ -73,3 +47,22 @@ export default function page() {
         </main>
     )
 }
+
+
+// TODO
+// get create blog handler to move to edit page
+// add icon spinner to button
+// create edit page and render data
+// complete form to edit all blog data (title, description, keywords, categories or tags) 
+// add a-tags in rich text editor
+// add videos in rich text editor
+// publish button in edit page
+// start using SWR or React Query
+// 8. Save Data
+// 9. Render data on Draft mode
+// 10. Render data on Blog page
+// 11. Show user their own blogs
+// 12 make blogs editable
+// 13. TEST
+// 14 Make 20 blogs
+// 15. Google Ads

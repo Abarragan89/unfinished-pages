@@ -3,6 +3,7 @@ export interface BlogData {
     title: string;
     description: string;
     date: string;
+    pictureURL: string;
     likes: number;
     dislikes: number;
 }

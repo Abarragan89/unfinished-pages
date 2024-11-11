@@ -7,7 +7,6 @@ import { Session } from "../../types/users";
 export default function CommentSection() {
 
     const session: Session = useSession();
-    console.log('session', session)
 
     function showAddCommentModal(): void {
         alert('showing comment modal')

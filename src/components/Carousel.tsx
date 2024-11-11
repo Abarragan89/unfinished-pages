@@ -9,13 +9,6 @@ import { IoIosArrowForward } from "react-icons/io";
 export default function Carousel({ children }: { children: React.ReactNode }) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, }, [Autoplay({ stopOnInteraction: true, delay: 6500 })])
 
-    const logSlidesInView = useCallback((emblaApi: EmblaCarouselType) => {
-        console.log(emblaApi.selectedScrollSnap())
-    }, [])
-
-    useEffect(() => {
-        if (emblaApi) emblaApi.on('slidesInView', logSlidesInView)
-    }, [emblaApi, logSlidesInView])
     const scrollPrev = useCallback(() => {
         if (emblaApi) emblaApi.scrollPrev()
     }, [emblaApi])
