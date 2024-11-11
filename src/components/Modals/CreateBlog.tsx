@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ModalWrapper from "./ModalWrapper";
 import axios from "axios";
 
 export default function CreateBlog() {
-    const [blogTitle, setBlogTitle] = useState<string>('')
-    const [blogTitleCount, setBlogTitleCount] = useState<number>(0)
+    const router = useRouter();
+    const [blogTitle, setBlogTitle] = useState<string>('');
+    const [blogTitleCount, setBlogTitleCount] = useState<number>(0);
 
     async function createBlogHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -16,8 +18,9 @@ export default function CreateBlog() {
                 title: blogTitle.trim()
             }
         })
-            .then(response => {
-                console.log('response', response);
+            .then(({ data }) => {
+                console.log('response', data.blog.id);
+                router.replace(`/editBlog/${data.blog.id}`)
             })
             .catch(error => {
                 console.log('error creating blog', error);

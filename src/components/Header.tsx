@@ -2,7 +2,6 @@
 import Navigation from "./Navigation"
 import Image from "next/image"
 import Link from "next/link"
-import SearchInput from './FormInputs/SearchInput'
 
 export default function Header() {
     return (

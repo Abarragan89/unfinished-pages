@@ -3,9 +3,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import axios
- from 'axios';
+import axios from 'axios';
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
 import DefaultBlock from '@/components/SlateRenderers/DefaultBlock';
@@ -15,9 +15,9 @@ import HeadingTwo from '@/components/SlateRenderers/HeadingTwo';
 import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
 import AddImageModal from '@/components/Modals/AddImageModal';
-import ImageRender from './SlateRenderers/ImageRender';
-// import Button Icons for ToolBar
+import ImageRender from '../SlateRenderers/ImageRender';
 
+// import Button Icons for ToolBar
 import { CiImageOn } from "react-icons/ci";
 import { BiBold } from "react-icons/bi";
 import { RiItalic } from "react-icons/ri";
@@ -49,6 +49,8 @@ declare module 'slate' {
 }
 
 export default function SlateRichText() {
+    const pathname = usePathname(); 
+  
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [imageURL, setImageUrl] = useState<string>('');
@@ -224,7 +226,7 @@ export default function SlateRichText() {
         return marks ? marks[format] === true : false
     }
 
-    const toolBarButtonStyles = 'p-1 h-[30px] mx-1 opacity-[.4] hover:opacity-[1]'
+    const toolBarButtonStyles = 'p-1 h-[30px] mx-1 opacity-[.6] hover:opacity-[1]'
     const toolBarItemChosen: React.CSSProperties = {
         boxShadow: "0px 4px 8px -2px rgba(9, 30, 66, 0.25), 0px 0px 0px 1px rgba(9, 30, 66, 0.08)",
         borderRadius: "4px",
@@ -319,12 +321,13 @@ export default function SlateRichText() {
                 setImageUrl={setImageUrl}
                 setImageAlt={setImageAlt}
             />
+
             <section className='w-[80%] mx-auto max-w-[800px]'>
                 <Slate
                     editor={editor} initialValue={content}
                     onChange={handleChange}
                 >
-                    <menu className='flex justify-between bg-[var(--gray-100)] rounded-t border border-[var(--gray-600)] px-5 py-[10px]'>
+                    <menu className='flex justify-between bg-[var(--off-white)] rounded-t border border-[var(--gray-600)] px-5 py-[15px]'>
                         <div className='flex max-w-[350px] items-center'>
                             <MarkButton iconType="bold" />
                             <MarkButton iconType="italic" />
@@ -334,7 +337,7 @@ export default function SlateRichText() {
                             <BlockButton iconType="numbered-list" />
                             <BlockButton iconType="bulleted-list" />
                             <BlockButton iconType="code" />
-                            <Link href={"/editBlog/?showModal=addImage"}
+                            <Link href={`${pathname}?showModal=addImage`}
                                 className={`${toolBarButtonStyles}`}>
                                 <CiImageOn size={20} className='mx-auto' />
                             </Link>

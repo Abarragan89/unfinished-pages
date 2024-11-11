@@ -11,7 +11,6 @@ interface Props {
 const ModalWrapper = ({ children, title, urlParam }: Props) => {
 
     const router = useRouter();
-
     const params = useSearchParams();
     const showModal = params.get('showModal')
 

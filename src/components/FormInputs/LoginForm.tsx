@@ -46,13 +46,15 @@ export default function LoginForm() {
                             className="input-browser-reset text-[.925rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
                         <IoIosMail size={34} className="rounded-md absolute top-[-2px] text-[var(--brown-500)]" />
                     </div>
-                    <button
-                        onClick={(e) => submitEmailLogin(e)}
-                        type="submit"
-                        className="custom-small-btn mx-auto mt-3"
-                    >
-                        Send Link
-                    </button>
+                    <div className="flex justify-center">
+                        <button
+                            onClick={(e) => submitEmailLogin(e)}
+                            type="submit"
+                            className="custom-small-btn mx-auto mt-3"
+                        >
+                            Send Link
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
