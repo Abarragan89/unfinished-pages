@@ -25,7 +25,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
                 </li>
                 <li className={listElStyles}>
                     <HiPencilSquare size={20} />
-                    <Link href='/createBlog' onClick={onClose} className="ml-3">Write</Link>
+                    <Link href='/myBlogs' onClick={onClose} className="ml-3">Write</Link>
                 </li>
                 <li className={listElStyles}>
                     <GoSignOut size={20} />

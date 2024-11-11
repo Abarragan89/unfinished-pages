@@ -3,7 +3,7 @@ import SlateRichText from "@/components/SlateRichText"
 import { Suspense } from 'react'
 
 
-export default function CreateBlog() {
+export default function editBlog() {
     return (
         <main className="mt-3">
             <SubheadingTitle title={'Create Blog'} />

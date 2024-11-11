@@ -286,11 +286,9 @@ export default function SlateRichText() {
     };
 
     const saveContent = async () => {
-
-        console.log('content', content)
         axios({
             method: 'post',
-            url: '/api/blogRoutes',
+            url: '/api/authorRoutes',
             data: content
         });
 
@@ -336,7 +334,7 @@ export default function SlateRichText() {
                             <BlockButton iconType="numbered-list" />
                             <BlockButton iconType="bulleted-list" />
                             <BlockButton iconType="code" />
-                            <Link href={"/createBlog/?showModal=addImage"}
+                            <Link href={"/editBlog/?showModal=addImage"}
                                 className={`${toolBarButtonStyles}`}>
                                 <CiImageOn size={20} className='mx-auto' />
                             </Link>

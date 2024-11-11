@@ -114,11 +114,9 @@ html {
   box-sizing: border-box;
   color: var(--off-white);
   cursor: pointer;
-  display: inline-block;
   font-weight: 500;
   padding: 4px 13px;
   width: fit-content;
-  display: block;
   font-size: 0.875rem;
   text-align: center;
   text-decoration: none;
@@ -161,6 +159,7 @@ html {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  resize: none;
 }
 
 .input-browser-reset:focus {

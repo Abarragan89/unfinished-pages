@@ -10,15 +10,11 @@ export default function TopicCard({ title, description, imgSrc }: BlogTopic) {
                 width={1920}
                 height={1280}
                 alt="Busts of Greek philosophers"
-                className="opacity-85 rounded-t-sm"
+                className="rounded-t-sm"
             />
             <div className=" border-t-0 rounded-b-sm p-4 pt-2">
                 <h3 className="uppercase font-medium text-[var(--brown-500)] text-[1.05rem]">{title}</h3>
                 <p className="my-2 text-[.9rem]">{description}</p>
-
-                {/* <div className="flex justify-center">
-                    <Link href="/" className="custom-small-btn mt-5">View Blogs</Link>
-                </div> */}
                 
             </div>
         </Link>

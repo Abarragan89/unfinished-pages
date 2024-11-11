@@ -1,57 +1,47 @@
 import Image from "next/image"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";
-import { BlogTopic } from "../../../../types/blogtopics";
+import Link from "next/link";
+import { BlogData } from "../../../../types/blog";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar";
 
 export default function Page({ params }: { params: { slug: string } }) {
 
-
-    const blogTopics: BlogTopic[] = [
+    const blogData: BlogData[] = [
         {
-            title: "Philosophy",
-            description: "Exploring philosophy\’s big questions, I find myself both the debater and the skeptic, endlessly intrigued.",
-            imgSrc: "/images/topicCardImgs/philosophy.jpg",
-            alt: "",
-            link: ""
+            id: '1',
+            title: 'Boost Your Creativity with These Proven Techniques',
+            description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
+            date: 'September 12, 2023',
+            likes: 53,
+            dislikes: 11
         },
         {
-            title: "Religion",
-            description: "I wrestle with religious ideas, questioning beliefs and unraveling perspectives that shape human meaning.",
-            imgSrc: "/images/topicCardImgs/religion.jpg",
-            alt: "",
-            link: ""
+            id: '2',
+            title: 'Mastering the Art of Productivity: Tips for Daily Success',
+            description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
+            date: 'August 29, 2024',
+            likes: 120,
+            dislikes: 25
         },
         {
-            title: "Family",
-            description: "Family life sparks inner debates on tradition, values, and what it truly means to connect and belong.",
-            imgSrc: "/images/topicCardImgs/family.jpg",
-            alt: "",
-            link: ""
+            id: '3',
+            title: 'Healthy Living Hacks: Simple Changes for a Better Life',
+            description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
+            date: 'July 12, 2023',
+            likes: 892,
+            dislikes: 30
         },
         {
-            title: "Education",
-            description: "I challenge myself on education\’s role, questioning how best we learn, grow, and pass on knowledge.",
-            imgSrc: "/images/topicCardImgs/education.jpg",
-            alt: "",
-            link: ""
-        },
-        {
-            title: "Technology",
-            description: "I argue the pros and cons of technology, reflecting on how it shapes us and transforms our daily lives.",
-            imgSrc: "/images/topicCardImgs/technology.jpg",
-            alt: "",
-            link: ""
-        },
-        {
-            title: "Government",
-            description: "I find myself questioning the role of government, debating its impact on freedom, justice, and societal well-being.",
-            imgSrc: "/images/topicCardImgs/government.jpg",
-            alt: "",
-            link: ""
+            id: '4',
+            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
+            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
+            date: 'Decemeber 25, 2024',
+            likes: 2,
+            dislikes: 1
         }
-    ];
+    ]
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">
@@ -98,11 +88,20 @@ export default function Page({ params }: { params: { slug: string } }) {
             <section className="mt-[30px]">
                 <SubheadingTitle title="Related Blogs" />
                 <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
-                    {blogTopics.map((topic, index) => (
-                        <div className="mb-[30px]" key={index}>
-                            <BlogCard />
-                        </div>
-                    ))}
+                    {blogData.map((blog: BlogData) => {
+                        return (
+                            <Link key={blog.id} href={`/blog/${blog.title}`} className="embla__slide">
+                                <BlogCard
+                                    id={blog.id}
+                                    title={blog.title}
+                                    description={blog.description}
+                                    date={blog.date}
+                                    likes={blog.likes}
+                                    dislikes={blog.dislikes}
+                                />
+                            </Link>
+                        )
+                    })}
                 </div>
             </section>
         </main>

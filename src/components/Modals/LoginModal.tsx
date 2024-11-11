@@ -10,13 +10,14 @@ export const LoginModal = () => {
 
     return (
         <>
-            {showModal === 'login' &&
+            {/* {showModal === 'login' && */}
                 <ModalWrapper
                     title='Join the Conversation'
+                    urlParam='login'
                 >
                     <LoginForm />
                 </ModalWrapper>
-            }
+            {/* } */}
         </>
     )
 }
