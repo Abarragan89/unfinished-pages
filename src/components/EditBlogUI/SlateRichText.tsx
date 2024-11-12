@@ -3,7 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
 // Component Imports
@@ -59,18 +59,6 @@ export default function SlateRichText() {
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
-
-
-    // const initialValue = useMemo(
-    //     () =>
-    //         JSON.parse(localStorage.getItem('content') as string) || [
-    //             {
-    //                 type: 'paragraph',
-    //                 children: [{ text: 'A line of text in a paragraph.' }],
-    //             },
-    //         ],
-    //     []
-    // )
 
     const initialValue: Descendant[] = [
         {

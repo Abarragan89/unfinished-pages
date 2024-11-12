@@ -13,8 +13,6 @@ export default async function page() {
 
     const blogs = await prisma.blog.findMany({ where: { userId: userId as string } });
 
-    console.log('blogs', blogs)
-
     return (
         <main className="pt-[30px]">
             <CreateBlog />

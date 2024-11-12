@@ -1,8 +1,7 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay'
-import { EmblaCarouselType } from 'embla-carousel'
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 

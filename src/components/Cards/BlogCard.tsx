@@ -10,7 +10,6 @@ export default function BlogCard({
     likes,
     dislikes,
     pictureURL,
-    id
 }: BlogData) {
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
