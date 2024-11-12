@@ -6,6 +6,7 @@ import { withHistory } from 'slate-history'
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
 import DefaultBlock from '@/components/SlateRenderers/DefaultBlock';
@@ -16,6 +17,7 @@ import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
 import AddImageModal from '@/components/Modals/AddImageModal';
 import ImageRender from '../SlateRenderers/ImageRender';
+import InputBlockWrapper from './InputBlockWrapper';
 
 // import Button Icons for ToolBar
 import { CiImageOn } from "react-icons/ci";
@@ -49,13 +51,14 @@ declare module 'slate' {
 }
 
 export default function SlateRichText() {
-    const pathname = usePathname(); 
-  
+    const pathname = usePathname();
+
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [imageURL, setImageUrl] = useState<string>('');
     const [imageAlt, setImageAlt] = useState<string>('');
-    const [chosenElement, setChosenElement] = useState<string>('')
+    const [chosenElement, setChosenElement] = useState<string>('');
+    const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
@@ -272,6 +275,7 @@ export default function SlateRichText() {
 
 
     const handleChange = (newValue: Descendant[]) => {
+        setIsButtonAbled(true);
         setContent(newValue); // Save content to state on every change
     };
 
@@ -281,6 +285,8 @@ export default function SlateRichText() {
             url: '/api/authorRoutes',
             data: content
         });
+
+        setIsButtonAbled(false)
 
 
         // try {
@@ -303,19 +309,22 @@ export default function SlateRichText() {
 
 
     return (
-        <section className='mt-5'>
+        <InputBlockWrapper
+            subtitle='Blog Content'
+            saveHandler={saveContent}
+            isButtonAble={isButtonAbled}
+        >
             <AddImageModal
                 onClickHandler={() => insertImage(editor, imageURL)}
                 setImageUrl={setImageUrl}
                 setImageAlt={setImageAlt}
             />
-
-            <section className='w-[80%] mx-auto max-w-[800px]'>
+            <section className='w-full mx-auto'>
                 <Slate
                     editor={editor} initialValue={content}
                     onChange={handleChange}
                 >
-                    <menu className='flex justify-between bg-[var(--off-white)] rounded-t border border-[var(--gray-600)] px-5 py-[15px]'>
+                    <menu className='flex justify-between bg-[var(--off-white)] rounded-t pb-[10px] pt-[5px]'>
                         <div className='flex max-w-[350px] items-center'>
                             <MarkButton iconType="bold" />
                             <MarkButton iconType="italic" />
@@ -330,19 +339,13 @@ export default function SlateRichText() {
                                 <CiImageOn size={20} className='mx-auto' />
                             </Link>
                         </div>
-                        <button
-                            className='custom-small-btn'
-                            onClick={saveContent}
-                        >
-                            Save
-                        </button>
                     </menu>
                     <Editable
                         renderElement={renderElement}
                         renderLeaf={renderLeaf}
                         spellCheck
                         autoFocus
-                        className='h-[50vh] border border-[var(--gray-600)] border-t-0 p-[15px] rounded-b focus:outline-none overflow-y-scroll overflow-x-hidden break-normal'
+                        className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md focus:outline-none overflow-y-auto overflow-x-hidden break-normal bg-white'
                         onKeyDown={(event) => {
                             if (event.metaKey || event.ctrlKey) {
                                 switch (event.key.toLowerCase()) {
@@ -370,6 +373,6 @@ export default function SlateRichText() {
                     />
                 </Slate>
             </section>
-        </section >
+        </InputBlockWrapper>
     )
 }

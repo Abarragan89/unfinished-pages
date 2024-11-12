@@ -3,6 +3,7 @@ import MainHeading from "@/components/Headings/MainHeading";
 import { BlogData } from "../../../../types/blog";
 import { formatDate } from "../../../../utils/formatDate";
 import BlogCard from "@/components/Cards/BlogCard";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Page({ params }: { params: { slug: string } }) {
 
@@ -49,6 +50,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] rounded-md">
+            <ScrollToTop />
             <header className="relative">
                 <Image
                     src={`/images/categories/${params.slug}.png`}

@@ -5,6 +5,7 @@ import { BlogData } from "../../../../types/blog";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Page({ params }: { params: { slug: string } }) {
 
@@ -49,8 +50,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">
+            <ScrollToTop />
             <h1 className="max-w-[700px] mx-auto text-[2rem] leading-[2.2rem] md:text-5xl md:leading-[3.5rem] mb-[18px] font-[700]">How do I manage my time? Focus on career or family?</h1>
-
             {/* author readtime date and author profile pic  */}
             <section className="flex max-w-[700px] mx-auto mb-[40px]">
                 <Image

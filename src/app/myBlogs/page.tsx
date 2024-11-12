@@ -6,15 +6,16 @@ import CreateBlog from "@/components/Modals/CreateBlog";
 import { prisma } from "../../../utils/prisma";
 import { headers } from 'next/headers'
 import { formatDate } from "../../../utils/formatDate";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default async function page() {
     const headersList = headers()
     const userId = headersList.get('x-user-id')
-
     const blogs = await prisma.blog.findMany({ where: { userId: userId as string } });
 
     return (
         <main className="pt-[30px]">
+            <ScrollToTop />
             <CreateBlog />
             <SubheadingTitle title="My Blogs" />
             <div className="absolute right-[25px] top-[80px]">
@@ -28,6 +29,7 @@ export default async function page() {
                     return (
                         <Link key={blog.id} href={`/editBlog/${blog.id}`}
                             className="my-[20px]"
+                            scroll={true}
                         >
                             <BlogCard
                                 id={blog.id}

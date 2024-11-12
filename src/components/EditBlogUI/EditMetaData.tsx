@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import UploadImageInput from "./UploadImageInput";
+import InputBlockWrapper from "./InputBlockWrapper";
 
 export default function EditMetaData() {
 
@@ -35,17 +36,11 @@ export default function EditMetaData() {
     }
 
     return (
-        <section className="relative max-w-[800px] mx-auto w-[80%] border border-[var(--gray-300)] p-[25px] pt-[60px] rounded-sm my-[40px] bg-[var(--off-white)] custom-low-lifted-shadow">
-            <h3
-                className="tracking-wider text-[1.15rem] w-fit absolute mx-auto left-0 top-0 text-center rounded-br-[30px] bg-[var(--brown-500)] text-white py-[6px] px-5 border-t-0 border-l-0 custom-low-lifted-shadow"
-            >Blog Details
-            </h3>
-            <button
-                className={`absolute right-[15px] top-[10px] custom-small-btn ${isDetailsSavable ? '' : 'opacity-[0.5] pointer-events-none'}`}
-                onClick={saveDetailsHandler}
-            >
-                Save
-            </button>
+        <InputBlockWrapper
+            saveHandler={saveDetailsHandler}
+            isButtonAble={isDetailsSavable}
+            subtitle="Blog Details"
+        >
             <div className="flex flex-col">
                 <div className="flex justify-between mx-1 tracking-wide">
                     <label htmlFor="blog-title" className="text-[.95rem]">Title</label>
@@ -78,9 +73,8 @@ export default function EditMetaData() {
                     cols={30}
                 />
             </div>
-
             <UploadImageInput />
+        </InputBlockWrapper>
 
-        </section>
     )
 }

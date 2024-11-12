@@ -31,7 +31,7 @@ export default function UploadImageInput() {
                 if (Math.abs(aspectRatio - targetAspectRatio) < 0.01) {
                     setMessage("Image accepted, Add image to confirm upload");
                 } else {
-                    setMessage("Image must have a 16:9 aspect ratio. Use Canva or other photos processing website");
+                    setMessage("Image must have a 16:9 aspect ratio. Use Canva or other photos processing websites to adjust dimensions.");
                     event.target.value = ""; // Reset the input
                 }
                 URL.revokeObjectURL(img.src); // Clean up
@@ -71,13 +71,15 @@ export default function UploadImageInput() {
     }
 
     return (
-        <div>
+        <div className="mt-6">
             <input
                 type="file"
                 accept="image/jpeg, image/png, image/webp"
                 onChange={(e) => handleFileChange(e)}
             />
-            <p>{message}</p>
+            <p 
+            className="text-[.925rem] text-red-700 text-center mt-3 italic"
+            >{message}</p>
 
             <img
                 src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
