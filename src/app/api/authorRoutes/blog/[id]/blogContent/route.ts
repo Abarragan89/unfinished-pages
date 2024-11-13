@@ -7,9 +7,39 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         const { id: blogId } = params
 
         console.log(blogId)
-        const blogData = await request.json()
+        const content = await request.json()
 
-        console.log('blog content ', blogData)
+        // delete all content and redo content
+        await prisma.blogContent.deleteMany({
+            where: { blogId }
+        })
+
+
+        const createdContents = await Promise.all(
+
+            content.map(async (content: any) => {
+                return prisma.blogContent.create({
+                    data: {
+                        blogId,
+                        type: content.type,
+                        url: content.url || null,
+                        children: {
+                            create: content.children.map((child: any) => ({
+                                text: child.text || '',
+                                bold: child.bold || false,
+                                italic: child.italic || false,
+                                underline: child.underline || false,
+                            })),
+                        },
+                    },
+                    include: {
+                        children: true,
+                    },
+                });
+            })
+        );
+
+
         return NextResponse.json({ message: 'success ' })
 
     } catch (error) {

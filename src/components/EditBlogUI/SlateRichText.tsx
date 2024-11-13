@@ -51,11 +51,14 @@ declare module 'slate' {
 }
 
 interface Props {
-    blogId: string
+    blogId: string,
+    blogContent: []
 }
 
 
-export default function SlateRichText({ blogId }: Props) {
+export default function SlateRichText({ blogId, blogContent }: Props) {
+
+    console.log('blog content ', blogContent)
 
     const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
@@ -76,7 +79,7 @@ export default function SlateRichText({ blogId }: Props) {
         },
     ]
 
-    const [content, setContent] = useState<Descendant[]>(initialValue); // initialValue is the starting content structure
+    const [content, setContent] = useState<Descendant[]>(blogContent || initialValue); // initialValue is the starting content structure
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
@@ -294,8 +297,9 @@ export default function SlateRichText({ blogId }: Props) {
             data: content
         })
         .then(response => {
-            setIsContentSaving(false);
-        })
+                setIsButtonAbled(false);
+                setIsContentSaving(false);
+            })
     };
 
 

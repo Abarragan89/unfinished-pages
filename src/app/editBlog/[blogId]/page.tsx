@@ -28,8 +28,21 @@ export default async function editBlog({ params }: { params: { blogId: string } 
 
     // Get Data if above checks don't fail
     const blogData = await prisma.blog.findUnique({
-        where: { id: blogId }
+        where: { id: blogId },
+
+
+        include: {
+            content: {
+                include: {
+                    children: true
+                }
+            }
+        }
+
+
     })
+
+    console.log('blog from query ', blogData)
     // Error finding blog data
     if (!blogData) {
         throw new Error('Could not find blog data')
@@ -48,6 +61,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                 />
                 <SlateRichText 
                     blogId={blogId as string}
+                    blogContent={blogData.content as []}
                 />
             </Suspense>
         </main>

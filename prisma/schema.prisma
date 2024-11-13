@@ -94,10 +94,10 @@ model Blog {
 
 model BlogContent {
   id String @id @default(cuid())
-  blogId String
   type String
   children ContentBlock[]
   url String?
+  blogId String
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
 }
 
@@ -110,8 +110,3 @@ model ContentBlock {
   contentBlockId String
   contentBlock BlogContent @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
 }
-
-
-// const blogContentBlocks = await prisma.blogContentBlock.findMany({
-//   where: { blogId },
-// });
