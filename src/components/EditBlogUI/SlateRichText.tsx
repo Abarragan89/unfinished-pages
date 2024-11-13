@@ -50,9 +50,14 @@ declare module 'slate' {
     }
 }
 
-export default function SlateRichText() {
-    const pathname = usePathname();
+interface Props {
+    blogId: string
+}
 
+
+export default function SlateRichText({ blogId }: Props) {
+
+    const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [imageURL, setImageUrl] = useState<string>('');
@@ -281,35 +286,17 @@ export default function SlateRichText() {
     };
 
     const saveContent = async () => {
+        console.log('content ', content)
         setIsContentSaving(true)
-        // axios({
-        //     method: 'post',
-        //     url: '/api/authorRoutes',
-        //     data: content
-        // });
-        setTimeout(() => {
-            setIsContentSaving(false)
-            setIsButtonAbled(false)
-        }, 2000);
-
-
-        // try {
-        //     const response = await fetch('/api/save-content', {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(content), // Save JSON representation to the backend
-        //     });
-
-        //     if (!response.ok) {
-        //         throw new Error('Failed to save content');
-        //     }
-        //     alert('Content saved successfully!');
-        // } catch (error) {
-        //     console.error(error);
-        //     alert('Error saving content');
-        // }
+        axios({
+            method: 'PUT',
+            url: `/api/authorRoutes/blog/${blogId}/blogContent`,
+            data: content
+        })
+        .then(response => {
+            setIsContentSaving(false);
+        })
     };
-
 
 
     return (

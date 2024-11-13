@@ -3,28 +3,31 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ModalWrapper from "./ModalWrapper";
 import axios from "axios";
+import { BarLoader } from "react-spinners";
 
 export default function CreateBlog() {
     const router = useRouter();
     const [blogTitle, setBlogTitle] = useState<string>('');
     const [blogTitleCount, setBlogTitleCount] = useState<number>(0);
+    const [isCreating, setIsCreating] = useState<boolean>(false)
 
     async function createBlogHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setIsCreating(true)
         axios({
             method: 'post',
-            url: '/api/authorRoutes/blogs',
+            url: '/api/authorRoutes',
             data: {
                 title: blogTitle.trim()
             }
         })
-            .then(({ data }) => {
-                console.log('response', data.blog.id);
-                router.replace(`/editBlog/${data.blog.id}`)
-            })
-            .catch(error => {
-                console.log('error creating blog', error);
-            });
+        .then(({ data }) => {
+            setIsCreating(false);
+            router.replace(`/editBlog/${data.blog.id}`)
+        })
+        .catch(error => {
+            console.log('error creating blog', error);
+        });
     }
 
     return (
@@ -33,7 +36,7 @@ export default function CreateBlog() {
             urlParam="createBlog"
         >
             <form
-                onSubmit={(e) => createBlogHandler(e)}
+                onSubmit={isCreating ? undefined : (e) => createBlogHandler(e)}
                 className="flex flex-col items-center"
             >
                 <div className="flex flex-col">
@@ -53,9 +56,20 @@ export default function CreateBlog() {
                 </div>
                 <button
                     type="submit"
-                    className="custom-small-btn mt-4"
+                    className="custom-small-btn mt-4 h-[30px]"
                 >
-                    Create
+                    {isCreating ?
+                        <BarLoader
+                            color={'white'}
+                            width={30}
+                            height={2}
+                            loading={isCreating}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        :
+                        'Create'
+                    }
                 </button>
             </form>
         </ModalWrapper>

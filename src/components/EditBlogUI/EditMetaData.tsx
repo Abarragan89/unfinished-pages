@@ -2,6 +2,7 @@
 import { useState } from "react"
 import UploadImageInput from "./UploadImageInput";
 import InputBlockWrapper from "./InputBlockWrapper";
+import axios from "axios";
 
 interface Props {
     title: string;
@@ -38,10 +39,23 @@ export default function EditMetaData({ title, description, pictureURL, blogId }:
 
     async function saveDetailsHandler() {
         setIsDetailsSaving(true)
-        setTimeout(() => {
-            setIsDetailsSaving(false)
-            setIsDetailsSavable(false)
-        }, 2000)
+
+        axios({
+            method: 'PUT',
+            url: `/api/authorRoutes/blog/${blogId}/blogDetails`,
+            data: {
+                blogTitle,
+                blogDescription
+            }
+        })
+            .then(response => {
+                console.log('response in front end ', response)
+                setIsDetailsSaving(false)
+                setIsDetailsSavable(false)
+            })
+            .catch(error => {
+                console.log('error updating blog details', error)
+            })
     }
 
     return (

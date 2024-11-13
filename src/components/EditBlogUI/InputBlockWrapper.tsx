@@ -18,10 +18,10 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
             </h3>
             <button
                 className={`absolute right-[15px] h-[30px] top-[10px] custom-small-btn ${isButtonAble ? '' : 'opacity-[.5] pointer-events-none'}`}
-                onClick={saveHandler}
+                onClick={UIStateTrigger ? undefined : saveHandler}
             >
                 {UIStateTrigger ?
-                    < BarLoader
+                    <BarLoader
                         color={'white'}
                         width={30}
                         height={2}

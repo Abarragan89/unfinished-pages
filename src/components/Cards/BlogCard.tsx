@@ -16,10 +16,10 @@ export default function BlogCard({
             {/* Your slide content here */}
             <Image
                 src={pictureURL ? pictureURL : "/images/blogs/fillerImg.png"}
-                width={1920}
-                height={1280}
+                width={320}
+                height={180}
                 alt="Busts of Greek philosophers"
-                className="rounded-t-sm"
+                className="rounded-t-sm w-[320px] h-[180px]"
             />
             <div className="flex justify-between px-2 pt-1 text-[var(--gray-600)] text-[0.875rem]">
                 <p>{date}</p>

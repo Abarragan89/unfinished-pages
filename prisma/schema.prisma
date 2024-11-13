@@ -87,28 +87,28 @@ model Blog {
   pictureURL String?
   keyWords String?
   isPublished Boolean @default(false)
-  content BlogContentBlock[]
+  content BlogContent[]
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model BlogContentBlock {
+model BlogContent {
   id String @id @default(cuid())
   blogId String
   type String
-  children ContentBlockText[]
+  children ContentBlock[]
   url String?
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
 }
 
-model ContentBlockText {
+model ContentBlock {
   id String @id @default(cuid())
   text String
   bold Boolean?
   underline Boolean?
   italic Boolean?
   contentBlockId String
-  contentBlock BlogContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+  contentBlock BlogContent @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
 }
 
 

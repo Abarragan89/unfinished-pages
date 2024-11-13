@@ -3,6 +3,8 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import PulseLoader from "react-spinners/PulseLoader";
 import Link from "next/link";
+import NextImage from 'next/image';
+
 
 
 export default function UploadImageInput({ blogId, pictureURL }: { blogId: string, pictureURL: string }) {
@@ -78,7 +80,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
         formData.append('file', file);
         try {
             // This posts it to the s3 Bucket
-            const response = await fetch(`/api/authorRoutes/blogs/${blogId}/s3Upload`, {
+            const response = await fetch(`/api/authorRoutes/blog/${blogId}/s3Upload`, {
                 method: 'PUT',
                 body: formData
             });
@@ -97,7 +99,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
         <div className="mt-6">
             {!file &&
                 <label
-                    className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[400px]'} mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
+                    className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[280px]'} mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
                     htmlFor="image-upload"
                 >
                     {isUpLoading ?
@@ -126,10 +128,11 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             }
             {
                 imagePreview ?
-                    <img
+                    <NextImage
+                        width={320}
+                        height={180}
                         src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
                         alt="Preview"
-                        style={{ width: "350px", height: "210px" }}
                         className="mx-auto mt-5"
                     />
                     :
