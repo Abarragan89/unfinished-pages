@@ -58,42 +58,42 @@ export default function Home() {
 
   const blogData: BlogData[] = [
     {
-        id: '1',
-        title: 'Boost Your Creativity with These Proven Techniques',
-        description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
-        date: 'September 12, 2023',
-        likes: 53,
-        dislikes: 11,
-        pictureURL: '/public/topicCardImgs/family.png'
+      id: '1',
+      title: 'Boost Your Creativity with These Proven Techniques',
+      description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
+      date: 'September 12, 2023',
+      likes: 53,
+      dislikes: 11,
+      pictureURL: '/images/topicCardImgs/family.jpg'
     },
     {
-        id: '2',
-        title: 'Mastering the Art of Productivity: Tips for Daily Success',
-        description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
-        date: 'August 29, 2024',
-        likes: 120,
-        dislikes: 25,
-        pictureURL: '/public/topicCardImgs/family.png'
+      id: '2',
+      title: 'Mastering the Art of Productivity: Tips for Daily Success',
+      description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
+      date: 'August 29, 2024',
+      likes: 120,
+      dislikes: 25,
+      pictureURL: '/images/topicCardImgs/family.jpg'
     },
     {
-        id: '3',
-        title: 'Healthy Living Hacks: Simple Changes for a Better Life',
-        description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
-        date: 'July 12, 2023',
-        likes: 892,
-        dislikes: 30,
-        pictureURL: '/public/topicCardImgs/family.png'
+      id: '3',
+      title: 'Healthy Living Hacks: Simple Changes for a Better Life',
+      description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
+      date: 'July 12, 2023',
+      likes: 892,
+      dislikes: 30,
+      pictureURL: '/images/topicCardImgs/family.jpg'
     },
     {
-        id: '4',
-        title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-        description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-        date: 'Decemeber 25, 2024',
-        likes: 2,
-        dislikes: 1,
-        pictureURL: '/public/topicCardImgs/family.png'
+      id: '4',
+      title: 'Exploring the Future of AI: Trends and Innovations Ahead',
+      description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
+      date: 'Decemeber 25, 2024',
+      likes: 2,
+      dislikes: 1,
+      pictureURL: '/images/topicCardImgs/family.jpg'
     }
-]
+  ]
 
 
   return (

@@ -1,13 +1,14 @@
+import { BarLoader } from "react-spinners";
 
 interface Props {
     children: React.ReactNode;
     isButtonAble: boolean;
     subtitle: string;
+    UIStateTrigger: boolean;
     saveHandler: () => void;
 }
 
-
-export default function InputBlockWrapper({ children, subtitle, isButtonAble, saveHandler }: Props) {
+export default function InputBlockWrapper({ children, subtitle, isButtonAble, saveHandler, UIStateTrigger }: Props) {
     return (
         <section className="relative max-w-[800px] mx-auto w-[80%] border border-[var(--gray-300)] p-[25px] pt-[60px] rounded-sm my-[40px] bg-[var(--off-white)] custom-low-lifted-shadow">
             <h3
@@ -16,10 +17,21 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
                 {subtitle}
             </h3>
             <button
-                className={`absolute right-[15px] top-[10px] custom-small-btn ${isButtonAble ? '' : 'opacity-[0.5] pointer-events-none'}`}
+                className={`absolute right-[15px] h-[30px] top-[10px] custom-small-btn ${isButtonAble ? '' : 'opacity-[.5] pointer-events-none'}`}
                 onClick={saveHandler}
             >
-                Save
+                {UIStateTrigger ?
+                    < BarLoader
+                        color={'white'}
+                        width={30}
+                        height={2}
+                        loading={UIStateTrigger}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                    :
+                    'Save'
+                }
             </button>
 
             {children}

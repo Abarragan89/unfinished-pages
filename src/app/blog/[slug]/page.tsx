@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             date: 'September 12, 2023',
             likes: 53,
             dislikes: 11,
-            pictureURL: '/public/topicCardImgs/family.png'
+            pictureURL: '/images/topicCardImgs/family.jpg'
         },
         {
             id: '2',
@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             date: 'August 29, 2024',
             likes: 120,
             dislikes: 25,
-            pictureURL: '/public/topicCardImgs/family.png'
+            pictureURL: '/images/topicCardImgs/family.jpg'
         },
         {
             id: '3',
@@ -35,7 +35,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             date: 'July 12, 2023',
             likes: 892,
             dislikes: 30,
-            pictureURL: '/public/topicCardImgs/family.png'
+            pictureURL: '/images/topicCardImgs/family.jpg'
         },
         {
             id: '4',
@@ -44,7 +44,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             date: 'Decemeber 25, 2024',
             likes: 2,
             dislikes: 1,
-            pictureURL: '/public/topicCardImgs/family.png'
+            pictureURL: '/images/topicCardImgs/family.jpg'
         }
     ]
 
@@ -72,7 +72,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
             {/* This is the Image */}
             <Image
-                src={'/images/blogs/family.png'}
+                src={'/images/blogs/family.jpg'}
                 width={700}
                 height={394}
                 alt="Image of thing, should replace with data"

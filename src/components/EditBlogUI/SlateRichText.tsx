@@ -59,6 +59,7 @@ export default function SlateRichText() {
     const [imageAlt, setImageAlt] = useState<string>('');
     const [chosenElement, setChosenElement] = useState<string>('');
     const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
+    const [isContentSaving, setIsContentSaving] = useState<boolean>(false);
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
@@ -280,13 +281,16 @@ export default function SlateRichText() {
     };
 
     const saveContent = async () => {
-        axios({
-            method: 'post',
-            url: '/api/authorRoutes',
-            data: content
-        });
-
-        setIsButtonAbled(false)
+        setIsContentSaving(true)
+        // axios({
+        //     method: 'post',
+        //     url: '/api/authorRoutes',
+        //     data: content
+        // });
+        setTimeout(() => {
+            setIsContentSaving(false)
+            setIsButtonAbled(false)
+        }, 2000);
 
 
         // try {
@@ -313,6 +317,7 @@ export default function SlateRichText() {
             subtitle='Blog Content'
             saveHandler={saveContent}
             isButtonAble={isButtonAbled}
+            UIStateTrigger={isContentSaving}
         >
             <AddImageModal
                 onClickHandler={() => insertImage(editor, imageURL)}

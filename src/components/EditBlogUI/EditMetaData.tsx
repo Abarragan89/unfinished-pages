@@ -10,8 +10,8 @@ export default function EditMetaData() {
 
     const [blogDescription, setBlogDescription] = useState<string>('');
     const [blogDescriptionCount, setBlogDescriptionCount] = useState<number>(0);
-
     const [isDetailsSavable, setIsDetailsSavable] = useState<boolean>(false);
+    const [isDetailsSaving, setIsDetailsSaving] = useState<boolean>(false);
 
     function handleDetailsTextChange(inputArea: string, e: React.ChangeEvent<HTMLTextAreaElement>) {
         switch (inputArea) {
@@ -23,8 +23,6 @@ export default function EditMetaData() {
                 setBlogDescription(e.target.value);
                 setBlogDescriptionCount(e.target.value.length)
                 break;
-            case 'image':
-                break;
             default:
                 break;
         }
@@ -32,7 +30,11 @@ export default function EditMetaData() {
     }
 
     async function saveDetailsHandler() {
-        setIsDetailsSavable(false)
+        setIsDetailsSaving(true)
+        setTimeout(() => {
+            setIsDetailsSaving(false)
+            setIsDetailsSavable(false)
+        }, 2000)
     }
 
     return (
@@ -40,6 +42,7 @@ export default function EditMetaData() {
             saveHandler={saveDetailsHandler}
             isButtonAble={isDetailsSavable}
             subtitle="Blog Details"
+            UIStateTrigger={isDetailsSaving}
         >
             <div className="flex flex-col">
                 <div className="flex justify-between mx-1 tracking-wide">
