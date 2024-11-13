@@ -13,7 +13,7 @@ export default function CreateBlog() {
         e.preventDefault();
         axios({
             method: 'post',
-            url: '/api/authorRoutes',
+            url: '/api/authorRoutes/blogs',
             data: {
                 title: blogTitle.trim()
             }

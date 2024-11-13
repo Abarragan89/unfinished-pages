@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { prisma } from '../../../../../utils/prisma';
+import { prisma } from '../../../../../../../utils/prisma';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
 const s3Client = new S3Client({
@@ -29,21 +29,21 @@ async function uploadFileToS3(file: Buffer, filename: string) {
     const contentType = getContentType(filename);
     const timestampedKey = `${filename}-${Date.now()}`;
 
-    const params = {
+    const s3Params = {
         Bucket: process.env.AWS_S3_BUCKET_NAME,
         Key: timestampedKey,
         Body: file,
         ContentType: contentType
     }
 
-    const command = new PutObjectCommand(params)
+    const command = new PutObjectCommand(s3Params)
     await s3Client.send(command)
     const url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${timestampedKey}`;
     return url;
 }
 
 // The POST is fired as soon as a user creates a new blog
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const formData = await request.formData();
         const file = formData.get('file');
@@ -55,9 +55,15 @@ export async function POST(request: NextRequest) {
 
         if (file instanceof File) {
             const buffer = Buffer.from(await file.arrayBuffer());
-            const s3Data = await uploadFileToS3(buffer, file.name)
-            console.log('file name in return from uploadFileToS3', s3Data)
-            return NextResponse.json({ imageUrl: s3Data }, { status: 200 })
+            const pictureURL = await uploadFileToS3(buffer, file.name)
+
+            // set the image url to s3 bucket uplaod
+            await prisma.blog.update({
+                where: { id: params.id },
+                data: { pictureURL }
+            })
+
+            return NextResponse.json({ pictureURL }, { status: 200 })
             // Proceed with buffer processing
         } else {
             throw new Error("Expected file to be a File object");

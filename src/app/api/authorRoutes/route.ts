@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../utils/prisma';
 
-// The POST is fired as soon as a user creates a new blog
+// The POST is fired as soon as a user CREATES a new blog
 export async function POST(request: NextRequest) {
     try {
         const { title } = await request.json()
@@ -23,19 +23,8 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function PUT(request: NextRequest) {
-    try {
-        const content = await request.json();
-        console.log('conetnt in backend ', content)
-    } catch (error) {
-        console.error('Error saving Blog Content ', error);
-        return NextResponse.json({ error: 'failed to parse blog content' })
-    }
-    return Response.json(request)
-}
-
+// Get the blod
 export async function GET(request: NextRequest) {
-    console.log('HITTING THE GET ROUTE!!!!!!!!!!!!!!!!!!!!!!!')
     try {
         const userId = request.headers.get('x-user-id');
         if (!userId) {

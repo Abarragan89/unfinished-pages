@@ -3,13 +3,20 @@ import { useState } from "react"
 import UploadImageInput from "./UploadImageInput";
 import InputBlockWrapper from "./InputBlockWrapper";
 
-export default function EditMetaData() {
+interface Props {
+    title: string;
+    description: string;
+    pictureURL: string;
+    blogId: string
+}
 
-    const [blogTitle, setBlogTitle] = useState<string>('');
-    const [blogTitleCount, setBlogTitleCount] = useState<number>(0);
+export default function EditMetaData({ title, description, pictureURL, blogId }: Props) {
 
-    const [blogDescription, setBlogDescription] = useState<string>('');
-    const [blogDescriptionCount, setBlogDescriptionCount] = useState<number>(0);
+    const [blogTitle, setBlogTitle] = useState<string>(title);
+    const [blogTitleCount, setBlogTitleCount] = useState<number>(title.length);
+
+    const [blogDescription, setBlogDescription] = useState<string>(description);
+    const [blogDescriptionCount, setBlogDescriptionCount] = useState<number>(description.length);
     const [isDetailsSavable, setIsDetailsSavable] = useState<boolean>(false);
     const [isDetailsSaving, setIsDetailsSaving] = useState<boolean>(false);
 
@@ -53,6 +60,7 @@ export default function EditMetaData() {
                     onChange={(e) => handleDetailsTextChange('title', e)}
                     className={"input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[1.15rem] font-bold bg-white"}
                     id="blog-title"
+                    value={blogTitle}
                     maxLength={65}
                     required
                     rows={1}
@@ -72,11 +80,15 @@ export default function EditMetaData() {
                     id="blog-title"
                     maxLength={150}
                     required
+                    value={blogDescription}
                     rows={3}
                     cols={30}
                 />
             </div>
-            <UploadImageInput />
+            <UploadImageInput
+                blogId={blogId}
+                pictureURL={pictureURL}
+            />
         </InputBlockWrapper>
 
     )

@@ -4,9 +4,10 @@ import { IoIosCheckboxOutline } from "react-icons/io";
 import PulseLoader from "react-spinners/PulseLoader";
 import Link from "next/link";
 
-export default function UploadImageInput() {
+
+export default function UploadImageInput({ blogId, pictureURL }: { blogId: string, pictureURL: string }) {
     const [message, setMessage] = useState<string>("");
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(pictureURL || null);
 
     const [file, setFile] = useState<File | null>(null)
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
@@ -76,12 +77,13 @@ export default function UploadImageInput() {
         const formData = new FormData();
         formData.append('file', file);
         try {
-            const response = await fetch('/api/authorRoutes/s3Upload', {
-                method: 'POST',
+            // This posts it to the s3 Bucket
+            const response = await fetch(`/api/authorRoutes/blogs/${blogId}/s3Upload`, {
+                method: 'PUT',
                 body: formData
             });
-            const { imageUrl } = await response.json();
-            setImagePreview(imageUrl)
+            const { pictureURL } = await response.json();
+            setImagePreview(pictureURL)
             setMessage("");
             setIsUploading(false)
             setFile(null)
@@ -105,7 +107,7 @@ export default function UploadImageInput() {
                             size={7}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-                            
+
                         />
                         :
                         imagePreview ?
