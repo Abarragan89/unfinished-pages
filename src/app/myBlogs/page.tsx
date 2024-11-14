@@ -14,7 +14,7 @@ export default async function page() {
     const blogs = await prisma.blog.findMany({ where: { userId: userId as string } });
 
     return (
-        <main className="pt-[30px]">
+        <main className="pt-[30px] min-h-[100vh]">
             <ScrollToTop />
             <CreateBlog />
             <SubheadingTitle title="My Blogs" />

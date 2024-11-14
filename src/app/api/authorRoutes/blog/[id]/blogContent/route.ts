@@ -5,41 +5,53 @@ import { prisma } from '../../../../../../../utils/prisma';
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id: blogId } = params
-
-        console.log(blogId)
         const content = await request.json()
 
         // delete all content and redo content
-        await prisma.blogContent.deleteMany({
+        const contentBlocks = await prisma.contentBlock.findMany({
             where: { blogId }
-        })
+        });
 
+        for (const block of contentBlocks) {
+            await prisma.contentBlock.delete({
+                where: { id: block.id }
+            });
+        }
 
-        const createdContents = await Promise.all(
+        console.log('content blocks before save', content)
 
-            content.map(async (content: any) => {
-                return prisma.blogContent.create({
+        const savedContentBlocks = await Promise.all(
+            content.map(async (content: any, index:number) => {
+                return prisma.contentBlock.create({
                     data: {
                         blogId,
                         type: content.type,
                         url: content.url || null,
+                        orderNumber: index,
                         children: {
-                            create: content.children.map((child: any) => ({
-                                text: child.text || '',
-                                bold: child.bold || false,
-                                italic: child.italic || false,
-                                underline: child.underline || false,
+                            create: content.children.map((detail: any) => ({
+                                text: detail.text || '',
+                                bold: detail.bold || false,
+                                italic: detail.italic || false,
+                                underline: detail.underline || false,
+                                type: detail.type === 'list-item' ? detail.type : null, // if it's a list, set the listType
+                                children: detail.children ? {
+                                    create: detail.children.map((item: any) => ({
+                                        text: item.text || '',
+                                        bold: item.bold || false,
+                                        italic: item.italic || false,
+                                        underline: item.underline || false,
+                                    }))
+                                } : undefined,
                             })),
                         },
                     },
-                    include: {
-                        children: true,
-                    },
+                    // include: {
+                    //     children: true
+                    // },
                 });
             })
         );
-
-
         return NextResponse.json({ message: 'success ' })
 
     } catch (error) {

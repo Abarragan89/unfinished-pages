@@ -87,26 +87,40 @@ model Blog {
   pictureURL String?
   keyWords String?
   isPublished Boolean @default(false)
-  content BlogContent[]
+  content ContentBlock[]
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model BlogContent {
+model ContentBlock {
   id String @id @default(cuid())
+  orderNumber Int
   type String
-  children ContentBlock[]
+  children ContentBlockDetails[]
   url String?
   blogId String
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
 }
 
-model ContentBlock {
+model ContentBlockDetails {
+  id String @id @default(cuid())
+  text String?
+  bold Boolean?
+  underline Boolean?
+  italic Boolean?
+  // List items are nested in another children array
+  type String?
+  children BlockDetailsListItems[]
+  contentBlockId String
+  contentBlock ContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+}
+
+model BlockDetailsListItems {
   id String @id @default(cuid())
   text String
   bold Boolean?
   underline Boolean?
   italic Boolean?
-  contentBlockId String
-  contentBlock BlogContent @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+  blockDetailsId String
+  blockDetails ContentBlockDetails @relation(fields: [blockDetailsId], references: [id], onDelete: Cascade)
 }

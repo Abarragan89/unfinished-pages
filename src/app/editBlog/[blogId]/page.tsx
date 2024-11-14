@@ -29,17 +29,35 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     // Get Data if above checks don't fail
     const blogData = await prisma.blog.findUnique({
         where: { id: blogId },
-
-
-        include: {
+        select: {
+            id: true,
+            title: true,
+            description: true,
+            pictureURL: true,
             content: {
-                include: {
-                    children: true
-                }
-            }
-        }
-
-
+                orderBy: { orderNumber: 'asc'},
+                select: {
+                    type: true,
+                    children: {
+                        select: {
+                            text: true,
+                            bold: true,
+                            italic: true,
+                            underline: true,
+                            type: true,
+                            children: { 
+                                select: {
+                                    text: true,
+                                    bold: true,
+                                    underline: true,
+                                    italic: true,
+                                }
+                            }
+                        }
+                    }
+                },
+            },
+        },
     })
 
     console.log('blog from query ', blogData)
@@ -59,7 +77,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                     pictureURL={blogData.pictureURL || ""}
                     blogId={blogId as string}
                 />
-                <SlateRichText 
+                <SlateRichText
                     blogId={blogId as string}
                     blogContent={blogData.content as []}
                 />

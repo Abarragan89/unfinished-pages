@@ -38,9 +38,11 @@ type CustomElement =
     | { type: 'code'; children: CustomText[] }
     | { type: 'numbered-list'; children: { type: 'list-item'; children: CustomText[] }[] }
     | { type: 'list-item'; children: CustomText[] }
+    | { type: 'heading-one'; children: CustomText[] }
+    | { type: 'heading-two'; children: CustomText[] }
     | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] };
 
-type CustomText = { text: string }
+type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
 
 declare module 'slate' {
     interface CustomTypes {
@@ -74,12 +76,128 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     const initialValue: Descendant[] = [
         {
-            type: 'paragraph',
-            children: [{ text: '' }],
-        },
-    ]
+            type: "paragraph",
+            children: [
+                {
+                    text: ""
+                },
+            ]
+        }
+    ];
 
-    const [content, setContent] = useState<Descendant[]>(blogContent || initialValue); // initialValue is the starting content structure
+    // const [content, setContent] = useState<Descendant[]>(blogContent);
+    const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContent(blogContent) : initialValue);
+
+
+
+    // const initialValue2 = blogContent.map((block) => console.log(block))
+    // console.log('block', initialValue2)
+
+    // const initialValue: Descendant[] = [
+    //     {
+    //         type: "paragraph",
+    //         children: [
+    //             {
+    //                 text: "ameofi "
+    //             },
+    //             {
+    //                 text: "jaiojefaeiow;j ",
+    //                 bold: true
+    //             },
+    //             {
+    //                 text: "j;a;dofiajeiowfj",
+    //                 italic: true
+    //             },
+    //             {
+    //                 text: "jl;ejfao;iewfio;aj ",
+    //                 bold: true,
+    //                 italic: true,
+    //                 underline: true
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         type: "heading-one",
+    //         children: [
+    //             {
+    //                 text: "Hey there"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         type: "numbered-list",
+    //         children: [
+    //             {
+    //                 type: "list-item",
+    //                 children: [
+    //                     {
+    //                         text: "How are doing? ",
+    //                         bold: true,
+    //                         italic: true,
+    //                         underline: true
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 type: "list-item",
+    //                 children: [
+    //                     {
+    //                         text: "Some text here"
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 type: "list-item",
+    //                 children: [
+    //                     {
+    //                         text: "Another item"
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // ];
+
+    // const [content, setContent] = useState<Descendant[]>(blogContent.length === 0 ? initialValue : blogContent);
+
+    function formatContent(blocks) {
+        const blogContent = blocks.map(block => {
+            // Check if block is a list
+            if (block.type === 'numbered-list' || block.type === 'bulleted-list') {
+                return {
+                    type: block.type,
+                    children: block.children
+                        .filter(child => child.type === 'list-item') // only list items
+                        .map(child => ({
+                            type: child.type,
+                            children: child.children?.filter(nested => nested.text?.trim()) // only non-empty text
+                                .map(nested => ({
+                                    text: nested.text,
+                                    bold: nested.bold || false,
+                                    italic: nested.italic || false,
+                                    underline: nested.underline || false,
+                                })) || [],
+                        })),
+                };
+            } else {
+                // For non-list types, exclude `children`
+                return {
+                    type: block.type || 'paragraph', // default to 'paragraph' if type is missing
+                    children: [
+                        {
+                            text: block.children?.[0]?.text || '', // grab the text from the first child, if present
+                            bold: block.children?.[0]?.bold || false,
+                            italic: block.children?.[0]?.italic || false,
+                            underline: block.children?.[0]?.underline || false,
+                        }
+                    ]
+                };
+            }
+        });
+        return blogContent;
+    }
+
+
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
@@ -107,11 +225,9 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         const { isVoid, insertBreak } = editor;
         // Define images as void elements
         editor.isVoid = element => element.type === 'image' || isVoid(element);
-
         // Custom behavior for the Enter key after an image
         editor.insertBreak = () => {
             const { selection } = editor;
-
             if (selection) {
                 const [parentNode] = Editor.parent(editor, selection);
                 // @ts-expect-error: Slate Rich Text Error
@@ -127,7 +243,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             // Default break behavior
             insertBreak();
         };
-
         return editor;
     };
 
@@ -282,6 +397,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         )
     }
 
+    console.log('content ', content)
 
     const handleChange = (newValue: Descendant[]) => {
         setIsButtonAbled(true);
@@ -296,7 +412,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             url: `/api/authorRoutes/blog/${blogId}/blogContent`,
             data: content
         })
-        .then(response => {
+            .then(response => {
                 setIsButtonAbled(false);
                 setIsContentSaving(false);
             })
