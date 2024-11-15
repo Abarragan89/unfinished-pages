@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../../../../utils/prisma';
-
+import { BlogContent } from '../../../../../../../types/blog';
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -19,8 +19,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
 
         await Promise.all(
-            // @ts-expect-error: Slate Rich Text Error
-            content.map(async (content, index: number) => {
+            
+            content.map(async (content:BlogContent, index: number) => {
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
@@ -28,7 +28,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                         url: content.url || null,
                         orderNumber: index,
                         children: {
-                            // @ts-expect-error: Slate Rich Text Error
                             create: content.children.map((detail) => ({
                                 text: detail.text || '',
                                 bold: detail.bold || false,
@@ -36,7 +35,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                                 underline: detail.underline || false,
                                 type: detail.type === 'list-item' ? detail.type : null, // if it's a list, set the listType
                                 children: detail.children ? {
-                                    // @ts-expect-error: Slate Rich Text Error
                                     create: detail.children.map((item) => ({
                                         text: item.text || '',
                                         bold: item.bold || false,

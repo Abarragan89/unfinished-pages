@@ -41,7 +41,6 @@ type CustomElement =
     | { type: 'heading-one'; children: CustomText[] }
     | { type: 'heading-two'; children: CustomText[] }
     | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] };
-
 type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
 
 declare module 'slate' {
@@ -52,6 +51,8 @@ declare module 'slate' {
     }
 }
 
+// Custom types
+import { BlogContent } from '../../../types/blog';
 interface Props {
     blogId: string,
     blogContent: []
@@ -160,24 +161,18 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     // const [content, setContent] = useState<Descendant[]>(blogContent.length === 0 ? initialValue : blogContent);
 
-    function formatContent(blocks: Descendant[]) {
+    function formatContent(blocks: BlogContent[]): Descendant[] {
         const blogContent = blocks.map(block => {
             // Check if block is a list
-            // @ts-expect-error: Slate Rich Text Error
+
             if (block.type === 'numbered-list' || block.type === 'bulleted-list') {
                 return {
-                    // @ts-expect-error: Slate Rich Text Error
                     type: block.type,
-                    // @ts-expect-error: Slate Rich Text Error
                     children: block.children
-                        // @ts-expect-error: Slate Rich Text Error
                         .filter(child => child.type === 'list-item') // only list items
-                        // @ts-expect-error: Slate Rich Text Error
                         .map(child => ({
                             type: child.type,
-                            // @ts-expect-error: Slate Rich Text Error
                             children: child.children?.filter(nested => nested.text?.trim())
-                                // @ts-expect-error: Slate Rich Text Error
                                 .map(nested => ({
                                     text: nested.text,
                                     bold: nested.bold || false,
@@ -189,24 +184,20 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             } else {
                 // For non-list types, exclude `children`
                 return {
-                    // @ts-expect-error: Slate Rich Text Error
+
                     type: block.type || 'paragraph', // default to 'paragraph' if type is missing
                     children: [
                         {
-                            // @ts-expect-error: Slate Rich Text Error
                             text: block.children?.[0]?.text || '',
-                            // @ts-expect-error: Slate Rich Text Error
                             bold: block.children?.[0]?.bold || false,
-                            // @ts-expect-error: Slate Rich Text Error
                             italic: block.children?.[0]?.italic || false,
-                            // @ts-expect-error: Slate Rich Text Error
                             underline: block.children?.[0]?.underline || false,
                         }
                     ]
                 };
             }
         });
-        return blogContent;
+        return blogContent as Descendant[];
     }
 
 

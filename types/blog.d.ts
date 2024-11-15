@@ -7,3 +7,26 @@ export interface BlogData {
     likes: number;
     dislikes: number;
 }
+
+export interface NestedListChildren {
+    text: ?string;
+    bold: ?boolean;
+    italic: ?boolean;
+    underline: ?boolean;
+}
+
+export interface BlogDetails {
+    text: ?string;
+    bold: ?boolean;
+    italic: ?boolean;
+    underline: ?boolean;
+    children: ?NestedListChildren[]
+    type: ?string;
+
+}
+
+export interface BlogContent {
+    type: string
+    children: BlogDetails[]
+    url: ?string
+}
