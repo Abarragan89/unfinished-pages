@@ -19,7 +19,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
 
         await Promise.all(
-            content.map(async (content: any, index: number) => {
+            // @ts-expect-error: Slate Rich Text Error
+            content.map(async (content, index: number) => {
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
