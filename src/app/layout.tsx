@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { NextAuthProvider } from "@/components/NextAuthProvider";
-
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Unfinished Pages",
@@ -22,9 +22,11 @@ export default function RootLayout({
         className={`antialiased text-[var(--off-black)] ${bodyFont.className}`}
       >
         <NextAuthProvider>
-          <Header />
-          {children}
-          <Footer />
+          <Suspense>
+            <Header />
+            {children}
+            <Footer />
+          </Suspense>
         </NextAuthProvider>
       </body>
     </html>

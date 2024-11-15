@@ -6,6 +6,7 @@ import { withHistory } from 'slate-history'
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+import formatContentToDescendantType from '../../../utils/formatBlogContent';
 
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
@@ -51,16 +52,12 @@ declare module 'slate' {
     }
 }
 
-// Custom types
-import { BlogContent } from '../../../types/blog';
 interface Props {
     blogId: string,
     blogContent: []
 }
 
-
 export default function SlateRichText({ blogId, blogContent }: Props) {
-
     console.log('blog content ', blogContent)
 
     const pathname = usePathname();
@@ -74,7 +71,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     // Create the editor
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
-
+    // Initial node if no content
     const initialValue: Descendant[] = [
         {
             type: "paragraph",
@@ -85,122 +82,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             ]
         }
     ];
-
-    // const [content, setContent] = useState<Descendant[]>(blogContent);
-    const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContent(blogContent) : initialValue);
-
-
-
-    // const initialValue2 = blogContent.map((block) => console.log(block))
-    // console.log('block', initialValue2)
-
-    // const initialValue: Descendant[] = [
-    //     {
-    //         type: "paragraph",
-    //         children: [
-    //             {
-    //                 text: "ameofi "
-    //             },
-    //             {
-    //                 text: "jaiojefaeiow;j ",
-    //                 bold: true
-    //             },
-    //             {
-    //                 text: "j;a;dofiajeiowfj",
-    //                 italic: true
-    //             },
-    //             {
-    //                 text: "jl;ejfao;iewfio;aj ",
-    //                 bold: true,
-    //                 italic: true,
-    //                 underline: true
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         type: "heading-one",
-    //         children: [
-    //             {
-    //                 text: "Hey there"
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         type: "numbered-list",
-    //         children: [
-    //             {
-    //                 type: "list-item",
-    //                 children: [
-    //                     {
-    //                         text: "How are doing? ",
-    //                         bold: true,
-    //                         italic: true,
-    //                         underline: true
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 type: "list-item",
-    //                 children: [
-    //                     {
-    //                         text: "Some text here"
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 type: "list-item",
-    //                 children: [
-    //                     {
-    //                         text: "Another item"
-    //                     }
-    //                 ]
-    //             }
-    //         ]
-    //     }
-    // ];
-
-    // const [content, setContent] = useState<Descendant[]>(blogContent.length === 0 ? initialValue : blogContent);
-
-    function formatContent(blocks: BlogContent[]): Descendant[] {
-        const blogContent = blocks.map(block => {
-            // Check if block is a list
-
-            if (block.type === 'numbered-list' || block.type === 'bulleted-list') {
-                return {
-                    type: block.type,
-                    children: block.children
-                        .filter(child => child.type === 'list-item') // only list items
-                        .map(child => ({
-                            type: child.type,
-                            children: child.children?.filter(nested => nested.text?.trim())
-                                .map(nested => ({
-                                    text: nested.text,
-                                    bold: nested.bold || false,
-                                    italic: nested.italic || false,
-                                    underline: nested.underline || false,
-                                })) || [],
-                        })),
-                };
-            } else {
-                // For non-list types, exclude `children`
-                return {
-
-                    type: block.type || 'paragraph', // default to 'paragraph' if type is missing
-                    children: [
-                        {
-                            text: block.children?.[0]?.text || '',
-                            bold: block.children?.[0]?.bold || false,
-                            italic: block.children?.[0]?.italic || false,
-                            underline: block.children?.[0]?.underline || false,
-                        }
-                    ]
-                };
-            }
-        });
-        return blogContent as Descendant[];
-    }
-
-
+    // Set the content to initial node or data from query
+    const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContentToDescendantType(blogContent) : initialValue);
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
@@ -400,15 +283,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         )
     }
 
-    console.log('content ', content)
-
     const handleChange = (newValue: Descendant[]) => {
         setIsButtonAbled(true);
         setContent(newValue); // Save content to state on every change
     };
 
     const saveContent = async () => {
-        console.log('content ', content)
         setIsContentSaving(true)
         axios({
             method: 'PUT',
@@ -420,7 +300,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 setIsContentSaving(false);
             })
     };
-
 
     return (
         <InputBlockWrapper
