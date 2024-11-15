@@ -160,17 +160,24 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     // const [content, setContent] = useState<Descendant[]>(blogContent.length === 0 ? initialValue : blogContent);
 
-    function formatContent(blocks) {
+    function formatContent(blocks: Descendant[]) {
         const blogContent = blocks.map(block => {
             // Check if block is a list
+            // @ts-expect-error: Slate Rich Text Error
             if (block.type === 'numbered-list' || block.type === 'bulleted-list') {
                 return {
+                    // @ts-expect-error: Slate Rich Text Error
                     type: block.type,
+                    // @ts-expect-error: Slate Rich Text Error
                     children: block.children
+                        // @ts-expect-error: Slate Rich Text Error
                         .filter(child => child.type === 'list-item') // only list items
+                        // @ts-expect-error: Slate Rich Text Error
                         .map(child => ({
                             type: child.type,
-                            children: child.children?.filter(nested => nested.text?.trim()) // only non-empty text
+                            // @ts-expect-error: Slate Rich Text Error
+                            children: child.children?.filter(nested => nested.text?.trim())
+                                // @ts-expect-error: Slate Rich Text Error
                                 .map(nested => ({
                                     text: nested.text,
                                     bold: nested.bold || false,
@@ -182,12 +189,17 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             } else {
                 // For non-list types, exclude `children`
                 return {
+                    // @ts-expect-error: Slate Rich Text Error
                     type: block.type || 'paragraph', // default to 'paragraph' if type is missing
                     children: [
                         {
-                            text: block.children?.[0]?.text || '', // grab the text from the first child, if present
+                            // @ts-expect-error: Slate Rich Text Error
+                            text: block.children?.[0]?.text || '',
+                            // @ts-expect-error: Slate Rich Text Error
                             bold: block.children?.[0]?.bold || false,
+                            // @ts-expect-error: Slate Rich Text Error
                             italic: block.children?.[0]?.italic || false,
+                            // @ts-expect-error: Slate Rich Text Error
                             underline: block.children?.[0]?.underline || false,
                         }
                     ]

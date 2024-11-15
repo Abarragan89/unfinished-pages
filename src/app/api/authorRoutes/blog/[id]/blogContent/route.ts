@@ -18,10 +18,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             });
         }
 
-        console.log('content blocks before save', content)
-
-        const savedContentBlocks = await Promise.all(
-            content.map(async (content: any, index:number) => {
+        await Promise.all(
+            content.map(async (content: any, index: number) => {
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
@@ -29,14 +27,16 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                         url: content.url || null,
                         orderNumber: index,
                         children: {
-                            create: content.children.map((detail: any) => ({
+                            // @ts-expect-error: Slate Rich Text Error
+                            create: content.children.map((detail) => ({
                                 text: detail.text || '',
                                 bold: detail.bold || false,
                                 italic: detail.italic || false,
                                 underline: detail.underline || false,
                                 type: detail.type === 'list-item' ? detail.type : null, // if it's a list, set the listType
                                 children: detail.children ? {
-                                    create: detail.children.map((item: any) => ({
+                                    // @ts-expect-error: Slate Rich Text Error
+                                    create: detail.children.map((item) => ({
                                         text: item.text || '',
                                         bold: item.bold || false,
                                         italic: item.italic || false,
