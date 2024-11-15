@@ -22,6 +22,12 @@ export default async function getBlogContent(userId: string, blogId: string) {
                 title: true,
                 description: true,
                 pictureURL: true,
+                user: {
+                    select: {
+                        name: true,
+                        image: true
+                    }
+                },
                 content: {
                     orderBy: { orderNumber: 'asc' },
                     select: {

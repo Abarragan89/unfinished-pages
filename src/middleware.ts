@@ -18,5 +18,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/api/authorRoutes', '/editBlog/:path*', '/myBlogs']
+    matcher: ['/api/authorRoutes', '/editBlog/:path*', '/previewBlog/:path*', '/myBlogs']
 }

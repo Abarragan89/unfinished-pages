@@ -1,10 +1,10 @@
 import SubheadingTitle from "@/components/Headings/SubheadingTitle"
 import SlateRichText from "@/components/EditBlogUI/SlateRichText"
 import EditMetaData from "@/components/EditBlogUI/EditMetaData"
-import { Suspense } from 'react'
 import { headers } from 'next/headers'
 import ScrollToTop from "@/components/ScrollToTop"
 import getBlogContent from "@/app/services/getBlogContent"
+import Link from "next/link"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
 
@@ -28,6 +28,9 @@ export default async function editBlog({ params }: { params: { blogId: string } 
         <main className="mt-3">
             <ScrollToTop />
             <SubheadingTitle title={'Create Blog'} />
+            <Link href={`/previewBlog/${blogData.id}`}>
+            Preview
+            </Link>
             <EditMetaData
                 title={blogData.title}
                 description={blogData.description || ""}
