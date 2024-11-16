@@ -3,7 +3,7 @@ import SlateRichText from "@/components/EditBlogUI/SlateRichText"
 import EditMetaData from "@/components/EditBlogUI/EditMetaData"
 import { headers } from 'next/headers'
 import ScrollToTop from "@/components/ScrollToTop"
-import getBlogContent from "@/app/services/getBlogContent"
+import getEditBlogContents from "@/app/services/getEditBlogContent"
 import Link from "next/link"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
@@ -17,7 +17,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
         throw new Error('Unauthorized access')
     }
     // get Blog Data
-    const blogData = await getBlogContent(userId, blogId)
+    const blogData = await getEditBlogContents(userId, blogId)
 
     // Error finding blog data
     if (!blogData) {

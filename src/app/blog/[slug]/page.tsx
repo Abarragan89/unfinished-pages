@@ -70,7 +70,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             {/* This will be the likes/comment button bar */}
             <BlogLikeCommentBar />
 
-            {/* This is the Image */}
+            {/* This is the Blog Image */}
             <Image
                 src={'/images/blogs/family.jpg'}
                 width={700}

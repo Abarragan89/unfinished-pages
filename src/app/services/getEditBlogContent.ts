@@ -1,7 +1,7 @@
 import { prisma } from "../../../utils/prisma";
 
 
-export default async function getBlogContent(userId: string, blogId: string) {
+export default async function getEditBlogContents(userId: string, blogId: string) {
     try {
         // Get User Blog Ids
         const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
@@ -22,15 +22,6 @@ export default async function getBlogContent(userId: string, blogId: string) {
                 title: true,
                 description: true,
                 pictureURL: true,
-                date: true,
-                likes: true,
-                readDuration: true,
-                user: {
-                    select: {
-                        name: true,
-                        image: true
-                    }
-                },
                 content: {
                     orderBy: { orderNumber: 'asc' },
                     select: {

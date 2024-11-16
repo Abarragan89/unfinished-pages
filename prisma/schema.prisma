@@ -81,9 +81,10 @@ model Blog {
   id String @id @default(cuid())
   title String
   description String?
-  date DateTime
+  date DateTime @default(now())
   likes Int @default(0)
   dislikes Int @default(0)
+  readDuration Int @default(0)
   pictureURL String?
   keyWords String?
   isPublished Boolean @default(false)
