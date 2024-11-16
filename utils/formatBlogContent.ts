@@ -12,9 +12,9 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                     .filter(child => child.type === 'list-item') // only list items
                     .map(child => ({
                         type: child.type,
-                        children: child.children?.filter(nested => nested.text?.trim())
-                            .map(nested => ({
-                                text: nested.text,
+                        children: child.children?.
+                            map(nested => ({
+                                text: nested.text || '',
                                 bold: nested.bold || false,
                                 italic: nested.italic || false,
                                 underline: nested.underline || false,

@@ -5,7 +5,7 @@ import { BlogContent } from '../../../../../../../types/blog';
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id: blogId } = params
-        const {content, readDuration} = await request.json()
+        const { content, readDuration } = await request.json()
 
         // delete all content and redo content
         const contentBlocks = await prisma.contentBlock.findMany({
@@ -17,12 +17,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 where: { id: block.id }
             });
         }
-
-
-        console.log('read duration ', readDuration)
-
-
-
         await Promise.all(
             content.map(async (content: BlogContent, index: number) => {
                 return prisma.contentBlock.create({
@@ -49,20 +43,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                             })),
                         },
                     },
-                    // include: {
-                    //     children: true
-                    // },
                 });
             })
         );
         await prisma.blog.update({
-            where: { id: blogId},
+            where: { id: blogId },
             data: {
                 readDuration
             }
         })
-        return NextResponse.json({ message: 'success ' })
-
     } catch (error) {
         console.log('error ', error)
     }

@@ -8,8 +8,6 @@ import { Session } from "../../../types/users";
 export default function BlogLikeCommentBar() {
 
     const session: Session = useSession();
-    console.log('session', session)
-
     function showLoginMenu(): void {
         alert('you need to login')
     }

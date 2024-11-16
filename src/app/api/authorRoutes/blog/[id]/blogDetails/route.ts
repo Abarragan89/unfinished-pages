@@ -7,9 +7,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         const { id: blogId } = params
         const { blogTitle: title, blogDescription: description } = await request.json();
 
-        console.log('description ', description)
-        console.log('title ', title)
-
         if (!title) {
             return NextResponse.json({ error: 'title is required' })
         }
@@ -21,9 +18,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 description
             }
         })
-
-
-        console.log('updated block', updatedBlog)
 
         return NextResponse.json({ message: updatedBlog })
     } catch (error) {

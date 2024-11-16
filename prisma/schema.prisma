@@ -76,7 +76,6 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-
 model Blog {
   id String @id @default(cuid())
   title String

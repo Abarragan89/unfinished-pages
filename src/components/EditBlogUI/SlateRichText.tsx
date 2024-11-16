@@ -42,6 +42,7 @@ type CustomElement =
     | { type: 'heading-one'; children: CustomText[] }
     | { type: 'heading-two'; children: CustomText[] }
     | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] };
+
 type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
 
 declare module 'slate' {
@@ -58,7 +59,6 @@ interface Props {
 }
 
 export default function SlateRichText({ blogId, blogContent }: Props) {
-    console.log('blog content ', blogContent)
 
     const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
@@ -93,6 +93,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
+        console.log('props children', props.children)
         switch (props.element.type) {
             case 'code':
                 return <CodeBlock {...props} />
@@ -155,6 +156,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     const renderLeaf = useCallback(props => {
         return <Leaf {...props} />
     }, [])
+
     // @ts-expect-error: Slate Rich Text Error
     const toggleBlock = (editor, format: string) => {
         // set status to change UI change in ToolBar
@@ -291,16 +293,17 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     const handleChange = (newValue: Descendant[]) => {
         setIsButtonAbled(true);
+        console.log('new value', newValue)
         setContent(newValue); // Save content to state on every change
-        console.log('content', newValue)
     };
 
+    console.log('content in text editor ', content)
 
     const saveContent = async () => {
         const wordCount = getPlainText(editor).split(" ").length;
         const wordsPerMinute = 250;
-        const readDuration = Math.floor(wordCount / wordsPerMinute); // Round up for partial minutes
-
+        const readLength = Math.floor(wordCount / wordsPerMinute); // Round up for partial minutes
+        const readDuration = readLength === 0 ? 1 : readLength
 
         setIsContentSaving(true)
         axios({

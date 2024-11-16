@@ -7,8 +7,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Page({ params }: { params: { slug: string } }) {
 
-    console.log('slug', params.slug)
-
     const blogData: BlogData[] = [
         {
             id: '1',

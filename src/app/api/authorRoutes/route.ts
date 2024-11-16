@@ -32,7 +32,6 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
         }
         const blogs = await prisma.blog.findMany();
-        console.log('blogs in route ', blogs);
 
         return NextResponse.json({ data: blogs })
     } catch (error) {

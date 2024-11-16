@@ -48,8 +48,7 @@ export default function EditMetaData({ title, description, pictureURL, blogId }:
                 blogDescription
             }
         })
-            .then(response => {
-                console.log('response in front end ', response)
+            .then(() => {
                 setIsDetailsSaving(false)
                 setIsDetailsSavable(false)
             })
