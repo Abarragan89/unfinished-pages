@@ -7,7 +7,7 @@ export default function loading() {
             <div className="flex flex-col items-start justify-center">
                 <ScaleLoader
                     width={10}
-                    height={10}
+                    height={20}
                     color="black"
                 />
                 <h1 className="text-center text-[1.1rem]">Loading...</h1>

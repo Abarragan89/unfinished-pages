@@ -354,7 +354,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                         renderElement={renderElement}
                         renderLeaf={renderLeaf}
                         spellCheck
-                        autoFocus
                         className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md focus:outline-none overflow-y-auto overflow-x-hidden break-normal bg-white'
                         onKeyDown={(event) => {
                             if (event.metaKey || event.ctrlKey) {
