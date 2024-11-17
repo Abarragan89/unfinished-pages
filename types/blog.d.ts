@@ -9,24 +9,24 @@ export interface BlogData {
 }
 
 export interface NestedListChildren {
-    text: ?string;
-    bold: ?boolean;
-    italic: ?boolean;
-    underline: ?boolean;
+    text?: string;
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
 }
 
 export interface BlogDetails {
-    text: ?string;
-    bold: ?boolean;
-    italic: ?boolean;
-    underline: ?boolean;
-    children: ?NestedListChildren[]
-    type: ?string;
+    text?: string;
+    bold?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+    children?: NestedListChildren[]
+    type?: string;
 
 }
 
 export interface BlogContent {
     type: string
     children: BlogDetails[]
-    url: ?string
+    url?: string
 }

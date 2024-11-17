@@ -31,7 +31,6 @@ import { PiListNumbersLight } from "react-icons/pi";
 import { RxListBullet } from "react-icons/rx";
 import { IoMdCode } from "react-icons/io";
 
-
 // Slate Typescript
 type CustomElement =
     | { type: 'paragraph'; children: CustomText[] }
@@ -93,7 +92,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     // @ts-expect-error: Slate Rich Text Error
     const renderElement = useCallback(props => {
-        console.log('props children', props.children)
         switch (props.element.type) {
             case 'code':
                 return <CodeBlock {...props} />
@@ -293,11 +291,9 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
     const handleChange = (newValue: Descendant[]) => {
         setIsButtonAbled(true);
-        console.log('new value', newValue)
-        setContent(newValue); // Save content to state on every change
+        setContent(newValue);
     };
 
-    console.log('content in text editor ', content)
 
     const saveContent = async () => {
         const wordCount = getPlainText(editor).split(" ").length;

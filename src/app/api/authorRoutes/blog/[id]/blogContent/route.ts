@@ -52,6 +52,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 readDuration
             }
         })
+        return NextResponse.json({ message: 'success' })
     } catch (error) {
         console.log('error ', error)
     }

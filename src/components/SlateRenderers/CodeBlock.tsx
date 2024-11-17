@@ -6,7 +6,7 @@ type SlateProps = RenderElementProps
 export default function CodeBlock({ attributes, children} : SlateProps) {
     return (
         <pre {...attributes}
-            className='bg-[var(--gray-500)] py-[2px] px-[5px]'
+            className='bg-slate-700 leading-normal py-[2px] px-[5px] text-[var(--off-white)] text-[14px]'
         >
             <code>{children}</code>
         </pre>
