@@ -1,6 +1,5 @@
 "use client"
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface Props {
     children: React.ReactNode;

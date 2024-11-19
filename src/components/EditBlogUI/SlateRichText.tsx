@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
 import formatContentToDescendantType from '../../../utils/formatBlogContent';
+import SideMenu from '../Menus/SideMenu';
 
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
@@ -16,7 +17,6 @@ import NumberedList from '@/components/SlateRenderers/NumberedList';
 import HeadingTwo from '@/components/SlateRenderers/HeadingTwo';
 import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
-import AddImageModal from '@/components/Modals/AddImageModal';
 import ImageRender from '../SlateRenderers/ImageRender';
 import InputBlockWrapper from './InputBlockWrapper';
 
@@ -138,6 +138,9 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     };
 
     const insertImage = (editor: ReactEditor, url: string) => {
+        // Here I need to make an upload to S3 and the return URL here
+        // I also need to save all the images to the user. 
+        // or make a image table
         const image: CustomElement = {
             type: 'image',
             url,
@@ -150,6 +153,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             children: [{ text: '' }],
         })
     }
+
     // @ts-expect-error: Slate Rich Text Error
     const renderLeaf = useCallback(props => {
         return <Leaf {...props} />
@@ -301,86 +305,90 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         const readLength = Math.floor(wordCount / wordsPerMinute); // Round up for partial minutes
         const readDuration = readLength === 0 ? 1 : readLength
 
-        setIsContentSaving(true)
-        axios({
-            method: 'PUT',
-            url: `/api/authorRoutes/blog/${blogId}/blogContent`,
-            data: {
+        try {
+            setIsContentSaving(true);
+            await axios.put(`/api/authorRoutes/blog/${blogId}/blogContent`, {
                 content,
-                readDuration
-            }
-        })
-            .then(() => {
-                setIsButtonAbled(false);
-                setIsContentSaving(false);
-            })
-    };
+                readDuration,
+            });
+
+            setIsButtonAbled(false);
+        } catch (error) {
+            console.error("Error saving content:", error);
+        } finally {
+            setIsContentSaving(false); // Ensure this always runs
+        }
+        };
 
     return (
-        <InputBlockWrapper
-            subtitle='Blog Content'
-            saveHandler={saveContent}
-            isButtonAble={isButtonAbled}
-            UIStateTrigger={isContentSaving}
-        >
-            <AddImageModal
+        <>
+            <SideMenu
                 onClickHandler={() => insertImage(editor, imageURL)}
                 setImageUrl={setImageUrl}
                 setImageAlt={setImageAlt}
+                imageAlt={imageAlt}
             />
-            <section className='w-full mx-auto'>
-                <Slate
-                    editor={editor} initialValue={content}
-                    onChange={handleChange}
-                >
-                    <menu className='flex justify-between bg-[var(--off-white)] rounded-t pb-[10px] pt-[5px]'>
-                        <div className='flex max-w-[350px] items-center'>
-                            <MarkButton iconType="bold" />
-                            <MarkButton iconType="italic" />
-                            <MarkButton iconType="underline" />
-                            <BlockButton iconType="heading-one" />
-                            <BlockButton iconType="heading-two" />
-                            <BlockButton iconType="numbered-list" />
-                            <BlockButton iconType="bulleted-list" />
-                            <BlockButton iconType="code" />
-                            <Link href={`${pathname}?showModal=addImage`}
-                                className={`${toolBarButtonStyles}`}>
-                                <CiImageOn size={20} className='mx-auto' />
-                            </Link>
-                        </div>
-                    </menu>
-                    <Editable
-                        renderElement={renderElement}
-                        renderLeaf={renderLeaf}
-                        spellCheck
-                        className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md focus:outline-none overflow-y-auto overflow-x-hidden break-normal bg-white'
-                        onKeyDown={(event) => {
-                            if (event.metaKey || event.ctrlKey) {
-                                switch (event.key.toLowerCase()) {
-                                    case 'b':
-                                        event.preventDefault();
-                                        toggleMark(editor, 'bold');
-                                        break;
-                                    case 'i':
-                                        event.preventDefault();
-                                        toggleMark(editor, 'italic');
-                                        break;
-                                    case 'u':
-                                        event.preventDefault();
-                                        toggleMark(editor, 'underline');
-                                        break;
-                                    default:
-                                        break;
+            <InputBlockWrapper
+                subtitle='Blog Content'
+                saveHandler={saveContent}
+                isButtonAble={isButtonAbled}
+                UIStateTrigger={isContentSaving}
+            >
+                <section className='w-full mx-auto'>
+                    <Slate
+                        editor={editor} initialValue={content}
+                        onChange={handleChange}
+                    >
+                        <menu className='flex justify-between bg-[var(--off-white)] rounded-t pb-[10px] pt-[5px]'>
+                            <div className='flex max-w-[350px] items-center'>
+                                <MarkButton iconType="bold" />
+                                <MarkButton iconType="italic" />
+                                <MarkButton iconType="underline" />
+                                <BlockButton iconType="heading-one" />
+                                <BlockButton iconType="heading-two" />
+                                <BlockButton iconType="numbered-list" />
+                                <BlockButton iconType="bulleted-list" />
+                                <BlockButton iconType="code" />
+                                <Link href={`${pathname}?sideMenu=addImage`}
+                                    scroll={false}
+                                    className={`${toolBarButtonStyles}`}>
+                                    <CiImageOn size={20} className='mx-auto' />
+                                </Link>
+                            </div>
+                        </menu>
+                        <Editable
+                            renderElement={renderElement}
+                            renderLeaf={renderLeaf}
+                            spellCheck
+                            className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md focus:outline-none overflow-y-auto overflow-x-hidden break-normal bg-white'
+                            onKeyDown={(event) => {
+                                if (event.metaKey || event.ctrlKey) {
+                                    switch (event.key.toLowerCase()) {
+                                        case 'b':
+                                            event.preventDefault();
+                                            toggleMark(editor, 'bold');
+                                            break;
+                                        case 'i':
+                                            event.preventDefault();
+                                            toggleMark(editor, 'italic');
+                                            break;
+                                        case 'u':
+                                            event.preventDefault();
+                                            toggleMark(editor, 'underline');
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
-                            }
-                            if (event.key === 'Tab') {
-                                event.preventDefault();
-                                Transforms.insertText(editor, '    ');
-                            }
-                        }}
-                    />
-                </Slate>
-            </section>
-        </InputBlockWrapper>
+                                if (event.key === 'Tab') {
+                                    event.preventDefault();
+                                    Transforms.insertText(editor, '    ');
+                                }
+                            }}
+                        />
+                    </Slate>
+                </section>
+            </InputBlockWrapper>
+        </>
     )
 }

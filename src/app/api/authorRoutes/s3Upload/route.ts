@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { prisma } from '../../../../../../../utils/prisma';
+import { prisma } from '../../../../../utils/prisma';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
 const s3Client = new S3Client({
@@ -43,7 +43,7 @@ async function uploadFileToS3(file: Buffer, filename: string) {
 }
 
 // The POST is fired as soon as a user creates a new blog
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const formData = await request.formData();
         const file = formData.get('file');
@@ -56,13 +56,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         if (file instanceof File) {
             const buffer = Buffer.from(await file.arrayBuffer());
             const pictureURL = await uploadFileToS3(buffer, file.name)
-
-            // set the image url to s3 bucket uplaod
-            await prisma.blog.update({
-                where: { id: params.id },
-                data: { pictureURL }
-            })
-
+            // return the HTML string returned from s3 Bucket
             return NextResponse.json({ pictureURL }, { status: 200 })
             // Proceed with buffer processing
         } else {

@@ -1,7 +1,7 @@
 import getBlogContent from "@/app/services/getBlogContent"
 import { headers } from 'next/headers'
 import formatContentToDescendantType from "../../../../utils/formatBlogContent"
-import { BlogContent, BlogData, BlogDetails } from "../../../../types/blog"
+import { BlogContent } from "../../../../types/blog"
 import { Descendant } from "slate"
 import ScrollToTop from "@/components/ScrollToTop"
 import BlogMetaDetails from "@/components/BlogUI/BlogMetaDetails"
@@ -27,7 +27,6 @@ export default async function page({ params }: { params: { blogId: string } }) {
     if (!blogData) {
         throw new Error('Could not find blog data')
     }
-
 
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])

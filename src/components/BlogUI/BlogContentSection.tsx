@@ -1,4 +1,5 @@
 import { BlogContent, BlogDetails, NestedListChildren } from "../../../types/blog";
+import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
     return (
@@ -104,6 +105,17 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                 {block.children.map((blockDetails: BlogDetails) => blockDetails.text).join('\n')}
                             </code>
                         </pre>
+                    )
+                } else if (block.type === 'image') {
+                    return (
+                        <div>
+                            <Image
+                                src={block.url as string}
+                                width={700}
+                                height={394}
+                                alt={'user alt tag'}
+                            />
+                        </div>
                     )
                 }
             })}

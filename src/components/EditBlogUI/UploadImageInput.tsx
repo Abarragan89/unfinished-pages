@@ -4,7 +4,7 @@ import { IoIosCheckboxOutline } from "react-icons/io";
 import PulseLoader from "react-spinners/PulseLoader";
 import Link from "next/link";
 import NextImage from 'next/image';
-
+import axios from "axios";
 
 
 export default function UploadImageInput({ blogId, pictureURL }: { blogId: string, pictureURL: string }) {
@@ -79,19 +79,31 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
         const formData = new FormData();
         formData.append('file', file);
         try {
-            // This posts it to the s3 Bucket
-            const response = await fetch(`/api/authorRoutes/blog/${blogId}/s3Upload`, {
-                method: 'PUT',
-                body: formData
-            });
-            const { pictureURL } = await response.json();
-            setImagePreview(pictureURL)
-            setMessage("");
-            setIsUploading(false)
-            setFile(null)
+            // Post to the S3 Bucket
+            const { data } = await axios.post(
+                `/api/authorRoutes/s3Upload`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
+            // Get the pictureURL
+            const { pictureURL } = data;
+            // Save image to Database for Blog
+            await axios.put(
+                `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
+                {pictureURL}
+            )
+            setImagePreview(pictureURL);
+            setMessage('');
         } catch (error) {
-            setIsUploading(false)
-            setFile(null)
+            console.error('Error uploading blog cover image:', error);
+            setMessage('Failed to upload the image. Please try again.');
+        } finally {
+            setIsUploading(false);
+            setFile(null);
         }
     }
 
@@ -100,7 +112,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             {!file &&
                 <label
                     className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[280px]'} mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
-                    htmlFor="image-upload"
+                    htmlFor="cover-image-upload"
                 >
                     {isUpLoading ?
                         <PulseLoader
@@ -109,7 +121,6 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                             size={7}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-
                         />
                         :
                         imagePreview ?
@@ -118,7 +129,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                             'Add Cover Photo'
                     }
                     <input
-                        id="image-upload"
+                        id="cover-image-upload"
                         type="file"
                         className="hidden"
                         accept="image/jpeg, image/png, image/webp"
@@ -129,8 +140,8 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             {
                 imagePreview ?
                     <NextImage
-                        width={320}
-                        height={180}
+                        width={200}
+                        height={200}
                         src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
                         alt="Preview"
                         className="mx-auto mt-5"

@@ -35,6 +35,7 @@ export default async function getBlogContent(userId: string, blogId: string) {
                     orderBy: { orderNumber: 'asc' },
                     select: {
                         type: true,
+                        url: true,
                         children: {
                             select: {
                                 text: true,

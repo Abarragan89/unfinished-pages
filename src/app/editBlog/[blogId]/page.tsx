@@ -29,7 +29,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
             <ScrollToTop />
             <SubheadingTitle title={'Create Blog'} />
             <Link href={`/previewBlog/${blogData.id}`}>
-            Preview
+                Preview
             </Link>
             <EditMetaData
                 title={blogData.title}

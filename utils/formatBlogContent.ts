@@ -25,6 +25,7 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
             // For non-list types, exclude `children`
             return {
                 type: block.type || 'paragraph', // default to 'paragraph' if type is missing
+                url: block?.url || '',
                 children: [
                     {
                         text: block.children?.[0]?.text || '',

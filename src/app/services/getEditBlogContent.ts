@@ -26,6 +26,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
                     orderBy: { orderNumber: 'asc' },
                     select: {
                         type: true,
+                        url: true,
                         children: {
                             select: {
                                 text: true,

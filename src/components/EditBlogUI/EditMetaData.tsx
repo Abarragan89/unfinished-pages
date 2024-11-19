@@ -38,23 +38,18 @@ export default function EditMetaData({ title, description, pictureURL, blogId }:
     }
 
     async function saveDetailsHandler() {
-        setIsDetailsSaving(true)
-
-        axios({
-            method: 'PUT',
-            url: `/api/authorRoutes/blog/${blogId}/blogDetails`,
-            data: {
+        try {
+            setIsDetailsSaving(true);
+            await axios.put(`/api/authorRoutes/blog/${blogId}/blogDetails`, {
                 blogTitle,
-                blogDescription
-            }
-        })
-            .then(() => {
-                setIsDetailsSaving(false)
-                setIsDetailsSavable(false)
-            })
-            .catch(error => {
-                console.log('error updating blog details', error)
-            })
+                blogDescription,
+            });
+
+            setIsDetailsSaving(false);
+            setIsDetailsSavable(false);
+        } catch (error) {
+            console.log('Error updating blog details:', error);
+        }
     }
 
     return (

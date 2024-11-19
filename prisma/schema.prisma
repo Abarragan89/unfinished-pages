@@ -18,10 +18,12 @@ model User {
   name          String?
   email         String          @unique
   emailVerified DateTime?
-  image         String?
+  image  String?
+  isAuthor      Boolean         @default(false)
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
+  blogImages    Image[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   createdAt DateTime @default(now())
@@ -123,4 +125,12 @@ model BlockDetailsListItems {
   italic Boolean?
   blockDetailsId String
   blockDetails ContentBlockDetails @relation(fields: [blockDetailsId], references: [id], onDelete: Cascade)
+}
+
+model Image {
+  id String @id @default(cuid())
+  url String
+  alt String
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
