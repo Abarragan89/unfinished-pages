@@ -8,18 +8,18 @@ import NextImage from 'next/image';
 import axios from "axios";
 
 interface Props {
-    onClickHandler: () => void;
+    onClickHandler: (url: string) => void;
     setImageUrl: React.Dispatch<React.SetStateAction<string>>
-    setImageAlt: React.Dispatch<React.SetStateAction<string>>
-    imageAlt: string;
 }
 
-export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, imageAlt }: Props) {
+export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
 
-    const [wordCount, setWordCount] = useState<number>(0)
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imageWidth, setImageWidth] = useState<string>('')
+    const [imageHeight, setImageHeight] = useState<string>('')
+    const [imageAlt, setImageAlt] = useState<string>('')
     const [file, setFile] = useState<File | null>(null)
     const sideMenuRef = useRef<HTMLLIElement | null>(null);
 
@@ -31,12 +31,16 @@ export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, ima
     async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!file) return;
-
         setIsUploading(true);
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('imageHeight', imageHeight);
+        formData.append('imageWidth', imageWidth);
+        formData.append('imageAlt', imageAlt)
+        formData.append('isCoverImage', 'false')
 
         try {
+            // save image to s3 and save it to users images[]
             const { data } = await axios.post(
                 `/api/authorRoutes/s3Upload`,
                 formData,
@@ -49,26 +53,19 @@ export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, ima
             // Get the pictureURL
             const { pictureURL } = data;
 
-            // Save image to Database to User Model
-            // await axios.put(
-            //     `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
-            //     { pictureURL }
-            // )
+            // save this for the selection of the photo
+            setImageUrl(pictureURL)
+            // set the url of the image to the Slate Editor
+            onClickHandler(pictureURL);
+            router.back();
             setImagePreview(pictureURL);
             setMessage('');
         } catch (error) {
             console.log('error uploading photo', error)
         }
-
-
-
-
-        // save this for the selection of the photo
-        // onClickHandler();
-        // router.back();
     }
-    
-    
+
+
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         setMessage("");
@@ -90,7 +87,10 @@ export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, ima
             reader.onload = () => setImagePreview(reader.result as string); // Set the image preview source
             reader.readAsDataURL(file as File); // Read file as Data URL
 
-            // 4. If all checks pass, set the state variable to send to post request
+            // 4. Find the images width and height
+            setImageHeight(img.height.toString())
+            setImageWidth(img.width.toString())
+            // 5. If all checks pass, set the state variable to send to post request
             setFile(file as File);
         };
     }
@@ -110,7 +110,7 @@ export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, ima
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-    
+
 
     return (
         <>
@@ -146,12 +146,12 @@ export default function SideMenu({ onClickHandler, setImageUrl, setImageAlt, ima
                                     <div className="flex flex-col text-[.85rem] text-[var(--brown-500)] mt-3">
                                         <label htmlFor="photoAlt">
                                             Photo Description
-                                            <span className="ml-10 text-[.8rem] text-[var(--brown-500)]">{wordCount}/100</span>
+                                            <span className="ml-10 text-[.8rem] text-[var(--brown-500)]">{imageAlt.length}/100</span>
                                         </label>
                                         <input type="text"
                                             required
                                             maxLength={100}
-                                            onChange={(e) => { setImageAlt(e.target.value); setWordCount(e.target.value.length) }}
+                                            onChange={(e) => { setImageAlt(e.target.value) }}
                                             className="input-browser-reset text-[.925rem] w-[190px] py-[3px] px-[8px] border border-[var(--brown-500)] text-[.9rem]"
                                             placeholder="" />
                                     </div>

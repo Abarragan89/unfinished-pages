@@ -10,7 +10,9 @@ import axios from "axios";
 export default function UploadImageInput({ blogId, pictureURL }: { blogId: string, pictureURL: string }) {
     const [message, setMessage] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string | null>(pictureURL || null);
-
+    const [imageWidth, setImageWidth] = useState<string>('')
+    const [imageHeight, setImageHeight] = useState<string>('')
+    const [imageAlt, setImageAlt] = useState<string>('')
     const [file, setFile] = useState<File | null>(null)
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [fileIsAccepted, setFileIsAccepted] = useState<boolean>(false)
@@ -31,18 +33,19 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             const img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
+                // set width and height to be sent to database
+                setImageHeight(img.height.toString())
+                setImageWidth(img.width.toString())
                 const aspectRatio = img.width / img.height;
                 const targetAspectRatio = 16 / 9;
                 const minResolution = { width: 700, height: 394 };
 
                 // Check aspect ratio
-                if (Math.abs(aspectRatio - targetAspectRatio) < 0.01) {
-                    setFileIsAccepted(true);
-                    setMessage("Image accepted, 'Set Cover Photo' to confirm upload");
-                } else {
+                if (Math.abs(aspectRatio - targetAspectRatio) > 0.01) {
                     setFileIsAccepted(false);
                     setMessage("Image must have a 16:9 aspect ratio. Use Canva or other photos processing websites to adjust dimensions.");
                     event.target.value = ""; // Reset the input
+                    return
                 }
                 URL.revokeObjectURL(img.src); // Clean up
 
@@ -55,6 +58,8 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                     return;
                 }
 
+                setFileIsAccepted(true);
+                setMessage("Add a description and Confirm Upload");
 
                 // 3. Set preview using user's file path
                 const reader = new FileReader();
@@ -78,6 +83,11 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
         setIsUploading(true);
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('imageHeight', imageHeight);
+        formData.append('imageWidth', imageWidth);
+        formData.append('imageAlt', imageAlt)
+        formData.append('isCoverImage', 'true')
+
         try {
             // Post to the S3 Bucket
             const { data } = await axios.post(
@@ -89,13 +99,16 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                     },
                 }
             );
+
             // Get the pictureURL
             const { pictureURL } = data;
+
             // Save image to Database for Blog
             await axios.put(
                 `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
-                {pictureURL}
+                { pictureURL }
             )
+            
             setImagePreview(pictureURL);
             setMessage('');
         } catch (error) {
@@ -139,15 +152,16 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             }
             {
                 imagePreview ?
-                    <NextImage
-                        width={200}
-                        height={200}
-                        src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
-                        alt="Preview"
-                        className="mx-auto mt-5"
-                    />
+                    <>
+                        <NextImage
+                            width={200}
+                            height={200}
+                            src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
+                            alt="Preview"
+                            className="mx-auto mt-5"
+                        />
+                    </>
                     :
-
                     <div className="flex flex-col justify-center items-center">
                         <p className="font-bold mt-3">Cover Photo Requirements</p>
                         <ul className="text-[.9rem]">
@@ -182,26 +196,44 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                     </div>
             }
             <p
-                className={`text-[.925rem] ${fileIsAccepted ? 'text-green-700' : 'text-red-700'}  text-center mt-3 italic`}
+                className={`text-[.925rem] ${fileIsAccepted ? 'text-green-700' : 'text-red-700'} text-center mt-3 italic`}
             >{message}</p>
             {
                 file &&
-                <button
-                    onClick={handleSubmit}
-                    className="custom-small-btn mx-auto block w-fit mt-3"
-                >
-                    {isUpLoading ?
-                        <PulseLoader
-                            color={'white'}
-                            loading={isUpLoading}
-                            size={7}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
+                <>
+                    <div className="flex flex-col w-fit mx-auto mt-2">
+                        <div className="flex justify-between mx-1">
+                            <label
+                                className="text-[.875rem]"
+                                htmlFor="cover-image-alt"
+                            >Photo Description</label>
+                            <p className="text-[.85rem]">{imageAlt.length}/100</p>
+                        </div>
+                        <input
+                            type="text"
+                            id="cover-image-alt"
+                            maxLength={100}
+                            onChange={(e) => setImageAlt(e.target.value)}
+                            className="input-browser-reset border border-[var(--brown-300)] mx-auto block px-2 py-[2px]"
                         />
-                        :
-                        'Set Cover Photo'
-                    }
-                </button>
+                    </div>
+                    <button
+                        onClick={handleSubmit}
+                        className={`custom-small-btn mx-auto block w-fit mt-4 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}
+                    >
+                        {isUpLoading ?
+                            <PulseLoader
+                                color={'white'}
+                                loading={isUpLoading}
+                                size={7}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                            :
+                            'Confirm Upload'
+                        }
+                    </button>
+                </>
             }
         </div>
     );

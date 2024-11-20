@@ -131,6 +131,9 @@ model Image {
   id String @id @default(cuid())
   url String
   alt String
+  width Int
+  height Int
+  isBlogCover Boolean
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

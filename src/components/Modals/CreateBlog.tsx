@@ -8,7 +8,6 @@ import { BarLoader } from "react-spinners";
 export default function CreateBlog() {
     const router = useRouter();
     const [blogTitle, setBlogTitle] = useState<string>('');
-    const [blogTitleCount, setBlogTitleCount] = useState<number>(0);
     const [isCreating, setIsCreating] = useState<boolean>(false)
 
     async function createBlogHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -21,13 +20,13 @@ export default function CreateBlog() {
                 title: blogTitle.trim()
             }
         })
-        .then(({ data }) => {
-            setIsCreating(false);
-            router.replace(`/editBlog/${data.blog.id}`)
-        })
-        .catch(error => {
-            console.log('error creating blog', error);
-        });
+            .then(({ data }) => {
+                setIsCreating(false);
+                router.replace(`/editBlog/${data.blog.id}`)
+            })
+            .catch(error => {
+                console.log('error creating blog', error);
+            });
     }
 
     return (
@@ -41,7 +40,7 @@ export default function CreateBlog() {
             >
                 <div className="flex flex-col">
                     <textarea
-                        onChange={(e) => { setBlogTitle(e.target.value); setBlogTitleCount(e.target.value.length) }}
+                        onChange={(e) => setBlogTitle(e.target.value)}
                         className="input-browser-reset p-[6px] border border-[var(--brown-500)] text-[.9rem]"
                         id="blog-title"
                         maxLength={65}
@@ -51,7 +50,7 @@ export default function CreateBlog() {
                     />
                     <div className="flex justify-between mx-1 text-[.95rem]">
                         <p className="text-[.9rem] text-[var(--gray-600)] italic">Title can be edited later</p>
-                        <p className="text-[var(--brown-500)]">{blogTitleCount}/65</p>
+                        <p className="text-[var(--brown-500)]">{blogTitle.length}/65</p>
                     </div>
                 </div>
                 <button

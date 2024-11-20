@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
             data: {
                 title,
                 userId,
-                
                 date: new Date()
             }
         });

@@ -136,8 +136,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         };
         return editor;
     };
-
-    const insertImage = (editor: ReactEditor, url: string) => {
+    
+    const insertImage = (url: string) => {
         // Here I need to make an upload to S3 and the return URL here
         // I also need to save all the images to the user. 
         // or make a image table
@@ -323,10 +323,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     return (
         <>
             <SideMenu
-                onClickHandler={() => insertImage(editor, imageURL)}
+                onClickHandler={insertImage}
                 setImageUrl={setImageUrl}
-                setImageAlt={setImageAlt}
-                imageAlt={imageAlt}
             />
             <InputBlockWrapper
                 subtitle='Blog Content'

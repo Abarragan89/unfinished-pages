@@ -46,17 +46,40 @@ async function uploadFileToS3(file: Buffer, filename: string) {
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const formData = await request.formData();
-        const file = formData.get('file');
-        // checks here for file format, size, etc.
+        const imageFile = formData.get('file');
+        const imageHeight = formData.get('imageHeight') as string;
+        const imageWidth = formData.get('imageWidth') as string;
+        const imageAlt = formData.get('imageAlt') as string;
+        const  isCoverImage = formData.get('isCoverImage');
+        const booleanIsCoverImage = (isCoverImage === 'true')
 
-        if (!file) {
+        if (!imageFile) {
             return NextResponse.json({ error: 'File is required' }, { status: 400 });
         }
+        // Get User ID
+        const userId = request.headers.get('x-user-id');
 
-        if (file instanceof File) {
-            const buffer = Buffer.from(await file.arrayBuffer());
-            const pictureURL = await uploadFileToS3(buffer, file.name)
-            // return the HTML string returned from s3 Bucket
+        if (!userId) return NextResponse.json({ error: 'User not logged in' })
+
+
+        if (imageFile instanceof File) {
+            const buffer = Buffer.from(await imageFile.arrayBuffer());
+            // upload it to S3
+            const pictureURL = await uploadFileToS3(buffer, imageFile.name)
+
+            // Save image to database and attach to User
+            await prisma.image.create({
+                data: {
+                    userId,
+                    url: pictureURL,
+                    alt: imageAlt,
+                    isBlogCover: booleanIsCoverImage,
+                    width: parseInt(imageWidth),
+                    height: parseInt(imageHeight)
+                }
+            })
+
+            // return the HTML string returned from s3 Bucket to assign
             return NextResponse.json({ pictureURL }, { status: 200 })
             // Proceed with buffer processing
         } else {
@@ -64,7 +87,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         }
 
     } catch (error) {
-        console.error('Error uploading photo ', error);
+        console.error('Error uploading photo 123 ', error);
         return NextResponse.json({ error: 'failed to upload image' })
     }
 }
