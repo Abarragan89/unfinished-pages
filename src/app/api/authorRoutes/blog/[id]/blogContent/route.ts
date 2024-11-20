@@ -5,7 +5,7 @@ import { BlogContent } from '../../../../../../../types/blog';
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id: blogId } = params
-        const { content, readDuration } = await request.json()
+        const { content, readDuration } = await request.json();
 
         // delete all content and redo content
         const contentBlocks = await prisma.contentBlock.findMany({
@@ -52,6 +52,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 readDuration
             }
         })
+
         return NextResponse.json({ message: 'success' })
     } catch (error) {
         console.log('error ', error)

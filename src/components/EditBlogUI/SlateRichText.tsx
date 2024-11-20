@@ -136,11 +136,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         };
         return editor;
     };
-    
+
     const insertImage = (url: string) => {
-        // Here I need to make an upload to S3 and the return URL here
-        // I also need to save all the images to the user. 
-        // or make a image table
         const image: CustomElement = {
             type: 'image',
             url,
@@ -262,7 +259,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 return <RxListBullet size={22} />
             case 'code':
                 return <IoMdCode />
-
             default:
                 return
         }
@@ -318,7 +314,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         } finally {
             setIsContentSaving(false); // Ensure this always runs
         }
-        };
+    };
 
     return (
         <>

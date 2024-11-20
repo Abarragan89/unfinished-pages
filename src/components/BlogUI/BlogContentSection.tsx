@@ -6,24 +6,30 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
         <div className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
+                const validChildren = block.children.filter(
+                    (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
+                );
+                if (validChildren.length === 0) return;
                 if (block.type === 'paragraph') {
                     return (
-                        block.children.map((blockDetails: BlogDetails, subIndex: number) => {
-                            if (!blockDetails.text) return;
-                            return (
-                                <p
+                        <p
+                            key={index.toString()}
+                            className="py-3"
+                        >
+                            {block.children.map((blockDetails: BlogDetails, subIndex: number) => (
+                                <span
                                     key={index.toString() + subIndex.toString()}
-                                    className={`py-3
-                                            ${blockDetails.bold ? 'font-bold' : ''}
-                                            ${blockDetails.italic ? 'italic' : ''}
-                                            ${blockDetails.underline ? 'underline' : ''}
-                                        `}
+                                    className={`
+                                        ${blockDetails.bold ? 'font-bold' : ''}
+                                        ${blockDetails.italic ? 'italic' : ''}
+                                        ${blockDetails.underline ? 'underline' : ''}
+                                    `}
                                 >
                                     {blockDetails.text}
-                                </p>
-                            )
-                        })
-                    )
+                                </span>
+                            ))}
+                        </p>
+                    );
                 } else if (block.type.includes('list')) {
                     return (
                         block.type === 'numbered-list' ? (
