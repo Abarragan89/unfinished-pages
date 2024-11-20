@@ -43,14 +43,14 @@ async function uploadFileToS3(file: Buffer, filename: string) {
 }
 
 // The POST is fired as soon as a user creates a new blog
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
         const imageFile = formData.get('file');
         const imageHeight = formData.get('imageHeight') as string;
         const imageWidth = formData.get('imageWidth') as string;
         const imageAlt = formData.get('imageAlt') as string;
-        const  isCoverImage = formData.get('isCoverImage');
+        const isCoverImage = formData.get('isCoverImage');
         const booleanIsCoverImage = (isCoverImage === 'true')
 
         if (!imageFile) {

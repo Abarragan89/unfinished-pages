@@ -33,7 +33,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                 } else if (block.type.includes('list')) {
                     return (
                         block.type === 'numbered-list' ? (
-                            <ol className="list-decimal ml-[50px] py-3">
+                            <ol key={index.toString()} className="list-decimal ml-[50px] py-3">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => (
                                         <li
@@ -50,7 +50,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                 ))}
                             </ol>
                         ) : (
-                            <ul className="list-disc ml-[50px] py-3">
+                            <ul key={index.toString()} className="list-disc ml-[50px] py-3">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => (
                                         <li
@@ -114,7 +114,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     )
                 } else if (block.type === 'image') {
                     return (
-                        <div>
+                        <div key={index.toString()}>
                             <Image
                                 src={block.url as string}
                                 width={700}
