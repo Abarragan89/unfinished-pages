@@ -15,3 +15,12 @@ export interface Session {
     status: string;
     update: (data: Partial<Data>) => void;
 }
+
+export interface UserImage {
+    id: string;
+    url: string;
+    alt: string;
+    width: string;
+    height: string;
+    isCoverImage: string;
+}

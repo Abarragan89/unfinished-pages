@@ -6,6 +6,8 @@ import PulseLoader from "react-spinners/PulseLoader";
 import { IoMdClose } from "react-icons/io";
 import NextImage from 'next/image';
 import axios from "axios";
+import { UserImage } from "../../../types/users";
+
 
 interface Props {
     onClickHandler: (url: string) => void;
@@ -15,6 +17,7 @@ interface Props {
 export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
+    const [userImages, setUserImages] = useState<UserImage[]>([])
     const [message, setMessage] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageWidth, setImageWidth] = useState<string>('')
@@ -38,7 +41,6 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
         formData.append('imageWidth', imageWidth);
         formData.append('imageAlt', imageAlt)
         formData.append('isCoverImage', 'false')
-
         try {
             // save image to s3 and save it to users images[]
             const { data } = await axios.post(
@@ -110,6 +112,24 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    async function getUserImages() {
+        try {
+            const { data } = await axios.get('/api/authorRoutes/blogImages');
+
+            setUserImages(data.userImages)
+            console.log('data in fetch ', data)
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        if (sideMenu === 'addImage') {
+            // get user imags
+            getUserImages()
+        }
+    }, [sideMenu])
 
 
     return (
@@ -187,7 +207,18 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                         }
                     </form>
 
-
+                    {/* users images */}
+                    <section className="h-[100vh] overflow-y-scroll pb-[200px]">
+                        {userImages && userImages?.map((image: UserImage) => (
+                            <NextImage
+                                src={image.url}
+                                width={parseInt(image.width)}
+                                height={parseInt(image.height)}
+                                alt={image.alt}
+                                className="max-w-[80%] m-2 mx-auto"
+                            />
+                        ))}
+                    </section>
                 </menu>
             }
         </>
