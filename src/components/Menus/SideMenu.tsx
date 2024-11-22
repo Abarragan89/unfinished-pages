@@ -11,11 +11,10 @@ import SearchInput from "../FormInputs/SearchInput";
 
 
 interface Props {
-    onClickHandler: (url: string) => void;
-    setImageUrl: React.Dispatch<React.SetStateAction<string>>
+    onClickHandler: (image: UserImage) => void;
 }
 
-export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
+export default function SideMenu({ onClickHandler }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [userImages, setUserImages] = useState<UserImage[] | null>(null)
@@ -54,7 +53,7 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                 }
             );
 
-            setUserImages(prev => [data.imageData, ...prev])
+            setUserImages(prev => [data.imageData, ...(prev || [])])
             // Get the pictureURL
 
             // const { pictureURL } = data;
@@ -210,7 +209,7 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                                 </div>
                                 :
                                 <>
-                                    <SearchInput 
+                                    <SearchInput
                                         placeholder="Search By Description"
                                         inputWidth="full"
                                     />
@@ -241,7 +240,7 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                     }
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
                         {userImages && userImages?.map((image: UserImage) => (
-                            <div className="relative w-[80%] mx-auto">
+                            <div className="relative w-[80%] mx-auto" key={image.id}>
                                 <figure>
                                     <IoMdClose
                                         size={24}
@@ -249,7 +248,7 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                                         onClick={() => deleteUserImage(image.id)}
                                     />
                                     <NextImage
-                                        onClick={() => { onClickHandler(image.url); router.back() }}
+                                        onClick={() => { onClickHandler(image); router.back() }}
                                         src={image.url}
                                         width={parseInt(image.width)}
                                         height={parseInt(image.height)}

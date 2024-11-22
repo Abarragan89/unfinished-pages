@@ -13,20 +13,16 @@ export default function CreateBlog() {
     async function createBlogHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setIsCreating(true)
-        axios({
-            method: 'post',
-            url: '/api/authorRoutes',
-            data: {
-                title: blogTitle.trim()
-            }
-        })
-            .then(({ data }) => {
-                setIsCreating(false);
-                router.replace(`/editBlog/${data.blog.id}`)
-            })
-            .catch(error => {
-                console.log('error creating blog', error);
+        try {
+            const { data } = await axios.post('/api/authorRoutes', {
+                title: blogTitle.trim(),
             });
+
+            setIsCreating(false);
+            router.replace(`/editBlog/${data.blog.id}`);
+        } catch (error) {
+            console.error('Error creating blog', error);
+        }
     }
 
     return (

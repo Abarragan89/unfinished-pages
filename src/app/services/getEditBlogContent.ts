@@ -26,7 +26,16 @@ export default async function getEditBlogContents(userId: string, blogId: string
                     orderBy: { orderNumber: 'asc' },
                     select: {
                         type: true,
-                        url: true,
+                        image: {
+                            select: {
+                                id: true,
+                                alt: true,
+                                width: true,
+                                height: true,
+                                url: true,
+                                isBlogCover: true
+                            }
+                        },
                         children: {
                             select: {
                                 text: true,
@@ -48,6 +57,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 },
             },
         })
+        console.log('blog data in service ', blogData)
         return blogData;
     } catch (error) {
         console.log('error getting blog data', error)

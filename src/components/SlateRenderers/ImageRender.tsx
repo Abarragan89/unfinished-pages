@@ -4,14 +4,18 @@ import Image from "next/image";
 // Define the type for your component's props
 type SlateProps = RenderElementProps
 // Component to render image elements
-export default function ImageRender({ children, attributes, element }: SlateProps) {
+export default function ImageRender({ attributes, element }: SlateProps) {
     return (
         <div {...attributes}>
-            <div>
-                {/* @ts-expect-error: Slate Rich Text Error */}
-                <Image src={element.url} alt="Slate Image" className='mx-auto' width={350} height={275} />
-            </div>
-            {children}
+            {element.type === 'image' && (
+                <Image
+                    src={element.image.url}
+                    alt={element.image.alt}
+                    className="mx-auto"
+                    width={parseInt(element.image.width)}
+                    height={parseInt(element.image.height)}
+                />
+            )}
         </div>
     )
 }

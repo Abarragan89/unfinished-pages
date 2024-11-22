@@ -23,20 +23,5 @@ export async function POST(request: NextRequest) {
     }
 }
 
-// Get the blod
-export async function GET(request: NextRequest) {
-    try {
-        const userId = request.headers.get('x-user-id');
-        if (!userId) {
-            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
-        }
-        const blogs = await prisma.blog.findMany();
-
-        return NextResponse.json({ data: blogs })
-    } catch (error) {
-        console.error('Error saving Blog Content ', error);
-        return NextResponse.json({ error: 'failed to parse blog content' })
-    }
-}
 
 

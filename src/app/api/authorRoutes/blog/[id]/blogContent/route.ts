@@ -19,11 +19,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
         await Promise.all(
             content.map(async (content: BlogContent, index: number) => {
+                console.log('content in route', content)
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
                         type: content.type,
-                        url: content.url || null,
+                        imageId: content?.image?.id || null,
                         orderNumber: index,
                         children: {
                             create: content.children.map((detail) => ({

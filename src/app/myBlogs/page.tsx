@@ -11,8 +11,11 @@ import ScrollToTop from "@/components/ScrollToTop";
 export default async function page() {
     const headersList = headers()
     const userId = headersList.get('x-user-id')
-    const blogs = await prisma.blog.findMany({ where: { userId: userId as string } });
-
+    const blogs = await prisma.blog.findMany(
+        {
+            where: { userId: userId as string },
+            orderBy: { createdAt: 'desc' }
+        });
     return (
         <main className="pt-[30px] min-h-[100vh]">
             <ScrollToTop />
@@ -47,22 +50,3 @@ export default async function page() {
         </main>
     )
 }
-
-
-// TODO
-// get create blog handler to move to edit page
-// add icon spinner to button
-// create edit page and render data
-// complete form to edit all blog data (title, description, keywords, categories or tags) 
-// add a-tags in rich text editor
-// add videos in rich text editor
-// publish button in edit page
-// start using SWR or React Query
-// 8. Save Data
-// 9. Render data on Draft mode
-// 10. Render data on Blog page
-// 11. Show user their own blogs
-// 12 make blogs editable
-// 13. TEST
-// 14 Make 20 blogs
-// 15. Google Ads

@@ -1,3 +1,5 @@
+import { UserImage } from "./users";
+
 export interface BlogData {
     id: string;
     title: string;
@@ -28,5 +30,5 @@ export interface BlogDetails {
 export interface BlogContent {
     type: string
     children: BlogDetails[]
-    url?: string
+    image: UserImage
 }

@@ -30,11 +30,12 @@ import { RiH2 } from "react-icons/ri";
 import { PiListNumbersLight } from "react-icons/pi";
 import { RxListBullet } from "react-icons/rx";
 import { IoMdCode } from "react-icons/io";
+import { UserImage } from '../../../types/users';
 
 // Slate Typescript
 type CustomElement =
     | { type: 'paragraph'; children: CustomText[] }
-    | { type: 'image'; children: CustomText[]; url: string }
+    | { type: 'image'; children: CustomText[]; image: UserImage }
     | { type: 'code'; children: CustomText[] }
     | { type: 'numbered-list'; children: { type: 'list-item'; children: CustomText[] }[] }
     | { type: 'list-item'; children: CustomText[] }
@@ -137,14 +138,13 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         return editor;
     };
 
-    const insertImage = (url: string) => {
-        const image: CustomElement = {
+    const insertImage = (image: UserImage) => {
+        const imageEl: CustomElement = {
             type: 'image',
-            url,
+            image,
             children: [{ text: '' }], // Images need at least one child to render correctly
         }
-        Transforms.insertNodes(editor, image);
-
+        Transforms.insertNodes(editor, imageEl);
         Transforms.insertNodes(editor, {
             type: 'paragraph',
             children: [{ text: '' }],
@@ -316,11 +316,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         }
     };
 
+
+    console.log('content ', content)
     return (
         <>
             <SideMenu
                 onClickHandler={insertImage}
-                setImageUrl={setImageUrl}
             />
             <InputBlockWrapper
                 subtitle='Blog Content'

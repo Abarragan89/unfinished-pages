@@ -19,11 +19,29 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                         })) || [],
                     })),
             };
-        } else {
+        } else if (block.type === 'image') {
+            return {
+                type: block.type,
+                children: block.children?.map(child => ({
+                    text: child.text || '',
+                    bold: child.bold || false,
+                    italic: child.italic || false,
+                    underline: child.underline || false,
+                })),
+                image: {
+                    id: block.image.id,
+                    url: block.image.url,
+                    alt: block.image.alt,
+                    width: block.image.width,
+                    height: block.image.height
+                }
+            }
+        }
+        else {
+            console.log('block ', block)
             // Handle non-list types
             return {
                 type: block.type || 'paragraph', // Default to 'paragraph' if type is missing
-                url: block?.url || null,
                 children: block.children?.map(child => ({
                     text: child.text || '',
                     bold: child.bold || false,

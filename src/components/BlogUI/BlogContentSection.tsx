@@ -114,14 +114,14 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         </pre>
                     )
                 } else if (block.type === 'image') {
-                    console.log('lbock ', block)
                     return (
                         <div key={index.toString()}>
                             <Image
-                                src={block.url as string}
-                                width={700}
-                                height={394}
-                                alt={'user alt tag'}
+                                src={block.image.url as string}
+                                width={parseInt(block.image.width)}
+                                height={parseInt(block.image.height)}
+                                alt={block.image.alt}
+                                className="w-full"
                             />
                         </div>
                     )
