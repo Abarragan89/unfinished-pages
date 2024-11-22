@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import NextImage from 'next/image';
 import axios from "axios";
 import { UserImage } from "../../../types/users";
+import SearchInput from "../FormInputs/SearchInput";
 
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
 export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
-    const [userImages, setUserImages] = useState<UserImage[]>([])
+    const [userImages, setUserImages] = useState<UserImage[] | null>(null)
     const [message, setMessage] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageWidth, setImageWidth] = useState<string>('')
@@ -52,21 +53,25 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                     },
                 }
             );
-            // Get the pictureURL
-            const { pictureURL } = data;
 
+            setUserImages(prev => [data.imageData, ...prev])
+            // Get the pictureURL
+
+            // const { pictureURL } = data;
             // save this for the selection of the photo
-            setImageUrl(pictureURL)
+            // setImageUrl(pictureURL)
             // set the url of the image to the Slate Editor
-            onClickHandler(pictureURL);
-            router.back();
-            setImagePreview(pictureURL);
+            // onClickHandler(pictureURL);
+            // router.back();
+
+            setImagePreview('');
+            setIsUploading(false);
             setMessage('');
+            setImageAlt('')
         } catch (error) {
             console.log('error uploading photo', error)
         }
     }
-
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -124,6 +129,20 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
         }
     }
 
+    async function deleteUserImage(imageId: string) {
+        try {
+            await axios.delete('/api/authorRoutes/blogImages', {
+                data: { imageId }
+            });
+
+            setUserImages((prev) => prev!.filter((img) => img.id !== imageId));
+
+        } catch (error) {
+            console.log('error deleting user Image ', error)
+        }
+
+    }
+
     useEffect(() => {
         if (sideMenu === 'addImage') {
             // get user imags
@@ -138,7 +157,7 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                 &&
                 <menu
                     ref={sideMenuRef}
-                    className="fixed z-20 top-0 bottom-0 left-0 border border-r-gray-300 bg-[var(--off-white)] w-[280px] animate-slideInFromLeft custom-low-lifted-shadow">
+                    className="fixed z-20 top-0 bottom-0 left-0 border border-r-gray-300 bg-[var(--off-white)] w-[350px] animate-slideInFromLeft custom-low-lifted-shadow">
                     <MdOutlineArrowBack
                         onClick={router.back}
                         size={25}
@@ -146,22 +165,21 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                     />
                     <form
                         onSubmit={(e) => onSubmitHandler(e)}
-                        className="flex flex-col items-center bg-white border border-[var(--gray-300)] mx-4 rounded-md py-5 custom-360-light-shadow mt-[50px]"
+                        className="flex flex-col items-center mx-4 rounded-md py-3 mt-[30px]"
                     >
                         {
                             imagePreview ?
                                 <div className="relative flex flex-col items-center">
                                     <IoMdClose
                                         size={20}
-                                        className="absolute top-0 right-[20px] bg-[var(--gray-500)] hover:cursor-pointer hover:bg-[var(--off-white)]"
+                                        className="absolute top-0 right-0 bg-[var(--brown-500)] text-[var(--off-white)] hover:cursor-pointer hover:text-[var(--brown-100)] rounded-bl-lg"
                                         onClick={() => setImagePreview(null)}
                                     />
                                     <NextImage
-                                        width={320}
-                                        height={180}
-                                        src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
+                                        width={300}
+                                        height={200}
+                                        src={imagePreview}
                                         alt="Preview"
-                                        className="px-5"
                                     />
                                     <div className="flex flex-col text-[.85rem] text-[var(--brown-500)] mt-3">
                                         <label htmlFor="photoAlt">
@@ -175,50 +193,74 @@ export default function SideMenu({ onClickHandler, setImageUrl }: Props) {
                                             className="input-browser-reset text-[.925rem] w-[190px] py-[3px] px-[8px] border border-[var(--brown-500)] text-[.9rem]"
                                             placeholder="" />
                                     </div>
-                                    <button className={`custom-small-btn mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                                        Add
+                                    <button className={`custom-small-btn mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'} ${isUpLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+                                        {isUpLoading ?
+                                            <PulseLoader
+                                                color={'white'}
+                                                loading={isUpLoading}
+                                                size={7}
+                                                aria-label="Loading Spinner"
+                                                data-testid="loader"
+
+                                            />
+                                            :
+                                            'Upload'
+                                        }
                                     </button>
                                 </div>
                                 :
-                                <label
-                                    className={`block w-[90%] mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
-                                    htmlFor="image-upload"
-                                >
-                                    {isUpLoading ?
-                                        <PulseLoader
-                                            color={'white'}
-                                            loading={isUpLoading}
-                                            size={7}
-                                            aria-label="Loading Spinner"
-                                            data-testid="loader"
-
-                                        />
-                                        :
-                                        'Add Photo'
-                                    }
-                                    <input
-                                        id="image-upload"
-                                        type="file"
-                                        className="hidden"
-                                        accept="image/jpeg, image/png, image/webp"
-                                        onChange={(e) => handleFileChange(e)}
+                                <>
+                                    <SearchInput 
+                                        placeholder="Search By Description"
+                                        inputWidth="full"
                                     />
-                                </label>
+
+                                    <label
+                                        className={`block w-[80%] mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
+                                        htmlFor="image-upload"
+                                    >
+                                        Upload Photo
+                                        <input
+                                            id="image-upload"
+                                            type="file"
+                                            className="hidden"
+                                            accept="image/jpeg, image/png, image/webp"
+                                            onChange={(e) => handleFileChange(e)}
+                                        />
+                                    </label>
+                                </>
+
                         }
                     </form>
 
                     {/* users images */}
-                    <section className="h-[100vh] overflow-y-scroll pb-[200px]">
+                    {userImages && userImages.length === 0 ?
+                        <h4 className="text-center text-[1.15rem] italic">No photos uploaded</h4>
+                        :
+                        <h4 className="text-center text-[1.15rem] text-[var(--brown-500)] tracking-wider">Photo Collection</h4>
+                    }
+                    <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
                         {userImages && userImages?.map((image: UserImage) => (
-                            <NextImage
-                                src={image.url}
-                                width={parseInt(image.width)}
-                                height={parseInt(image.height)}
-                                alt={image.alt}
-                                className="max-w-[80%] m-2 mx-auto"
-                            />
+                            <div className="relative w-[80%] mx-auto">
+                                <figure>
+                                    <IoMdClose
+                                        size={24}
+                                        className="absolute top-[11px] p-1 right-[3px] bg-[var(--brown-500)] text-[var(--off-white)] hover:cursor-pointer hover:text-[var(--brown-100)] rounded-bl-md"
+                                        onClick={() => deleteUserImage(image.id)}
+                                    />
+                                    <NextImage
+                                        onClick={() => { onClickHandler(image.url); router.back() }}
+                                        src={image.url}
+                                        width={parseInt(image.width)}
+                                        height={parseInt(image.height)}
+                                        alt={image.alt}
+                                        className="w-full m-2 mx-auto hover:cursor-pointer border-[3px] border-transparent hover:border-[var(--brown-300)]"
+                                    />
+                                </figure>
+                            </div>
                         ))}
                     </section>
+
                 </menu>
             }
         </>

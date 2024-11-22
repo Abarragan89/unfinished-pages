@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
             const pictureURL = await uploadFileToS3(buffer, imageFile.name)
 
             // Save image to database and attach to User
-            await prisma.image.create({
+            const imageData = await prisma.image.create({
                 data: {
                     userId,
                     url: pictureURL,
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
             })
 
             // return the HTML string returned from s3 Bucket to assign
-            return NextResponse.json({ pictureURL }, { status: 200 })
+            return NextResponse.json({ pictureURL, imageData }, { status: 200 })
             // Proceed with buffer processing
         } else {
             throw new Error("Expected file to be a File object");

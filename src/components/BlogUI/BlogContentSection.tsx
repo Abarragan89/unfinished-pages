@@ -2,6 +2,7 @@ import { BlogContent, BlogDetails, NestedListChildren } from "../../../types/blo
 import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
+    console.log('blog content ', blogContent)
     return (
         <div className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}
@@ -9,7 +10,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                 const validChildren = block.children.filter(
                     (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
                 );
-                if (validChildren.length === 0) return;
+                if (validChildren.length === 0 && block.type !== 'image') return;
                 if (block.type === 'paragraph') {
                     return (
                         <p
@@ -113,6 +114,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         </pre>
                     )
                 } else if (block.type === 'image') {
+                    console.log('lbock ', block)
                     return (
                         <div key={index.toString()}>
                             <Image

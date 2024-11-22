@@ -108,7 +108,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                 `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
                 { pictureURL }
             )
-            
+
             setImagePreview(pictureURL);
             setMessage('');
         } catch (error) {
@@ -158,7 +158,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                             height={200}
                             src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
                             alt="Preview"
-                            className="mx-auto mt-5"
+                            className="mx-auto mt-5 w-auto h-auto"
                         />
                     </>
                     :
