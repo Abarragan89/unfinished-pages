@@ -250,8 +250,8 @@ export default function SideMenu({ onClickHandler }: Props) {
                                     <NextImage
                                         onClick={() => { onClickHandler(image); router.back() }}
                                         src={image.url}
-                                        width={parseInt(image.width)}
-                                        height={parseInt(image.height)}
+                                        width={image.width}
+                                        height={image.height}
                                         alt={image.alt}
                                         className="w-full m-2 mx-auto hover:cursor-pointer border-[3px] border-transparent hover:border-[var(--brown-300)]"
                                     />

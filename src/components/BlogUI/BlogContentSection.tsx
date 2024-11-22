@@ -118,8 +118,8 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         <div key={index.toString()}>
                             <Image
                                 src={block.image.url as string}
-                                width={parseInt(block.image.width)}
-                                height={parseInt(block.image.height)}
+                                width={block.image.width}
+                                height={block.image.height}
                                 alt={block.image.alt}
                                 className="w-full"
                             />

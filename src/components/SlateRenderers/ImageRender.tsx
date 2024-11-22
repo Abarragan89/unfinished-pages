@@ -12,8 +12,8 @@ export default function ImageRender({ attributes, element }: SlateProps) {
                     src={element.image.url}
                     alt={element.image.alt}
                     className="mx-auto"
-                    width={parseInt(element.image.width)}
-                    height={parseInt(element.image.height)}
+                    width={element.image.width}
+                    height={element.image.height}
                 />
             )}
         </div>

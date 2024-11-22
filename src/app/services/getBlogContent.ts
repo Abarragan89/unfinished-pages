@@ -37,6 +37,7 @@ export default async function getBlogContent(userId: string, blogId: string) {
                         type: true,
                         image: {
                             select: {
+                                id: true,
                                 alt: true,
                                 width: true,
                                 height: true,

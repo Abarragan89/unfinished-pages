@@ -20,7 +20,7 @@ export interface UserImage {
     id: string;
     url: string;
     alt: string;
-    width: string;
-    height: string;
-    isCoverImage: string;
+    width: number;
+    height: number;
+    isBlogCover: boolean;
 }
