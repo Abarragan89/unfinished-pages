@@ -93,7 +93,7 @@ model Blog {
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   publishedDate DateTime  @default(now()) 
-  updatedAt DateTime @default(now()) 
+  updatedAt DateTime? @default(now()) 
 }
 
 model ContentBlock {
@@ -101,6 +101,7 @@ model ContentBlock {
   orderNumber Int
   type String
   children ContentBlockDetails[]
+  url String?
   imageId   String?
   blogId String
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
