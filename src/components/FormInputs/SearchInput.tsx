@@ -2,7 +2,7 @@ import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
 
 
-export default function SearchInput({ placeholder, inputWidth }: { placeholder: string, inputWidth: string }) {
+export default function SearchInput({ placeholder, inputWidth }: { placeholder: string, inputWidth?: string }) {
     return (
 
         <>
