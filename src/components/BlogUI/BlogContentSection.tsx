@@ -114,17 +114,19 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         </pre>
                     )
                 } else if (block.type === 'image') {
-                    return (
-                        <div key={index.toString()}>
-                            <Image
-                                src={block.image.url as string}
-                                width={block.image.width}
-                                height={block.image.height}
-                                alt={block.image.alt}
-                                className="w-full"
-                            />
-                        </div>
-                    )
+                    if (block.image) {
+                        return (
+                            <div key={index.toString()}>
+                                <Image
+                                    src={block.image.url as string}
+                                    width={block.image.width}
+                                    height={block.image.height}
+                                    alt={block.image.alt}
+                                    className="w-full"
+                                />
+                            </div>
+                        )
+                    }
                 }
             })}
         </div>
