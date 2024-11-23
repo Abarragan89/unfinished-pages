@@ -30,5 +30,5 @@ export interface BlogDetails {
 export interface BlogContent {
     type: string
     children: BlogDetails[]
-    image: UserImage
+    image?: UserImage
 }
