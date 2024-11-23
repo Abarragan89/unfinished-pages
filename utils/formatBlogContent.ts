@@ -19,7 +19,7 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                         })) || [],
                     })),
             };
-        } else if (block.type === 'image') {
+        } else if (block.type === 'image' && block.image) {
             return {
                 type: block.type,
                 children: block.children?.map(child => ({
