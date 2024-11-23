@@ -2,12 +2,11 @@
   Warnings:
 
   - You are about to drop the column `url` on the `ContentBlock` table. All the data in the column will be lost.
-  - Added the required column `updatedAt` to the `Blog` table without a default value. This is not possible if the table is not empty.
 
 */
 -- AlterTable
-ALTER TABLE "Blog" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "updatedAt" TIMESTAMP(3);
+ALTER TABLE "Blog" ADD COLUMN     "publishedDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 -- AlterTable
 ALTER TABLE "ContentBlock" DROP COLUMN "url",

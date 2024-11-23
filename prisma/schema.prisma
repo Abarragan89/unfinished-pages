@@ -101,7 +101,6 @@ model ContentBlock {
   orderNumber Int
   type String
   children ContentBlockDetails[]
-  url String?
   imageId   String?
   blogId String
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
