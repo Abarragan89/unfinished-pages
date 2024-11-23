@@ -105,7 +105,7 @@ model ContentBlock {
   imageId   String?
   blogId String
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
-  image  Image? @relation(fields: [imageId], references: [id])
+  image  Image? @relation(fields: [imageId], references: [id])  
 }
 
 model ContentBlockDetails {
