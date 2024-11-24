@@ -23,14 +23,32 @@ export async function DELETE(request: NextRequest) {
         const userId = request.headers.get('x-user-id');
         if (!userId) return NextResponse.json({ error: 'user not logged in' }, { status: 403 });
 
-        const userImages = await prisma.image.delete({
-            where: { id: imageId }
-        })
+        // Search all blogs where the image is used
+        const blogsUsingImage = await prisma.blog.findMany({
+            where: {
+                content: {
+                    some: {
+                        type: 'image',
+                        imageId: imageId,
+                    },
+                },
+            },
+            select: {
+                id: true,
+                title: true,
+            },
+        });
 
-        console.log('data in delte route ', imageId)
-        console.log('data in delte route ', typeof imageId)
-
-        return NextResponse.json({ message: 'yes' }, { status: 200 })
+        // if  image is not in use, delete it
+        if (blogsUsingImage.length === 0) {
+            // await prisma.image.delete({
+            //     where: { id: imageId }
+            // })
+            return NextResponse.json({ blogs: [] }, { status: 200 });
+            // or else, give back the blog titles
+        } else {
+            return NextResponse.json({ blogs: blogsUsingImage }, { status: 200 });
+        }
     } catch (error) {
         console.log('error getting user images', error)
     }

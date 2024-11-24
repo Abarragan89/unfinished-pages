@@ -7,7 +7,7 @@ type SlateProps = RenderElementProps
 export default function ImageRender({ attributes, element }: SlateProps) {
     return (
         <div {...attributes}>
-            {element.type === 'image' && (
+            {element.type === 'image' && element?.image?.url ? (
                 <Image
                     src={element.image.url}
                     alt={element.image.alt}
@@ -15,7 +15,12 @@ export default function ImageRender({ attributes, element }: SlateProps) {
                     width={element.image.width}
                     height={element.image.height}
                 />
-            )}
+            )
+                :
+                (
+                    <p>Broken Image Link.</p>
+                )
+            }
         </div>
     )
 }

@@ -39,6 +39,7 @@ export default function CreateBlog() {
                         onChange={(e) => setBlogTitle(e.target.value)}
                         className="input-browser-reset p-[6px] border border-[var(--brown-500)] text-[.9rem]"
                         id="blog-title"
+                        autoFocus
                         maxLength={65}
                         required
                         rows={1}

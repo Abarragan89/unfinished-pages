@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { useRouter, useSearchParams } from 'next/navigation';
+import Link from "next/link";
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { MdOutlineArrowBack } from "react-icons/md";
 import PulseLoader from "react-spinners/PulseLoader";
 import { IoMdClose } from "react-icons/io";
@@ -8,7 +9,9 @@ import NextImage from 'next/image';
 import axios from "axios";
 import { UserImage } from "../../../types/users";
 import SearchInput from "../FormInputs/SearchInput";
-
+import { BsThreeDots } from "react-icons/bs";
+import ModalWrapper from "../Modals/ModalWrapper";
+import { BlogData } from "../../../types/blog";
 
 interface Props {
     onClickHandler: (image: UserImage) => void;
@@ -19,6 +22,7 @@ export default function SideMenu({ onClickHandler }: Props) {
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [userImages, setUserImages] = useState<UserImage[] | null>(null)
     const [message, setMessage] = useState<string>("");
+    const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([])
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageWidth, setImageWidth] = useState<string>('')
     const [imageHeight, setImageHeight] = useState<string>('')
@@ -30,6 +34,7 @@ export default function SideMenu({ onClickHandler }: Props) {
     const router = useRouter();
     const params = useSearchParams();
     const sideMenu = params.get('sideMenu')
+    const pathname = usePathname();
 
     async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -52,17 +57,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                     },
                 }
             );
-
             setUserImages(prev => [data.imageData, ...(prev || [])])
-            // Get the pictureURL
-
-            // const { pictureURL } = data;
-            // save this for the selection of the photo
-            // setImageUrl(pictureURL)
-            // set the url of the image to the Slate Editor
-            // onClickHandler(pictureURL);
-            // router.back();
-
             setImagePreview('');
             setIsUploading(false);
             setMessage('');
@@ -120,7 +115,6 @@ export default function SideMenu({ onClickHandler }: Props) {
     async function getUserImages() {
         try {
             const { data } = await axios.get('/api/authorRoutes/blogImages');
-
             setUserImages(data.userImages)
             console.log('data in fetch ', data)
         } catch (error) {
@@ -130,11 +124,21 @@ export default function SideMenu({ onClickHandler }: Props) {
 
     async function deleteUserImage(imageId: string) {
         try {
-            await axios.delete('/api/authorRoutes/blogImages', {
+            const { data } = await axios.delete('/api/authorRoutes/blogImages', {
                 data: { imageId }
             });
 
-            setUserImages((prev) => prev!.filter((img) => img.id !== imageId));
+            // delete blog if not being used in Blog
+            if (data.blogs.length === 0) {
+                setUserImages((prev) => prev!.filter((img) => img.id !== imageId));
+                // or else, show modal with blogs title and links to change 
+            } else {
+                setBlogTitlesUsingImage(data.blogs)
+                router.push(`${pathname}?showModal=cannotDeleteImage`, {
+                    scroll: false,
+                })
+            }
+
 
         } catch (error) {
             console.log('error deleting user Image ', error)
@@ -152,6 +156,24 @@ export default function SideMenu({ onClickHandler }: Props) {
 
     return (
         <>
+            <ModalWrapper
+                title="Image is in use. Please delete it from the following blogs"
+                urlParam="cannotDeleteImage"
+            >
+                <>
+                    {blogTitlesUsingImage.map((blog: BlogData) => (
+                        <Link
+                            key={blog.id}
+                            href={`/editBlog/${blog.id}`}
+                            className="underline text-center block"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {blog.title}
+                        </Link>
+                    ))}
+                </>
+            </ModalWrapper>
             {sideMenu === 'addImage'
                 &&
                 <menu
@@ -179,6 +201,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         height={200}
                                         src={imagePreview}
                                         alt="Preview"
+                                        className="rounded-sm"
                                     />
                                     <div className="flex flex-col text-[.85rem] text-[var(--brown-500)] mt-3">
                                         <label htmlFor="photoAlt">
@@ -234,28 +257,31 @@ export default function SideMenu({ onClickHandler }: Props) {
 
                     {/* users images */}
                     {userImages && userImages.length === 0 ?
-                        <h4 className="text-center text-[1.15rem] italic">No photos uploaded</h4>
+                        <h4 className="text-center text-[1.1rem] border-[var(--gray-300)] italic border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">No photos uploaded</h4>
                         :
-                        <h4 className="text-center text-[1.15rem] text-[var(--brown-500)] tracking-wider">Photo Collection</h4>
+                        <h4 className="text-center text-[1.15rem] tracking-wider border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">Photo Collection</h4>
                     }
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
                         {userImages && userImages?.map((image: UserImage) => (
                             <div className="relative w-[80%] mx-auto" key={image.id}>
-                                <figure>
-                                    <IoMdClose
-                                        size={24}
-                                        className="absolute top-[11px] p-1 right-[3px] bg-[var(--brown-500)] text-[var(--off-white)] hover:cursor-pointer hover:text-[var(--brown-100)] rounded-bl-md"
+                                <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
+                                    <BsThreeDots
+                                        size={28}
+                                        className="absolute top-[25px] right-[8px] w-[30px] opacity-90 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
                                         onClick={() => deleteUserImage(image.id)}
                                     />
                                     <NextImage
-                                        onClick={() => { onClickHandler(image); router.back() }}
+                                        onClick={() => {
+                                            onClickHandler(image);
+                                            router.back();
+                                        }}
                                         src={image.url}
                                         width={image.width}
                                         height={image.height}
                                         alt={image.alt}
-                                        className="w-full m-2 mx-auto hover:cursor-pointer border-[3px] border-transparent hover:border-[var(--brown-300)]"
                                     />
                                 </figure>
+
                             </div>
                         ))}
                     </section>
