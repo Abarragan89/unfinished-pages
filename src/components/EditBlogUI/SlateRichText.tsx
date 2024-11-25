@@ -315,9 +315,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             setIsContentSaving(false); // Ensure this always runs
         }
     };
-
-
-    console.log('content ', content)
+    
     return (
         <>
             <SideMenu

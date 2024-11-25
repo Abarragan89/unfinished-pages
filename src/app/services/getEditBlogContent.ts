@@ -57,7 +57,6 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 },
             },
         })
-        console.log('blog data in service ', blogData)
         return blogData;
     } catch (error) {
         console.log('error getting blog data', error)

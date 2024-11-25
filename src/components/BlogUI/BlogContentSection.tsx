@@ -2,7 +2,6 @@ import { BlogContent, BlogDetails, NestedListChildren } from "../../../types/blo
 import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
-    console.log('blog content ', blogContent)
     return (
         <div className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}

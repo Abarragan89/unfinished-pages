@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { MdOutlineArrowBack } from "react-icons/md";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -10,8 +9,8 @@ import axios from "axios";
 import { UserImage } from "../../../types/users";
 import SearchInput from "../FormInputs/SearchInput";
 import { BsThreeDots } from "react-icons/bs";
-import ModalWrapper from "../Modals/ModalWrapper";
-import { BlogData } from "../../../types/blog";
+import CannotDeleteModal from "../Modals/CannotDeleteModal";
+import DeletePhotoSubMenu from "./DeletePhotoSubMenu";
 
 interface Props {
     onClickHandler: (image: UserImage) => void;
@@ -25,6 +24,7 @@ export default function SideMenu({ onClickHandler }: Props) {
     const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([])
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageWidth, setImageWidth] = useState<string>('')
+    const [showDeleteMenu, setShowDeleteMenu] = useState<string>('')
     const [imageHeight, setImageHeight] = useState<string>('')
     const [imageAlt, setImageAlt] = useState<string>('')
     const [file, setFile] = useState<File | null>(null)
@@ -34,6 +34,7 @@ export default function SideMenu({ onClickHandler }: Props) {
     const router = useRouter();
     const params = useSearchParams();
     const sideMenu = params.get('sideMenu')
+    const showModal = params.get('showModal')
     const pathname = usePathname();
 
     async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -96,33 +97,18 @@ export default function SideMenu({ onClickHandler }: Props) {
         };
     }
 
-    // Handle clicks outside of the menu to close menu
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (
-                sideMenuRef.current &&
-                !sideMenuRef.current.contains(event.target as Node)
-            ) {
-                router.back();
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
 
     async function getUserImages() {
         try {
             const { data } = await axios.get('/api/authorRoutes/blogImages');
             setUserImages(data.userImages)
-            console.log('data in fetch ', data)
         } catch (error) {
 
         }
     }
 
     async function deleteUserImage(imageId: string) {
+        console.log('image id ', imageId)
         try {
             const { data } = await axios.delete('/api/authorRoutes/blogImages', {
                 data: { imageId }
@@ -134,7 +120,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                 // or else, show modal with blogs title and links to change 
             } else {
                 setBlogTitlesUsingImage(data.blogs)
-                router.push(`${pathname}?showModal=cannotDeleteImage`, {
+                router.push(`${pathname}?sideMenu=addImage&showModal=cannotDeleteImage`, {
                     scroll: false,
                 })
             }
@@ -156,24 +142,10 @@ export default function SideMenu({ onClickHandler }: Props) {
 
     return (
         <>
-            <ModalWrapper
-                title="Image is in use. Please delete it from the following blogs"
-                urlParam="cannotDeleteImage"
-            >
-                <>
-                    {blogTitlesUsingImage.map((blog: BlogData) => (
-                        <Link
-                            key={blog.id}
-                            href={`/editBlog/${blog.id}`}
-                            className="underline text-center block"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {blog.title}
-                        </Link>
-                    ))}
-                </>
-            </ModalWrapper>
+            <CannotDeleteModal
+                blogsUsingImage={blogTitlesUsingImage}
+            />
+
             {sideMenu === 'addImage'
                 &&
                 <menu
@@ -264,11 +236,21 @@ export default function SideMenu({ onClickHandler }: Props) {
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
                         {userImages && userImages?.map((image: UserImage) => (
                             <div className="relative w-[80%] mx-auto" key={image.id}>
+                                {
+                                    showDeleteMenu === image.id &&
+                                    <DeletePhotoSubMenu
+                                        closeMenuState={setShowDeleteMenu}
+                                        photoId={image.id}
+                                        onClickHandler={deleteUserImage}
+                                    />
+                                }
                                 <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
+
                                     <BsThreeDots
-                                        size={28}
-                                        className="absolute top-[25px] right-[8px] w-[30px] opacity-90 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
-                                        onClick={() => deleteUserImage(image.id)}
+                                        size={25}
+                                        className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
+                                        onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
+
                                     />
                                     <NextImage
                                         onClick={() => {

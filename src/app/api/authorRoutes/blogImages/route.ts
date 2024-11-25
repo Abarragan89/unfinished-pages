@@ -41,9 +41,9 @@ export async function DELETE(request: NextRequest) {
 
         // if  image is not in use, delete it
         if (blogsUsingImage.length === 0) {
-            // await prisma.image.delete({
-            //     where: { id: imageId }
-            // })
+            await prisma.image.delete({
+                where: { id: imageId }
+            })
             return NextResponse.json({ blogs: [] }, { status: 200 });
             // or else, give back the blog titles
         } else {

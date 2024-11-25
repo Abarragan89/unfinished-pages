@@ -19,7 +19,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
         await Promise.all(
             content.map(async (content: BlogContent, index: number) => {
-                console.log('content in route', content)
                 return prisma.contentBlock.create({
                     data: {
                         blogId,

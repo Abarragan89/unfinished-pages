@@ -38,7 +38,6 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
             }
         }
         else {
-            console.log('block ', block)
             // Handle non-list types
             return {
                 type: block.type || 'paragraph', // Default to 'paragraph' if type is missing
