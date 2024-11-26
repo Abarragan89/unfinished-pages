@@ -27,7 +27,7 @@ export default function CreateBlog() {
 
     return (
         <ModalWrapper
-            title="Give your new blog a title"
+            title="Blog Title"
             urlParam="createBlog"
         >
             <form
@@ -35,15 +35,13 @@ export default function CreateBlog() {
                 className="flex flex-col items-center"
             >
                 <div className="flex flex-col">
-                    <textarea
+                    <input
                         onChange={(e) => setBlogTitle(e.target.value)}
-                        className="input-browser-reset p-[6px] border border-[var(--brown-500)] text-[.9rem]"
+                        className="input-browser-reset w-[260px] p-[6px] border border-[var(--brown-500)] text-[.9rem]"
                         id="blog-title"
                         autoFocus
                         maxLength={65}
                         required
-                        rows={1}
-                        cols={30}
                     />
                     <div className="flex justify-between mx-1 text-[.95rem]">
                         <p className="text-[.9rem] text-[var(--gray-600)] italic">Title can be edited later</p>

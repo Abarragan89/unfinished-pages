@@ -1,6 +1,7 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range, insertText } from 'slate'
+import { useRouter } from 'next/navigation';
+import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { usePathname } from 'next/navigation';
@@ -20,6 +21,7 @@ import BulletedList from '@/components/SlateRenderers/BulletedList';
 import ImageRender from '../SlateRenderers/ImageRender';
 import InputBlockWrapper from './InputBlockWrapper';
 
+
 // import Button Icons for ToolBar
 import { CiImageOn } from "react-icons/ci";
 import { BiBold } from "react-icons/bi";
@@ -32,6 +34,7 @@ import { RxListBullet } from "react-icons/rx";
 import { IoMdCode } from "react-icons/io";
 import { IoMdLink } from "react-icons/io";
 import { UserImage } from '../../../types/users';
+import InsertSlateLink from '../Modals/InsertSlateLink';
 
 // Slate Typescript
 type CustomElement =
@@ -62,8 +65,9 @@ interface Props {
 
 export default function SlateRichText({ blogId, blogContent }: Props) {
 
+    const router = useRouter();
     const pathname = usePathname();
-    const LIST_TYPES = ['numbered-list', 'bulleted-list']
+    const LIST_TYPES = ['numbered-list', 'bulleted-list', 'link']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
     const [chosenElement, setChosenElement] = useState<string>('');
     const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
@@ -348,6 +352,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 return <RxListBullet size={22} />
             case 'code':
                 return <IoMdCode />
+            case 'link':
+                return <IoMdLink size={22} />
             default:
                 return
         }
@@ -368,6 +374,11 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             </button>
         )
     }
+
+    function addAnchorLinkHandler(url: string) {
+        insertLink(editor, url);
+    }
+
     function BlockButton({ iconType }: { iconType: string }) {
         // need to useSlate so icons render correctly when clicking on text already formatted bold, etc.
         const editor = useSlate();
@@ -376,8 +387,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 className={`${toolBarButtonStyles}`}
                 style={isBlockActive(editor, iconType) ? toolBarItemChosen : undefined}
                 onMouseDown={(e) => {
-                    e.preventDefault();
-                    toggleBlock(editor, iconType)
+                    if (iconType === 'link' && !isLinkActive(editor)) {
+                        router.push(`${pathname}?showModal=addUrlLink`, { scroll: false })
+                    } else {
+                        e.preventDefault();
+                        toggleBlock(editor, iconType)
+                    }
                 }}>
                 <IconEl iconType={iconType} />
             </button>
@@ -416,6 +431,10 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             <SideMenu
                 onClickHandler={insertImage}
             />
+            <InsertSlateLink
+                addAnchorLinkHandler={addAnchorLinkHandler}
+            />
+
             <InputBlockWrapper
                 subtitle='Blog Content'
                 saveHandler={saveContent}
@@ -437,20 +456,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                                 <BlockButton iconType="numbered-list" />
                                 <BlockButton iconType="bulleted-list" />
                                 <BlockButton iconType="code" />
-                                {/* <BlockButton iconType="link" /> */}
-                                <button
-                                    className={`${toolBarButtonStyles}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const url = prompt('Enter the URL:');
-                                        if (url) {
-                                            insertLink(editor, url);
-                                        }
-                                    }
-                                    }
-                                >
-                                    <IoMdLink size={22} />
-                                </button>
+                                <BlockButton iconType="link" />
                                 <Link href={`${pathname}?sideMenu=addImage`}
                                     scroll={false}
                                     className={`${toolBarButtonStyles}`}>
