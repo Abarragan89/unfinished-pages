@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BlogContent, BlogDetails, NestedListChildren } from "../../../types/blog";
 import Image from "next/image";
 
@@ -10,24 +11,38 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
                 );
                 if (validChildren.length === 0 && block.type !== 'image') return;
+
                 if (block.type === 'paragraph') {
                     return (
                         <p
                             key={index.toString()}
                             className="py-3"
                         >
-                            {block.children.map((blockDetails: BlogDetails, subIndex: number) => (
-                                <span
-                                    key={index.toString() + subIndex.toString()}
-                                    className={`
+                            {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
+                                console.log('block details', blockDetails)
+                                if (blockDetails.type === 'link') {
+                                    return (
+                                        <Link
+                                            href={blockDetails.url as string}
+                                        >
+                                            {blockDetails.children?.map((linkText) => linkText.text)}
+                                        </Link>
+                                    )
+                                } else {
+                                    return (
+                                        <span
+                                            key={index.toString() + subIndex.toString()}
+                                            className={`
                                         ${blockDetails.bold ? 'font-bold' : ''}
                                         ${blockDetails.italic ? 'italic' : ''}
                                         ${blockDetails.underline ? 'underline' : ''}
                                     `}
-                                >
-                                    {blockDetails.text}
-                                </span>
-                            ))}
+                                        >
+                                            {blockDetails.text}
+                                        </span>
+                                    )
+                                }
+                            })}
                         </p>
                     );
                 } else if (block.type.includes('list')) {
@@ -112,7 +127,8 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                             </code>
                         </pre>
                     )
-                } else if (block.type === 'image') {
+                }
+                else if (block.type === 'image') {
                     if (block.image) {
                         return (
                             <div key={index.toString()}>
@@ -127,6 +143,24 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         )
                     }
                 }
+                // else if (block.type === 'link') {
+                //     return (
+                //         <a
+                //             key={index.toString()}
+                //             className="py-3"
+                //             href={block.url}
+                //         >
+                //             {block.children.map((blockDetails: BlogDetails, subIndex: number) => (
+                //                 <span
+                //                     key={index.toString() + subIndex.toString()}
+                //                     className='text-[var(--brown-300)] underline'
+                //                 >
+                //                     {blockDetails.text}
+                //                 </span>
+                //             ))}
+                //         </a>
+                //     )
+                // }
             })}
         </div>
     )

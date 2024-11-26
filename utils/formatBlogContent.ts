@@ -46,6 +46,14 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                     bold: child.bold || false,
                     italic: child.italic || false,
                     underline: child.underline || false,
+                    type: child.type,
+                    url: child.url,
+                    children: child.children?.map(nested => ({
+                        text: nested.text || '',
+                        bold: nested.bold || false,
+                        italic: nested.italic || false,
+                        underline: nested.underline || false,
+                    })) || [],
                 }))
             };
         }

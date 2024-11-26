@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor } from 'slate'
+import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { usePathname } from 'next/navigation';
@@ -30,6 +30,7 @@ import { RiH2 } from "react-icons/ri";
 import { PiListNumbersLight } from "react-icons/pi";
 import { RxListBullet } from "react-icons/rx";
 import { IoMdCode } from "react-icons/io";
+import { IoMdLink } from "react-icons/io";
 import { UserImage } from '../../../types/users';
 
 // Slate Typescript
@@ -41,7 +42,8 @@ type CustomElement =
     | { type: 'list-item'; children: CustomText[] }
     | { type: 'heading-one'; children: CustomText[] }
     | { type: 'heading-two'; children: CustomText[] }
-    | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] };
+    | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] }
+    | { type: 'link'; url: string; children: CustomText[], text: string };
 
 type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
 
@@ -63,14 +65,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list']
     const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
-    const [imageURL, setImageUrl] = useState<string>('');
-    const [imageAlt, setImageAlt] = useState<string>('');
     const [chosenElement, setChosenElement] = useState<string>('');
     const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
     const [isContentSaving, setIsContentSaving] = useState<boolean>(false);
 
     // Create the editor
-    const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
+    const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
     // Initial node if no content
     const initialValue: Descendant[] = [
@@ -108,6 +108,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 return <HeadingTwo {...props} />
             case 'image':
                 return <ImageRender {...props} />
+            case 'link': // Add rendering logic for links
+                return (
+                    <a className='underline text-[var(--brown-500)] inline' {...props.attributes} href={props.element.url} target="_blank" rel="noopener noreferrer">
+                        {props.children}
+                    </a>
+                );
             default:
                 return <DefaultBlock {...props} />
         }
@@ -137,6 +143,72 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         };
         return editor;
     };
+
+
+    function isLinkActive(editor: ReactEditor) {
+        const [link] = Editor.nodes(editor, {
+            match: n =>
+                !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === 'link',
+        })
+        return !!link
+    }
+
+    function unwrapLink(editor: ReactEditor) {
+        Transforms.unwrapNodes(editor, {
+            match: n =>
+                !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === 'link',
+        })
+    }
+
+    function wrapLink(editor: ReactEditor, url: string) {
+        if (isLinkActive(editor)) {
+            unwrapLink(editor)
+        }
+
+        const { selection } = editor
+        const isCollapsed = selection && Range.isCollapsed(selection)
+        const link: CustomElement = {
+            type: 'link',
+            url,
+            // children: isCollapsed ? [{ text: url }] : [],
+            text: ''
+        }
+
+        if (isCollapsed) {
+            Transforms.insertNodes(editor, link)
+        } else {
+            Transforms.wrapNodes(editor, link, { split: true })
+            Transforms.collapse(editor, { edge: 'end' })
+        }
+    }
+
+
+    function withInlines(editor: ReactEditor) {
+        const { isInline } = editor
+        editor.isInline = element =>
+            ['link'].includes(element.type) || isInline(element)
+
+        editor.insertText = text => {
+            if (text) {
+                wrapLink(editor, text)
+            }
+        }
+        editor.insertData = data => {
+            const text = data.getData('text/plain')
+            if (text) {
+                wrapLink(editor, text)
+            }
+        }
+        return editor
+    }
+
+    function insertLink(editor: ReactEditor, url: string) {
+        if (editor.selection) {
+            wrapLink(editor, url)
+        }
+    }
+
+    console.log('content in slate ', content)
 
     const insertImage = (image: UserImage) => {
         const imageEl: CustomElement = {
@@ -271,7 +343,10 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             <button
                 className={`${toolBarButtonStyles}`}
                 style={isMarkActive(editor, iconType) ? toolBarItemChosen : undefined}
-                onMouseDown={(e) => { e.preventDefault(); toggleMark(editor, iconType) }}>
+                onMouseDown={(e) => {
+                    e.preventDefault();
+                    toggleMark(editor, iconType)
+                }}>
                 <IconEl iconType={iconType} />
             </button>
         )
@@ -283,7 +358,10 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             <button
                 className={`${toolBarButtonStyles}`}
                 style={isBlockActive(editor, iconType) ? toolBarItemChosen : undefined}
-                onMouseDown={(e) => { e.preventDefault(); toggleBlock(editor, iconType) }}>
+                onMouseDown={(e) => {
+                    e.preventDefault();
+                    toggleBlock(editor, iconType)
+                }}>
                 <IconEl iconType={iconType} />
             </button>
         )
@@ -315,7 +393,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             setIsContentSaving(false); // Ensure this always runs
         }
     };
-    
+
     return (
         <>
             <SideMenu
@@ -342,6 +420,20 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                                 <BlockButton iconType="numbered-list" />
                                 <BlockButton iconType="bulleted-list" />
                                 <BlockButton iconType="code" />
+                                {/* <BlockButton iconType="link" /> */}
+                                <button
+                                    className={`${toolBarButtonStyles}`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        const url = prompt('Enter the URL:');
+                                        if (url) {
+                                            insertLink(editor, url);
+                                        }
+                                    }
+                                    }
+                                >
+                                    <IoMdLink size={22} />
+                                </button>
                                 <Link href={`${pathname}?sideMenu=addImage`}
                                     scroll={false}
                                     className={`${toolBarButtonStyles}`}>

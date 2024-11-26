@@ -24,11 +24,12 @@ export interface BlogDetails {
     underline?: boolean;
     children?: NestedListChildren[]
     type?: string;
-
+    url?: string;
 }
 
 export interface BlogContent {
     type: string
     children: BlogDetails[]
     image?: UserImage
+    url?: string;
 }

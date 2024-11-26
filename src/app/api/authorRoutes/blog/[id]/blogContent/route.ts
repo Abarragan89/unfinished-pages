@@ -19,6 +19,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
         await Promise.all(
             content.map(async (content: BlogContent, index: number) => {
+                console.log('content block ', content)
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
@@ -31,7 +32,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                                 bold: detail.bold || false,
                                 italic: detail.italic || false,
                                 underline: detail.underline || false,
-                                type: detail.type === 'list-item' ? detail.type : null, // if it's a list, set the listType
+                                type: detail.type || null,
+                                url: detail.url || null,
                                 children: detail.children ? {
                                     create: detail.children.map((item) => ({
                                         text: item.text || '',
