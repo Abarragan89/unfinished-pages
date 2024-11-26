@@ -23,6 +23,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     return (
                                         <Link
                                             href={blockDetails.url as string}
+                                            key={blockDetails.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
@@ -145,24 +146,6 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         )
                     }
                 }
-                // else if (block.type === 'link') {
-                //     return (
-                //         <a
-                //             key={index.toString()}
-                //             className="py-3"
-                //             href={block.url}
-                //         >
-                //             {block.children.map((blockDetails: BlogDetails, subIndex: number) => (
-                //                 <span
-                //                     key={index.toString() + subIndex.toString()}
-                //                     className='text-[var(--brown-300)] underline'
-                //                 >
-                //                     {blockDetails.text}
-                //                 </span>
-                //             ))}
-                //         </a>
-                //     )
-                // }
             })}
         </div>
     )
