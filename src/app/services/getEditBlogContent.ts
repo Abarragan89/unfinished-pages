@@ -42,6 +42,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
                                 bold: true,
                                 italic: true,
                                 underline: true,
+                                url: true,
                                 type: true,
                                 children: {
                                     select: {

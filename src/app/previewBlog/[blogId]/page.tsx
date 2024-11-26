@@ -28,13 +28,9 @@ export default async function page({ params }: { params: { blogId: string } }) {
         throw new Error('Could not find blog data')
     }
 
-    console.log('blog before formatting ', blogData)
-
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
 
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
-
-    console.log('consolidated data ', JSON.stringify(consolidatedData, null, 2))
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">

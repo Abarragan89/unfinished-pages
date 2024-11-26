@@ -19,7 +19,6 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                             className="py-3"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
-                                console.log('block details', blockDetails)
                                 if (blockDetails.type === 'link') {
                                     return (
                                         <Link

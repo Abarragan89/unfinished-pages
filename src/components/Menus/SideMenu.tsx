@@ -108,7 +108,6 @@ export default function SideMenu({ onClickHandler }: Props) {
     }
 
     async function deleteUserImage(imageId: string) {
-        console.log('image id ', imageId)
         try {
             const { data } = await axios.delete('/api/authorRoutes/blogImages', {
                 data: { imageId }

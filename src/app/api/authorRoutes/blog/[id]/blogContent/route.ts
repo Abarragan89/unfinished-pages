@@ -17,23 +17,23 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 where: { id: block.id }
             });
         }
+
         await Promise.all(
             content.map(async (content: BlogContent, index: number) => {
-                console.log('content block ', content)
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
-                        type: content.type,
+                        type: content.type, //paragraph
                         imageId: content?.image?.id || null,
                         orderNumber: index,
                         children: {
                             create: content.children.map((detail) => ({
+                                url: detail.url || null,
                                 text: detail.text || '',
                                 bold: detail.bold || false,
                                 italic: detail.italic || false,
                                 underline: detail.underline || false,
                                 type: detail.type || null,
-                                url: detail.url || null,
                                 children: detail.children ? {
                                     create: detail.children.map((item) => ({
                                         text: item.text || '',

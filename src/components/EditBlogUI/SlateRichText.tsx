@@ -86,7 +86,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     // Set the content to initial node or data from query
     const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContentToDescendantType(blogContent) : initialValue);
 
-
     const getPlainText = (editor: Editor) => {
         return Editor.string(editor, []);
     };
@@ -183,7 +182,21 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
 
     function withInlines(editor: ReactEditor) {
-        const { isInline, insertText } = editor
+        const { isInline, insertText, normalizeNode } = editor
+
+        // this normalization will remove the link element once it is erased
+        editor.normalizeNode = ([node, path]) => {
+            // @ts-expect-error: Slate Rich Text Error
+            if (node.type === 'link' && (!node.children || node.children.length === 0 || node.children[0].text === '')) {
+                // Remove the link if it has no text
+                Transforms.removeNodes(editor, { at: path });
+                return;
+            }
+
+            // Run the original normalize function
+            normalizeNode([node, path]);
+        };
+
         editor.isInline = element =>
             ['link'].includes(element.type) || isInline(element)
 
@@ -191,7 +204,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         const regex = /^https:\/\/[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})(:[0-9]{1,5})?(\/[^\s]*)?$/;
 
         editor.insertText = text => {
-            console.log('editor', editor)
             if (text && regex.test(text)) {
                 wrapLink(editor, text)
             } else {
@@ -214,8 +226,6 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             wrapLink(editor, url)
         }
     }
-
-    console.log('content in slate ', content)
 
     const insertImage = (image: UserImage) => {
         const imageEl: CustomElement = {
