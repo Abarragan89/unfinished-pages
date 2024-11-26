@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range } from 'slate'
+import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range, insertText } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { usePathname } from 'next/navigation';
@@ -43,7 +43,7 @@ type CustomElement =
     | { type: 'heading-one'; children: CustomText[] }
     | { type: 'heading-two'; children: CustomText[] }
     | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] }
-    | { type: 'link'; url: string; children: CustomText[], text: string };
+    | { type: 'link'; url: string; children: CustomText[] };
 
 type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
 
@@ -110,7 +110,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 return <ImageRender {...props} />
             case 'link': // Add rendering logic for links
                 return (
-                    <a className='underline text-[var(--brown-500)] inline' {...props.attributes} href={props.element.url} target="_blank" rel="noopener noreferrer">
+                    <a className='underline text-[var(--brown-500)] inline' {...props.attributes} href={props.element.url}>
                         {props.children}
                     </a>
                 );
@@ -146,6 +146,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
 
     function isLinkActive(editor: ReactEditor) {
+        // @ts-expect-error: Slate Rich Text Error
         const [link] = Editor.nodes(editor, {
             match: n =>
                 !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === 'link',
@@ -164,14 +165,12 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         if (isLinkActive(editor)) {
             unwrapLink(editor)
         }
-
         const { selection } = editor
         const isCollapsed = selection && Range.isCollapsed(selection)
         const link: CustomElement = {
             type: 'link',
             url,
-            // children: isCollapsed ? [{ text: url }] : [],
-            text: ''
+            children: isCollapsed ? [{ text: url }] : [{ text: '' }],
         }
 
         if (isCollapsed) {
@@ -184,19 +183,27 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
 
     function withInlines(editor: ReactEditor) {
-        const { isInline } = editor
+        const { isInline, insertText } = editor
         editor.isInline = element =>
             ['link'].includes(element.type) || isInline(element)
 
+        // check for valid URL string
+        const regex = /^https:\/\/[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})(:[0-9]{1,5})?(\/[^\s]*)?$/;
+
         editor.insertText = text => {
-            if (text) {
+            console.log('editor', editor)
+            if (text && regex.test(text)) {
                 wrapLink(editor, text)
+            } else {
+                insertText(text)
             }
         }
         editor.insertData = data => {
             const text = data.getData('text/plain')
-            if (text) {
+            if (text && regex.test(text)) {
                 wrapLink(editor, text)
+            } else {
+                insertText(text)
             }
         }
         return editor

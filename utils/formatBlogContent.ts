@@ -38,23 +38,31 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
             }
         }
         else {
-            // Handle non-list types
             return {
-                type: block.type || 'paragraph', // Default to 'paragraph' if type is missing
-                children: block.children?.map(child => ({
-                    text: child.text || '',
-                    bold: child.bold || false,
-                    italic: child.italic || false,
-                    underline: child.underline || false,
-                    type: child.type,
-                    url: child.url,
-                    children: child.children?.map(nested => ({
-                        text: nested.text || '',
-                        bold: nested.bold || false,
-                        italic: nested.italic || false,
-                        underline: nested.underline || false,
-                    })) || [],
-                }))
+                type: block.type || 'paragraph',
+                children: block.children?.map(child => {
+                    if (child.type === 'link') {
+                        // Ensure links have valid children
+                        return {
+                            type: 'link',
+                            url: child.url || '',
+                            children: child.children?.map(nested => ({
+                                text: nested.text || '',
+                                bold: nested.bold || false,
+                                italic: nested.italic || false,
+                                underline: nested.underline || false,
+                            })) || [],
+                        };
+                    } else {
+                        // Text nodes
+                        return {
+                            text: child.text || '',
+                            bold: child.bold || false,
+                            italic: child.italic || false,
+                            underline: child.underline || false,
+                        };
+                    }
+                }) || [],
             };
         }
     }) as Descendant[];

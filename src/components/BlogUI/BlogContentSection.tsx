@@ -24,6 +24,9 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     return (
                                         <Link
                                             href={blockDetails.url as string}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
                                         >
                                             {blockDetails.children?.map((linkText) => linkText.text)}
                                         </Link>
