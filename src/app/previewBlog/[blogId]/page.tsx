@@ -27,7 +27,6 @@ export default async function page({ params }: { params: { blogId: string } }) {
     if (!blogData) {
         throw new Error('Could not find blog data')
     }
-    console.log('blog data in preview ', JSON.stringify(blogData, null, 2))
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
 

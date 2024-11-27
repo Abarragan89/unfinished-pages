@@ -7,7 +7,6 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
         <section className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
-                console.log('block content ', block)
                 const validChildren = block.children.filter(
                     (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
                 );
@@ -16,7 +15,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <p
                             key={index.toString()}
-                            className="py-3"
+                            className="py-2"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -51,7 +50,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                 } else if (block.type.includes('list')) {
                     return (
                         block.type === 'numbered-list' ? (
-                            <ol key={index.toString()} className="list-decimal ml-[50px] py-3">
+                            <ol key={index.toString()} className="list-decimal ml-[50px] py-2">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
@@ -86,7 +85,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                 ))}
                             </ol>
                         ) : (
-                            <ul key={index.toString()} className="list-disc ml-[50px] py-3">
+                            <ul key={index.toString()} className="list-disc ml-[50px] py-2">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
@@ -126,7 +125,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="text-[1.95rem] py-3 tracking-wide"
+                            className="text-[1.95rem] py-2 tracking-wide"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -196,7 +195,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     )
                 } else if (block.type === 'code') {
                     return (
-                        <pre key={`code-${index}`} className="overflow-x-auto bg-slate-700 leading-normal p-3 text-[var(--off-white)] text-[14px]">
+                        <pre key={`code-${index}`} className="overflow-x-auto bg-slate-700 leading-normal p-2 text-[var(--off-white)] text-[14px]">
                             <code>
                                 {block.children.map((blockDetails: BlogDetails) => blockDetails.text).join('\n')}
                             </code>
