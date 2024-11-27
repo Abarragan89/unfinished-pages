@@ -56,7 +56,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li key={index.toString() + subIndex.toString()}>
+                                                <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
                                                     <Link
                                                         href={listBlockDetails.url as string}
                                                         target="_blank"
@@ -67,19 +67,20 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                                     </Link>
                                                 </li>
                                             )
+                                        } else {
+                                            return (
+                                                <li
+                                                    key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                                                    className={`
+                                                        ${listBlockDetails.bold ? 'font-bold' : ''}
+                                                        ${listBlockDetails.italic ? 'italic' : ''}
+                                                        ${listBlockDetails.underline ? 'underline' : ''}
+                                                    `}
+                                                >
+                                                    {listBlockDetails.text}
+                                                </li>
+                                            )
                                         }
-                                        return (
-                                            <li
-                                                key={index.toString() + subIndex.toString() + subSubIndex.toString()}
-                                                className={`
-                                                    ${listBlockDetails.bold ? 'font-bold' : ''}
-                                                    ${listBlockDetails.italic ? 'italic' : ''}
-                                                    ${listBlockDetails.underline ? 'underline' : ''}
-                                                `}
-                                            >
-                                                {listBlockDetails.text}
-                                            </li>
-                                        )
                                     })
                                 ))}
                             </ol>
@@ -90,7 +91,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li key={index.toString() + subIndex.toString()}>
+                                                <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
                                                     <Link
                                                         href={listBlockDetails.url as string}
                                                         target="_blank"
@@ -101,19 +102,20 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                                     </Link>
                                                 </li>
                                             )
+                                        } else {
+                                            return (
+                                                <li
+                                                    key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                                                    className={`
+                                                        ${listBlockDetails.bold ? 'font-bold' : ''}
+                                                        ${listBlockDetails.italic ? 'italic' : ''}
+                                                        ${listBlockDetails.underline ? 'underline' : ''}
+                                                    `}
+                                                >
+                                                    {listBlockDetails.text}
+                                                </li>
+                                            )
                                         }
-                                        return (
-                                            <li
-                                                key={index.toString() + subIndex.toString() + subSubIndex.toString()}
-                                                className={`
-                                                    ${listBlockDetails.bold ? 'font-bold' : ''}
-                                                    ${listBlockDetails.italic ? 'italic' : ''}
-                                                    ${listBlockDetails.underline ? 'underline' : ''}
-                                                `}
-                                            >
-                                                {listBlockDetails.text}
-                                            </li>
-                                        )
                                     })
                                 ))}
                             </ul>

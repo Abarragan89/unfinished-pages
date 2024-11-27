@@ -65,8 +65,6 @@ interface Props {
 
 export default function SlateRichText({ blogId, blogContent }: Props) {
 
-    console.log('blogh content', JSON.stringify(blogContent, null, 2))
-
     const router = useRouter();
     const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list', 'link']
@@ -472,7 +470,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                             renderElement={renderElement}
                             renderLeaf={renderLeaf}
                             spellCheck
-                            className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md focus:outline-none overflow-y-auto overflow-x-hidden break-normal bg-white'
+                            className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md input-browser-reset focus:outline-[var(--brown-500)] custom-thin-scrollbar overflow-y-auto overflow-x-hidden break-normal bg-white'
                             onKeyDown={(event) => {
                                 if (event.metaKey || event.ctrlKey) {
                                     switch (event.key.toLowerCase()) {

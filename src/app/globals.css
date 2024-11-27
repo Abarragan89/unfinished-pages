@@ -161,8 +161,6 @@ html {
 
 /* Input Styles */
 .input-browser-reset {
-  /* background-color: var(--off-white); */
-  /* color: var(--brown-500); */
   border-radius: 4px;
   outline: none;
   box-shadow: none;
@@ -173,6 +171,7 @@ html {
 }
 
 .input-browser-reset:focus {
+  -webkit-border-color: var(--brown-500);
   border-color: var(--brown-500);
 }
 
@@ -181,4 +180,29 @@ html {
   opacity: 1;
   font-style: italic;
   font-weight: 300;
+}
+
+/* Style the scrollbar */
+.custom-thin-scrollbar {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: var(--brown-500) var(--gray-100); /* Thumb and track colors for Firefox */
+}
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+.custom-thin-scrollbar::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+
+.custom-thin-scrollbar::-webkit-scrollbar-track {
+  background: var(--gray-100); /* Background of the scrollbar track */
+  border-radius: 1px;
+}
+
+.custom-thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--brown-500); /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounds the corners of the thumb */
+}
+
+.custom-thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--brown-300); /* Thumb color when hovered */
 }
