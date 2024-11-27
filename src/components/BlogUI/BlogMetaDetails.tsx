@@ -12,8 +12,6 @@ interface Props {
 
 export default function BlogMetaDetails({
     title,
-    coverImgAlt,
-    coverImgURL,
     authorName,
     authorImgURL,
     readingLength,

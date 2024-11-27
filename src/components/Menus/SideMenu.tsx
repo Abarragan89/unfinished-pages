@@ -34,7 +34,6 @@ export default function SideMenu({ onClickHandler }: Props) {
     const router = useRouter();
     const params = useSearchParams();
     const sideMenu = params.get('sideMenu')
-    const showModal = params.get('showModal')
     const pathname = usePathname();
 
     async function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -103,7 +102,7 @@ export default function SideMenu({ onClickHandler }: Props) {
             const { data } = await axios.get('/api/authorRoutes/blogImages');
             setUserImages(data.userImages)
         } catch (error) {
-
+            console.log('error getting user images', error)
         }
     }
 
@@ -207,6 +206,12 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         placeholder="Search By Description"
                                         inputWidth="full"
                                     />
+                                    {/*  conditional error message */}
+                                    {message &&
+                                        <p
+                                            className="text-center text-red-600 text-[.95rem]"
+                                        >{message}</p>
+                                    }
 
                                     <label
                                         className={`block w-[80%] mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
@@ -222,9 +227,9 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         />
                                     </label>
                                 </>
-
                         }
                     </form>
+
 
                     {/* users images */}
                     {userImages && userImages.length === 0 ?
