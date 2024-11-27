@@ -7,10 +7,11 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
         <div className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
+                console.log('block content ', block)
                 const validChildren = block.children.filter(
                     (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
                 );
-                if (validChildren.length === 0 && block.type !== 'image') return;
+                if (validChildren.length === 0 && block.type !== 'image' && block.type !== 'video') return;
                 if (block.type === 'paragraph') {
                     return (
                         <p
@@ -123,7 +124,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     );
                 } else if (block.type === 'heading-one') {
                     return (
-                        <h1
+                        <h2
                             key={index.toString()}
                             className="text-[1.95rem] py-3 tracking-wide"
                         >
@@ -155,11 +156,11 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     )
                                 }
                             })}
-                        </h1>
+                        </h2>
                     )
                 } else if (block.type === 'heading-two') {
                     return (
-                        <h2
+                        <h3
                             key={index.toString()}
                             className="text-[1.65rem] py-1 tracking-wide"
                         >
@@ -191,7 +192,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     )
                                 }
                             })}
-                        </h2>
+                        </h3>
                     )
                 } else if (block.type === 'code') {
                     return (
@@ -214,6 +215,21 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     className="w-full"
                                 />
                             </div>
+                        )
+                    }
+                } else if (block.type === 'video') {
+                    console.log('video block ', block)
+                    if (block.videoUrl) {
+                        return (
+                            <div className="relative w-full pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
+                                <iframe
+                                    src={block.videoUrl}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="absolute top-0 left-0 w-full h-full"
+                                ></iframe>
+                            </div>
+
                         )
                     }
                 }

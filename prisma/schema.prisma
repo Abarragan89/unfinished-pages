@@ -99,6 +99,7 @@ model ContentBlock {
   id String @id @default(cuid())
   orderNumber Int
   type String
+  videoUrl String? // this is only for videos
   children ContentBlockDetails[]
   imageId   String?
   blogId String

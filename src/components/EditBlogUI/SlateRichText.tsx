@@ -9,6 +9,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import formatContentToDescendantType from '../../../utils/formatBlogContent';
 import SideMenu from '../Menus/SideMenu';
+import { capitalizeFirstLetter } from '../../../utils/stringManipulation';
 
 // Component Imports
 import CodeBlock from '@/components/SlateRenderers/CodeBlock';
@@ -20,6 +21,7 @@ import HeadingOne from '@/components/SlateRenderers/HeadingOne';
 import BulletedList from '@/components/SlateRenderers/BulletedList';
 import ImageRender from '../SlateRenderers/ImageRender';
 import InputBlockWrapper from './InputBlockWrapper';
+import VideoElement from '../SlateRenderers/VideoElement';
 
 
 // import Button Icons for ToolBar
@@ -35,6 +37,8 @@ import { IoMdCode } from "react-icons/io";
 import { IoMdLink } from "react-icons/io";
 import { UserImage } from '../../../types/users';
 import InsertSlateLink from '../Modals/InsertSlateLink';
+import { RxVideo } from "react-icons/rx";
+
 
 // Slate Typescript
 type CustomElement =
@@ -46,9 +50,11 @@ type CustomElement =
     | { type: 'heading-one'; children: CustomText[] }
     | { type: 'heading-two'; children: CustomText[] }
     | { type: 'bulleted-list'; children: { type: 'list-item'; children: CustomText[] }[] }
+    | { type: 'video'; videoUrl: string; children: CustomText[] }
     | { type: 'link'; url: string; children: CustomText[] };
 
 type CustomText = { text: string, bold?: boolean, underline?: boolean, italic?: boolean }
+
 
 declare module 'slate' {
     interface CustomTypes {
@@ -117,6 +123,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                         {props.children}
                     </a>
                 );
+            case 'video':
+                return <VideoElement {...props} />;
             default:
                 return <DefaultBlock {...props} />
         }
@@ -230,6 +238,19 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             wrapLink(editor, url)
         }
     }
+
+    const insertVideo = (editor: any, videoUrl: string) => {
+        const video: CustomElement = {
+            type: 'video',
+            videoUrl,
+            children: [{ text: '' }],
+        };
+        Transforms.insertNodes(editor, video);
+        Transforms.insertNodes(editor, {
+            type: 'paragraph',
+            children: [{ text: '' }],
+        })
+    };
 
     const insertImage = (image: UserImage) => {
         const imageEl: CustomElement = {
@@ -365,6 +386,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         return (
             <button
                 className={`${toolBarButtonStyles}`}
+                title={capitalizeFirstLetter(iconType)}
                 style={isMarkActive(editor, iconType) ? toolBarItemChosen : undefined}
                 onMouseDown={(e) => {
                     e.preventDefault();
@@ -375,11 +397,14 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         )
     }
 
-
-    console.log('content ', content)
-    function addAnchorLinkHandler(url: string) {
-        insertLink(editor, url);
+    function addLinkHandler(url: string, isVideo: boolean) {
+        if (isVideo) {
+            insertVideo(editor, url)
+        } else {
+            insertLink(editor, url);
+        }
     }
+
 
     function BlockButton({ iconType }: { iconType: string }) {
         // need to useSlate so icons render correctly when clicking on text already formatted bold, etc.
@@ -387,10 +412,11 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         return (
             <button
                 className={`${toolBarButtonStyles}`}
+                title={capitalizeFirstLetter(iconType)}
                 style={isBlockActive(editor, iconType) ? toolBarItemChosen : undefined}
                 onMouseDown={(e) => {
                     if (iconType === 'link' && !isLinkActive(editor)) {
-                        router.push(`${pathname}?showModal=addUrlLink`, { scroll: false })
+                        router.push(`${pathname}?showModal=addLink`, { scroll: false })
                     } else {
                         e.preventDefault();
                         toggleBlock(editor, iconType)
@@ -434,7 +460,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 onClickHandler={insertImage}
             />
             <InsertSlateLink
-                addAnchorLinkHandler={addAnchorLinkHandler}
+                addLinkHandler={addLinkHandler}
             />
 
             <InputBlockWrapper
@@ -460,9 +486,16 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                                 <BlockButton iconType="code" />
                                 <BlockButton iconType="link" />
                                 <Link href={`${pathname}?sideMenu=addImage`}
+                                    title='Image'
                                     scroll={false}
                                     className={`${toolBarButtonStyles}`}>
                                     <CiImageOn size={20} className='mx-auto' />
+                                </Link>
+                                <Link href={`${pathname}?showModal=addLink&isVideo=true`}
+                                    scroll={false}
+                                    title='Video'
+                                    className={`${toolBarButtonStyles}`}>
+                                    <RxVideo size={20} className='mx-auto' />
                                 </Link>
                             </div>
                         </menu>

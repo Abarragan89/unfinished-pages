@@ -35,4 +35,5 @@ export interface BlogContent {
     children: BlogDetails[]
     image?: UserImage
     url?: string;
+    videoUrl?: string;
 }

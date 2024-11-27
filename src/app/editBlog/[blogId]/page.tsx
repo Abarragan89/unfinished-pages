@@ -19,6 +19,8 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     // get Blog Data
     const blogData = await getEditBlogContents(userId, blogId)
 
+    console.log('blog data in edit page ', blogData)
+
     // Error finding blog data
     if (!blogData) {
         throw new Error('Could not find blog data')

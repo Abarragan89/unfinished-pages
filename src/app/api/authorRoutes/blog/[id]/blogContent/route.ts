@@ -26,6 +26,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                         type: content.type, // paragraph, heading, etc.
                         imageId: content?.image?.id || null,
                         orderNumber: index,
+                        videoUrl: content.videoUrl || null,
                         children: {
                             create: content.children.map((detail) => ({
                                 url: detail.url || null,

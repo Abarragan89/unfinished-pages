@@ -53,6 +53,12 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                     height: block.image.height
                 }
             }
+        } else if (block.type === 'video') {
+            return {
+                type: block.type,
+                children: [{ text: '' }],
+                videoUrl: block.videoUrl
+            }
         }
         else {
             return {
