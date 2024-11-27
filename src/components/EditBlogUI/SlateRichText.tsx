@@ -239,7 +239,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         }
     }
 
-    const insertVideo = (editor: any, videoUrl: string) => {
+    const insertVideo = (editor: ReactEditor, videoUrl: string) => {
         const video: CustomElement = {
             type: 'video',
             videoUrl,
@@ -270,8 +270,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         return <Leaf {...props} />
     }, [])
 
-    // @ts-expect-error: Slate Rich Text Error
-    const toggleBlock = (editor, format: string) => {
+    const toggleBlock = (editor: ReactEditor, format: string) => {
         // set status to change UI change in ToolBar
         if (format === chosenElement) {
             setChosenElement('')

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
     return (
-        <div className="max-w-[700px] mx-auto leading-9 px-3">
+        <section className="max-w-[700px] mx-auto leading-9 px-3">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
                 console.log('block content ', block)
@@ -218,10 +218,9 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                         )
                     }
                 } else if (block.type === 'video') {
-                    console.log('video block ', block)
                     if (block.videoUrl) {
                         return (
-                            <div className="relative w-full pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
+                            <div key={index.toString()} className="relative w-full pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
                                 <iframe
                                     src={block.videoUrl}
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -234,6 +233,6 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     }
                 }
             })}
-        </div>
+        </section>
     )
 }
