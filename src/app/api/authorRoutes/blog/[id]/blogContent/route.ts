@@ -23,7 +23,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 return prisma.contentBlock.create({
                     data: {
                         blogId,
-                        type: content.type, //paragraph
+                        type: content.type, // paragraph, heading, etc.
                         imageId: content?.image?.id || null,
                         orderNumber: index,
                         children: {
@@ -33,13 +33,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                                 bold: detail.bold || false,
                                 italic: detail.italic || false,
                                 underline: detail.underline || false,
-                                type: detail.type || null,
+                                type: detail.type || null, // list-type or link
                                 children: detail.children ? {
                                     create: detail.children.map((item) => ({
                                         text: item.text || '',
                                         bold: item.bold || false,
                                         italic: item.italic || false,
                                         underline: item.underline || false,
+                                        type: item.type || null, // this is for inline anchor tags in lists
+                                        url: item.url || null,
+                                        children: item.children ? {
+                                            create: item.children.map((item) => ({
+                                                text: item.text || '',
+                                            }))
+                                        } : undefined,
                                     }))
                                 } : undefined,
                             })),

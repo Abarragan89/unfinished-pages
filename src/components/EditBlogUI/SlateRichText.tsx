@@ -65,6 +65,8 @@ interface Props {
 
 export default function SlateRichText({ blogId, blogContent }: Props) {
 
+    console.log('blogh content', JSON.stringify(blogContent, null, 2))
+
     const router = useRouter();
     const pathname = usePathname();
     const LIST_TYPES = ['numbered-list', 'bulleted-list', 'link']
@@ -375,6 +377,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         )
     }
 
+
+    console.log('content ', content)
     function addAnchorLinkHandler(url: string) {
         insertLink(editor, url);
     }

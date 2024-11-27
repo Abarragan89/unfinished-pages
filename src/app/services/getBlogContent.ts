@@ -59,6 +59,13 @@ export default async function getBlogContent(userId: string, blogId: string) {
                                         bold: true,
                                         underline: true,
                                         italic: true,
+                                        type: true,
+                                        url: true,
+                                        children: {
+                                            select: {
+                                                text: true
+                                            }
+                                        }
                                     }
                                 }
                             }

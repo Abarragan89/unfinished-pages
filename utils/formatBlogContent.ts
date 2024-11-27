@@ -11,12 +11,29 @@ export default function formatContentToDescendantType(blocks: BlogContent[]): De
                     .filter(child => child.type === 'list-item') // Only list items
                     .map(child => ({
                         type: child.type,
-                        children: child.children?.map(nested => ({
-                            text: nested.text || '',
-                            bold: nested.bold || false,
-                            italic: nested.italic || false,
-                            underline: nested.underline || false,
-                        })) || [],
+                        children: child.children?.map(nested => {
+                            if (nested.type === 'link') {
+                                // Ensure links have valid children
+                                return {
+                                    type: 'link',
+                                    url: nested.url || '',
+                                    children: nested.children?.map(nested => ({
+                                        text: nested.text || '',
+                                        bold: nested.bold || false,
+                                        italic: nested.italic || false,
+                                        underline: nested.underline || false,
+                                    })) || [],
+                                };
+                            } else {
+                                // Text nodes
+                                return {
+                                    text: nested.text || '',
+                                    bold: nested.bold || false,
+                                    italic: nested.italic || false,
+                                    underline: nested.underline || false,
+                                };
+                            }
+                        }) || [],
                     })),
             };
         } else if (block.type === 'image' && block.image) {

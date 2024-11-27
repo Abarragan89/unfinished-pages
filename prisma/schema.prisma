@@ -126,8 +126,18 @@ model BlockDetailsListItems {
   bold Boolean?
   underline Boolean?
   italic Boolean?
+  type String? // this is for anchor tags that are in list items
+  url String? // this is for anchor tags that are in list items
+  children AnchorLinksInListItems[]
   blockDetailsId String
   blockDetails ContentBlockDetails @relation(fields: [blockDetailsId], references: [id], onDelete: Cascade)
+}
+
+model AnchorLinksInListItems {
+  id String @id @default(cuid())
+  text String
+  parentListItemId String
+  parentListItem BlockDetailsListItems @relation(fields: [parentListItemId], references: [id], onDelete: Cascade)
 }
 
 model Image {

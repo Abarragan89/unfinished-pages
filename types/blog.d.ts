@@ -15,6 +15,9 @@ export interface NestedListChildren {
     bold?: boolean;
     italic?: boolean;
     underline?: boolean;
+    type?: string;
+    url?: string;
+    children?: NestedListChildren[]
 }
 
 export interface BlogDetails {
