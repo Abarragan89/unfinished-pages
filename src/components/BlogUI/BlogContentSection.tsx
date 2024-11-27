@@ -56,10 +56,9 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li>
+                                                <li key={index.toString() + subIndex.toString()}>
                                                     <Link
                                                         href={listBlockDetails.url as string}
-                                                        key={index.toString() + subIndex.toString()}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
@@ -91,10 +90,9 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li>
+                                                <li key={index.toString() + subIndex.toString()}>
                                                     <Link
                                                         href={listBlockDetails.url as string}
-                                                        key={index.toString() + subIndex.toString()}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
