@@ -1,13 +1,13 @@
 import getBlogContent from "@/app/services/getBlogContent"
 import { headers } from 'next/headers'
-import formatContentToDescendantType from "../../../../utils/formatBlogContent"
-import { BlogContent } from "../../../../types/blog"
+import formatContentToDescendantType from "../../../../../utils/formatBlogContent"
+import { BlogContent } from "../../../../../types/blog"
 import { Descendant } from "slate"
 import ScrollToTop from "@/components/ScrollToTop"
 import BlogMetaDetails from "@/components/BlogUI/BlogMetaDetails"
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
 import Image from "next/image"
-import consolidateCodeBlocks from "../../../../utils/consolidateCodeBlocks"
+import consolidateCodeBlocks from "../../../../../utils/consolidateCodeBlocks"
 import BlogContentSection from "@/components/BlogUI/BlogContentSection"
 
 export default async function page({ params }: { params: { blogId: string } }) {
@@ -33,7 +33,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
     return (
-        <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">
+        <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] pt-[30px] rounded-md">
             <ScrollToTop />
             <BlogMetaDetails
                 title={blogData.title}

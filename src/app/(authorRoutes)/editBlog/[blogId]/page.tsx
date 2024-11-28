@@ -25,12 +25,20 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     }
 
     return (
-        <main className="mt-3">
+        <main className="pt-[50px] relative">
             <ScrollToTop />
             <SubheadingTitle title={'Create Blog'} />
-            <Link href={`/previewBlog/${blogData.id}`}>
-                Preview
-            </Link>
+
+            <div className="flex absolute top-[10px] right-[2.5%] pe-2">
+                <Link
+                    href={`/previewBlog/${blogData.id}`}
+                    className="custom-small-btn"
+                >
+                    Preview
+                </Link>
+            </div>
+
+
             <EditMetaData
                 title={blogData.title}
                 description={blogData.description || ""}
@@ -41,6 +49,14 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                 blogId={blogId as string}
                 blogContent={blogData.content as []}
             />
+            <div className="flex justify-center">
+                <button
+                    className="custom-small-btn ml-5"
+                >Delete</button>
+                <button
+                    className="custom-small-btn ml-5"
+                >Publish</button>
+            </div>
         </main>
     )
 }

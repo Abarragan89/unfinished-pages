@@ -473,8 +473,8 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                         editor={editor} initialValue={content}
                         onChange={handleChange}
                     >
-                        <menu className='flex justify-between bg-[var(--off-white)] rounded-t pb-[10px] pt-[5px]'>
-                            <div className='flex max-w-[350px] items-center'>
+                        <menu className='flex  justify-between bg-[var(--off-white)] rounded-t pb-[10px] pt-[5px]'>
+                            <div className='flex flex-wrap max-w-[400px] items-center'>
                                 <MarkButton iconType="bold" />
                                 <MarkButton iconType="italic" />
                                 <MarkButton iconType="underline" />

@@ -19,7 +19,7 @@ export default function BlogCard({
                 width={320}
                 height={180}
                 alt="Busts of Greek philosophers"
-                className="rounded-t-sm w-[320px] h-[180px]"
+                className="rounded-t-sm w-full h-full"
             />
             <div className="flex justify-between px-2 pt-1 text-[var(--gray-600)] text-[0.875rem]">
                 <p>{date}</p>

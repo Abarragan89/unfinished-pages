@@ -3,9 +3,9 @@ import BlogCard from "@/components/Cards/BlogCard"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle"
 import { HiPencilSquare } from "react-icons/hi2";
 import CreateBlog from "@/components/Modals/CreateBlog";
-import { prisma } from "../../../utils/prisma";
+import { prisma } from "../../../../utils/prisma";
 import { headers } from 'next/headers'
-import { formatDate } from "../../../utils/formatDate";
+import { formatDate } from "../../../../utils/formatDate";
 import ScrollToTop from "@/components/ScrollToTop";
 
 export default async function page() {
@@ -17,7 +17,7 @@ export default async function page() {
             orderBy: { updatedAt: 'desc' }
         });
     return (
-        <main className="pt-[30px] min-h-[100vh]">
+        <main className="pt-[50px] min-h-[100vh]">
             <ScrollToTop />
             <CreateBlog />
             <SubheadingTitle title="My Blogs" />
