@@ -3,7 +3,7 @@ import ModalWrapper from "./ModalWrapper";
 import { useState } from "react";
 
 interface Props {
-    deleteBlogHandler: () => {}
+    deleteBlogHandler: () => void;
 }
 
 export default function ConfirmDeleteBlog({ deleteBlogHandler }: Props) {
