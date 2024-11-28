@@ -219,7 +219,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                     </div>
                     <button
                         onClick={handleSubmit}
-                        className={`custom-small-btn mx-auto block w-fit mt-4 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}
+                        className={`custom-small-btn bg-[var(--off-black)] mx-auto block w-fit mt-4 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}
                     >
                         {isUpLoading ?
                             <PulseLoader

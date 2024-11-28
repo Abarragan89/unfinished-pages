@@ -185,7 +185,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                             className="input-browser-reset text-[.925rem] w-[190px] py-[3px] px-[8px] border border-[var(--brown-500)] text-[.9rem]"
                                             placeholder="" />
                                     </div>
-                                    <button className={`custom-small-btn mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'} ${isUpLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+                                    <button className={`custom-small-btn bg-[var(--off-black)] mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'} ${isUpLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                                         {isUpLoading ?
                                             <PulseLoader
                                                 color={'white'}

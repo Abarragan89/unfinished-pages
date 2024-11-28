@@ -5,6 +5,7 @@ import { headers } from 'next/headers'
 import ScrollToTop from "@/components/ScrollToTop"
 import getEditBlogContents from "@/app/services/getEditBlogContent"
 import Link from "next/link"
+import PublishDeleteBlogBtns from "@/components/Buttons/PublishDeleteBlogBtns"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
 
@@ -28,17 +29,14 @@ export default async function editBlog({ params }: { params: { blogId: string } 
         <main className="pt-[50px] relative">
             <ScrollToTop />
             <SubheadingTitle title={'Create Blog'} />
-
             <div className="flex absolute top-[10px] right-[2.5%] pe-2">
                 <Link
                     href={`/previewBlog/${blogData.id}`}
-                    className="custom-small-btn"
+                    className="custom-small-btn bg-[var(--off-black)]"
                 >
                     Preview
                 </Link>
             </div>
-
-
             <EditMetaData
                 title={blogData.title}
                 description={blogData.description || ""}
@@ -49,14 +47,11 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                 blogId={blogId as string}
                 blogContent={blogData.content as []}
             />
-            <div className="flex justify-center">
-                <button
-                    className="custom-small-btn ml-5"
-                >Delete</button>
-                <button
-                    className="custom-small-btn ml-5"
-                >Publish</button>
-            </div>
+            {/*  Delete and Publish buttons */}
+            <PublishDeleteBlogBtns 
+                userId={userId}
+                blogId={blogId}
+            />
         </main>
     )
 }

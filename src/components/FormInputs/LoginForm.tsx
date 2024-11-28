@@ -50,7 +50,7 @@ export default function LoginForm() {
                         <button
                             onClick={(e) => submitEmailLogin(e)}
                             type="submit"
-                            className="custom-small-btn mx-auto mt-3"
+                            className="custom-small-btn bg-[var(--off-black)] mx-auto mt-3"
                         >
                             Send Link
                         </button>

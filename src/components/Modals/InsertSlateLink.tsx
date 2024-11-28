@@ -57,7 +57,7 @@ export default function InsertSlateLink({ addLinkHandler }: Props) {
                 {errorMsg &&
                     <p className="text-center text-red-600 text-[.9rem] mt-2 tracking-wide">{errorMsg}</p>
                 }
-                <button type="submit" className={`custom-small-btn mx-auto block ${errorMsg ? 'mt-2' : 'mt-4'}`}>
+                <button type="submit" className={`custom-small-btn bg-[var(--off-black)] mx-auto block ${errorMsg ? 'mt-2' : 'mt-4'}`}>
                     {isVideo ?
                         'Add Video'
                         :

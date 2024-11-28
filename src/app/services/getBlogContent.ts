@@ -1,8 +1,11 @@
 import { prisma } from "../../../utils/prisma";
 
-
 export default async function getBlogContent(userId: string, blogId: string) {
     try {
+
+        if (!userId) {
+            throw new Error('Unauthorized access')
+        }
         // Get User Blog Ids
         const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
             where: { userId: userId as string },

@@ -23,5 +23,35 @@ export async function POST(request: NextRequest) {
     }
 }
 
+export async function DELETE(request: NextRequest) {
+    try {
+        const { userId, blogId } = await request.json();
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
+        }
+
+        // Get User Blog Ids
+        const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
+            where: { userId: userId as string },
+            select: { id: true }
+        })
+        // Check If Owner of Blog
+        const isAuthor: boolean = userBlogsIds.some(blog => blog.id === blogId)
+        if (!isAuthor) {
+            return NextResponse.json({ error: 'blog is now owned by user' }, { status: 400 })
+        }
+
+        // delete blog once checks are passed
+        await prisma.blog.delete({
+            where: { id: blogId }
+        })
+
+        return NextResponse.json({ message: 'deleted' }, { status: 200 })
+
+    } catch (error) {
+        console.log('error deleting blog', error)
+    }
+}
+
 
 

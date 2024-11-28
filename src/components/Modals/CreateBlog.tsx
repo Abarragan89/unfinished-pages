@@ -37,7 +37,7 @@ export default function CreateBlog() {
                 <div className="flex flex-col">
                     <input
                         onChange={(e) => setBlogTitle(e.target.value)}
-                        className="input-browser-reset w-[260px] p-[6px] border border-[var(--brown-500)] text-[.9rem]"
+                        className="input-browser-reset w-[260px] p-[6px] border-2 border-[var(--brown-500)] text-[.9rem]"
                         id="blog-title"
                         autoFocus
                         maxLength={65}
@@ -50,7 +50,7 @@ export default function CreateBlog() {
                 </div>
                 <button
                     type="submit"
-                    className="custom-small-btn mt-4 h-[30px]"
+                    className="custom-small-btn bg-[var(--off-black)] mt-4 h-[30px]"
                 >
                     {isCreating ?
                         <BarLoader

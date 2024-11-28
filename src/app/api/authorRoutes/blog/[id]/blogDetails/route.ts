@@ -4,6 +4,11 @@ import { prisma } from '../../../../../../../utils/prisma';
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
+        const userId = request.headers.get('x-user-id');
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
+        }
+
         const { id: blogId } = params
         const { blogTitle: title, blogDescription: description } = await request.json();
 
@@ -23,5 +28,5 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     } catch (error) {
         console.log('error ', error)
     }
-
 }
+

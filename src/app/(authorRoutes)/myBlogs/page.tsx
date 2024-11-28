@@ -22,7 +22,7 @@ export default async function page() {
             <CreateBlog />
             <SubheadingTitle title="My Blogs" />
             <div className="absolute right-[25px] top-[80px]">
-                <Link href={'/myBlogs?showModal=createBlog'} className="flex items-center custom-small-btn">
+                <Link href={'/myBlogs?showModal=createBlog'} className="flex items-center custom-small-btn bg-[var(--off-black)]">
                     <HiPencilSquare size={16} />
                     <span className="ml-2">Write</span>
                 </Link>

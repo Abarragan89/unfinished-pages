@@ -4,6 +4,10 @@ import { BlogContent } from '../../../../../../../types/blog';
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
+        const userId = request.headers.get('x-user-id');
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
+        }
         const { id: blogId } = params
         const { content, readDuration } = await request.json();
 
