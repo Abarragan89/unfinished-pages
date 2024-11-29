@@ -8,10 +8,10 @@ export interface BlogData {
     pictureURL: string;
     likes: number;
     dislikes: number;
-    isPublished: boolean;
-    publishedDate: Date;
-    content: BlogContent;
-    readDuration: number;
+    isPublished?: boolean;
+    publishedDate?: Date;
+    content?: BlogContent;
+    readDuration?: number;
 }
 
 export interface NestedListChildren {
