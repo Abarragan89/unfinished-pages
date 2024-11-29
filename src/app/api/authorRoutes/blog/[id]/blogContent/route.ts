@@ -6,7 +6,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     try {
         const userId = request.headers.get('x-user-id');
         if (!userId) {
-            return NextResponse.json({ error: 'User ID is missing' }, { status: 500 });
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
         }
         const { id: blogId } = params
         const { content, readDuration } = await request.json();

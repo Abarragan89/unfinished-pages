@@ -31,7 +31,6 @@ export default function EditMetaData({ title, description, pictureURL, blogId }:
             console.log('Error updating blog details:', error);
         }
     }
-
     return (
         <form>
             <InputBlockWrapper

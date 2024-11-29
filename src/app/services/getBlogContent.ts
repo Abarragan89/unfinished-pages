@@ -27,6 +27,7 @@ export default async function getBlogContent(userId: string, blogId: string) {
                 pictureURL: true,
                 date: true,
                 likes: true,
+                isPublished: true,
                 readDuration: true,
                 user: {
                     select: {

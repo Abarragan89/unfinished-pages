@@ -28,7 +28,7 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
                 autoFocus={autofocus}
                 maxLength={characterLimit ?? undefined}
                 onChange={(e) => handleStateChange(e.target.value)}
-                className="input-browser-reset border border-[var(--brown-300)] mx-auto block px-2 py-[2px] w-full"
+                className="input-browser-reset border-2 border-[var(--brown-300)] mx-auto block px-2 py-[2px] w-full"
             />
         </div>
     )

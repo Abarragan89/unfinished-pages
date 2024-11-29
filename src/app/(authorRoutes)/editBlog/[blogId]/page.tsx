@@ -17,6 +17,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     if (!userId) {
         throw new Error('Unauthorized access')
     }
+    
     // get Blog Data
     const blogData = await getEditBlogContents(userId, blogId)
 
@@ -48,9 +49,10 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                 blogContent={blogData.content as []}
             />
             {/*  Delete and Publish buttons */}
-            <PublishDeleteBlogBtns 
+            <PublishDeleteBlogBtns
                 userId={userId}
                 blogId={blogId}
+                isBlogPublished={blogData.isPublished}
             />
         </main>
     )

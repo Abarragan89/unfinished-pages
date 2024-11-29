@@ -7,7 +7,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
         if (!userId) {
             throw new Error('Unauthorized access')
         }
-        
+
         // Get User Blog Ids
         const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
             where: { userId: userId as string },
@@ -26,6 +26,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 id: true,
                 title: true,
                 description: true,
+                isPublished: true,
                 pictureURL: true,
                 content: {
                     orderBy: { orderNumber: 'asc' },

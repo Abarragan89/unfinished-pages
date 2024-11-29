@@ -254,7 +254,6 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         size={25}
                                         className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
                                         onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
-
                                     />
                                     <NextImage
                                         onClick={() => {

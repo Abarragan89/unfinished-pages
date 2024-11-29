@@ -5,7 +5,7 @@ interface Props {
     isButtonAble: boolean;
     subtitle: string;
     UIStateTrigger: boolean;
-    saveHandler: () => void;
+    saveHandler: () => Promise<void>;
 }
 
 export default function InputBlockWrapper({ children, subtitle, isButtonAble, saveHandler, UIStateTrigger }: Props) {
@@ -17,7 +17,7 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
                 {subtitle}
             </h3>
             <button
-                type="submit"
+                type="button"
                 className={`absolute right-[15px] h-[30px] top-[10px] custom-small-btn bg-[var(--off-black)] ${isButtonAble ? '' : 'opacity-[.5] pointer-events-none'}`}
                 onClick={UIStateTrigger ? undefined : saveHandler}
             >

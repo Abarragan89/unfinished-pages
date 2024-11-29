@@ -201,7 +201,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             {
                 file &&
                 <>
-                    <div className="flex flex-col w-fit mx-auto mt-2">
+                    <div className="flex flex-col max-w-[270px] w-[90%] mx-auto mt-2">
                         <div className="flex justify-between mx-1">
                             <label
                                 className="text-[.875rem]"
@@ -214,7 +214,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
                             id="cover-image-alt"
                             maxLength={100}
                             onChange={(e) => setImageAlt(e.target.value)}
-                            className="input-browser-reset border border-[var(--brown-300)] mx-auto block px-2 py-[2px]"
+                            className="input-browser-reset w-full border border-[var(--brown-500)] mx-auto block px-2 py-[2px] text-[.95rem]"
                         />
                     </div>
                     <button
