@@ -1,4 +1,4 @@
-import getBlogContent from "@/app/services/getBlogContent"
+import getPreviewBlogContent from '@/app/services/getPreviewBlogContent'
 import { headers } from 'next/headers'
 import formatContentToDescendantType from "../../../../../utils/formatBlogContent"
 import { BlogContent } from "../../../../../types/blog"
@@ -21,7 +21,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
         throw new Error('Unauthorized access')
     }
     // Get blog data 
-    const blogData = await getBlogContent(userId, blogId);
+    const blogData = await getPreviewBlogContent(userId, blogId);
 
     // Error finding blog data
     if (!blogData) {
@@ -40,7 +40,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
                 authorName={blogData.user.name as string}
                 authorImgURL={blogData.user.image as string}
                 coverImgAlt={'Blog cover image'}
-                coverImgURL={blogData.pictureURL as string}
+                coverImgURL={blogData.coverPhotoUrl as string}
                 readingLength={blogData.readDuration}
                 publishDate={blogData.date.toLocaleDateString('en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
@@ -52,7 +52,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
 
             {/* This is the Blog Image */}
             <Image
-                src={blogData.pictureURL ? blogData.pictureURL : '/images/blogs/fillerImg.png'}
+                src={blogData.coverPhotoUrl ? blogData.coverPhotoUrl : '/images/blogs/fillerImg.png'}
                 width={700}
                 height={394}
                 alt="Image of thing, should replace with data"

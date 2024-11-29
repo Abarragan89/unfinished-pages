@@ -7,11 +7,11 @@ import axios from "axios";
 interface Props {
     title: string;
     description: string;
-    pictureURL: string;
+    coverPhotoUrl: string;
     blogId: string
 }
 
-export default function EditMetaData({ title, description, pictureURL, blogId }: Props) {
+export default function EditMetaData({ title, description, coverPhotoUrl, blogId }: Props) {
 
     const [blogTitle, setBlogTitle] = useState<string>(title);
     const [blogDescription, setBlogDescription] = useState<string>(description);
@@ -72,7 +72,7 @@ export default function EditMetaData({ title, description, pictureURL, blogId }:
                 </div>
                 <UploadImageInput
                     blogId={blogId}
-                    pictureURL={pictureURL}
+                    coverPhotoUrl={coverPhotoUrl}
                 />
             </InputBlockWrapper >
         </form>

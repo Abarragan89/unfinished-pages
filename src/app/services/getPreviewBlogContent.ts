@@ -1,13 +1,11 @@
 import { prisma } from "../../../utils/prisma";
 
-
-export default async function getEditBlogContents(userId: string, blogId: string) {
+export default async function getPreviewBlogContent(userId: string, blogId: string) {
     try {
 
         if (!userId) {
             throw new Error('Unauthorized access')
         }
-
         // Get User Blog Ids
         const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
             where: { userId: userId as string },
@@ -26,8 +24,17 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 id: true,
                 title: true,
                 description: true,
-                isPublished: true,
                 coverPhotoUrl: true,
+                date: true,
+                likes: true,
+                isPublished: true,
+                readDuration: true,
+                user: {
+                    select: {
+                        name: true,
+                        image: true
+                    }
+                },
                 content: {
                     orderBy: { orderNumber: 'asc' },
                     select: {
@@ -49,8 +56,8 @@ export default async function getEditBlogContents(userId: string, blogId: string
                                 bold: true,
                                 italic: true,
                                 underline: true,
-                                url: true,
                                 type: true,
+                                url: true,
                                 children: {
                                     select: {
                                         text: true,

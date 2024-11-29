@@ -41,7 +41,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
             <EditMetaData
                 title={blogData.title}
                 description={blogData.description || ""}
-                pictureURL={blogData.pictureURL || ""}
+                coverPhotoUrl={blogData.coverPhotoUrl || ""}
                 blogId={blogId as string}
             />
             <SlateRichText

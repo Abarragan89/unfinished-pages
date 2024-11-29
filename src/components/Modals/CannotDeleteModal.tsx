@@ -13,7 +13,7 @@ export default function CannotDeleteModal({ blogsUsingImage }: Props) {
             urlParam="cannotDeleteImage"
         >
             <>
-                <p className="text-center text-[.975rem] mb-3 text-[var(--brown-500)] tracking-wide">Remove image from the following blogs:</p>
+                <p className="text-center text-[.975rem] mb-3 text-[var(--brown-500)] tracking-wide">Remove image from the following blog(s):</p>
                 {blogsUsingImage.map((blog: BlogData) => (
                     <Link
                         key={blog.id}

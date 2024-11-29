@@ -24,7 +24,7 @@ export async function DELETE(request: NextRequest) {
         if (!userId) return NextResponse.json({ error: 'user not logged in' }, { status: 403 });
 
         // Search all blogs where the image is used
-        const blogsUsingImage = await prisma.blog.findMany({
+        const blogsUsingImageInContent = await prisma.blog.findMany({
             where: {
                 content: {
                     some: {
@@ -39,15 +39,41 @@ export async function DELETE(request: NextRequest) {
             },
         });
 
+        // need the picture url to see if it is used as a cover photo
+        const pictureURL = await prisma.image.findUnique({
+            where: { id: imageId },
+            select: {
+                url: true
+            }
+        })
+
+        if (!pictureURL?.url) {
+            return NextResponse.json({ error: 'image not found' }, { status: 400 })
+        }
+        const blogsUsingImageAsCover = await prisma.blog.findMany({
+            where: {
+                coverPhotoUrl: pictureURL!.url
+            },
+            select: {
+                id: true,
+                title: true
+            }
+        })
+
+        const blogsUsingImage = [...blogsUsingImageInContent, ...blogsUsingImageAsCover]
+        const uniqueBlogs = Array.from(
+            new Map(blogsUsingImage.map(blog => [blog.id, blog])).values()
+        );
+
         // if  image is not in use, delete it
-        if (blogsUsingImage.length === 0) {
+        if (uniqueBlogs.length === 0) {
             await prisma.image.delete({
                 where: { id: imageId }
             })
             return NextResponse.json({ blogs: [] }, { status: 200 });
             // or else, give back the blog titles
         } else {
-            return NextResponse.json({ blogs: blogsUsingImage }, { status: 200 });
+            return NextResponse.json({ blogs: uniqueBlogs }, { status: 200 });
         }
     } catch (error) {
         console.log('error getting user images', error)

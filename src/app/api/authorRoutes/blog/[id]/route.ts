@@ -21,7 +21,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         if (!blogToUpdate?.description) {
             return NextResponse.json({ error: 'Blog Description Required' }, { status: 400 })
         }
-        if (!blogToUpdate?.pictureURL) {
+        if (!blogToUpdate?.coverPhotoUrl) {
             return NextResponse.json({ error: 'Cover Photo Required' }, { status: 400 })
         }
         // Then update it. 

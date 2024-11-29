@@ -9,13 +9,13 @@ export default function BlogCard({
     date,
     likes,
     dislikes,
-    pictureURL,
+    coverPhotoUrl,
 }: BlogData) {
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
             {/* Your slide content here */}
             <Image
-                src={pictureURL ? pictureURL : "/images/blogs/fillerImg.png"}
+                src={coverPhotoUrl ? coverPhotoUrl : "/images/blogs/fillerImg.png"}
                 width={320}
                 height={180}
                 alt="Busts of Greek philosophers"

@@ -37,7 +37,7 @@ export default async function page() {
                             <BlogCard
                                 id={blog.id}
                                 title={blog.title}
-                                pictureURL={blog.pictureURL as string}
+                                coverPhotoUrl={blog.coverPhotoUrl as string}
                                 description={blog.description as string}
                                 date={formatDate(blog.date.toString())}
                                 likes={blog.likes}

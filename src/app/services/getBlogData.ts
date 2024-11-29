@@ -1,21 +1,7 @@
 import { prisma } from "../../../utils/prisma";
 
-export default async function getBlogContent(userId: string, blogId: string) {
+export default async function getBlogData(blogId: string) {
     try {
-
-        if (!userId) {
-            throw new Error('Unauthorized access')
-        }
-        // Get User Blog Ids
-        const userBlogsIds: { id: string; }[] = await prisma.blog.findMany({
-            where: { userId: userId as string },
-            select: { id: true }
-        })
-        // Check If Owner of Blog
-        const isAuthor: boolean = userBlogsIds.some(blog => blog.id === blogId)
-        if (!isAuthor) {
-            throw new Error('Unauthorized access')
-        }
 
         // Get Data if above checks don't fail
         const blogData = await prisma.blog.findUnique({
@@ -24,7 +10,7 @@ export default async function getBlogContent(userId: string, blogId: string) {
                 id: true,
                 title: true,
                 description: true,
-                pictureURL: true,
+                coverPhotoUrl: true,
                 date: true,
                 likes: true,
                 isPublished: true,

@@ -7,9 +7,9 @@ import NextImage from 'next/image';
 import axios from "axios";
 
 
-export default function UploadImageInput({ blogId, pictureURL }: { blogId: string, pictureURL: string }) {
+export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: string, coverPhotoUrl: string }) {
     const [message, setMessage] = useState<string>("");
-    const [imagePreview, setImagePreview] = useState<string | null>(pictureURL || null);
+    const [imagePreview, setImagePreview] = useState<string | null>(coverPhotoUrl || null);
     const [imageWidth, setImageWidth] = useState<string>('')
     const [imageHeight, setImageHeight] = useState<string>('')
     const [imageAlt, setImageAlt] = useState<string>('')
@@ -106,7 +106,7 @@ export default function UploadImageInput({ blogId, pictureURL }: { blogId: strin
             // Save image to Database for Blog
             await axios.put(
                 `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
-                { pictureURL }
+                { coverPhotoUrl: pictureURL }
             )
 
             setImagePreview(pictureURL);

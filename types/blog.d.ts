@@ -1,13 +1,14 @@
 import { UserImage } from "./users";
 
 export interface BlogData {
-    id: string;
-    title: string;
-    description: string;
-    date: string;
-    pictureURL: string;
-    likes: number;
-    dislikes: number;
+    id?: string;
+    title?: string;
+    description?: string;
+    date?: string;
+    coverPhotoUrl?: string;
+    coverPhotoAlt?: string;
+    likes?: number;
+    dislikes?: number;
     isPublished?: boolean;
     publishedDate?: Date;
     content?: BlogContent;

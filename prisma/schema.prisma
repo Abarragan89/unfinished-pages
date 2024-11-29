@@ -86,7 +86,8 @@ model Blog {
   likes Int @default(0)
   dislikes Int @default(0)
   readDuration Int @default(0)
-  pictureURL String?
+  coverPhotoUrl String?
+  coverPhotoAlt String?
   isPublished Boolean @default(false)
   content ContentBlock[]
   userId   String
