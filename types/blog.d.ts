@@ -8,7 +8,6 @@ export interface BlogData {
     coverPhotoUrl?: string;
     coverPhotoAlt?: string;
     likes?: number;
-    dislikes?: number;
     isPublished?: boolean;
     publishedDate?: Date;
     content?: BlogContent;

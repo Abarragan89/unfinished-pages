@@ -8,7 +8,6 @@ export default function BlogCard({
     description,
     date,
     likes,
-    dislikes,
     coverPhotoUrl,
 }: BlogData) {
     return (
@@ -30,7 +29,7 @@ export default function BlogCard({
                     </div>
                     <div className="flex items-center">
                         <FiMessageCircle />
-                        <p className=" ml-1">{dislikes}</p>
+                        <p className=" ml-1">15</p>
                     </div>
                 </div>
             </div>

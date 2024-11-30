@@ -119,7 +119,6 @@ export default async function Home() {
                     date={blog.date}
                     likes={blog.likes}
                     coverPhotoUrl={blog.coverPhotoUrl}
-                    dislikes={blog.dislikes}
                   />
                 </Link>
               )

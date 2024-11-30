@@ -41,7 +41,6 @@ export default async function page() {
                                 description={blog.description as string}
                                 date={formatDate(blog.date.toString())}
                                 likes={blog.likes}
-                                dislikes={blog.dislikes}
                             />
                         </Link>
                     )
