@@ -19,7 +19,7 @@ export default function BlogMetaDetails({
 }: Props) {
     return (
         <>
-            <h1 className="max-w-[700px] mx-auto leading-[2.2rem] text-[2.2rem] md:text-[2.5rem] md:leading-[3.5rem] mb-[18px] font-[700]">{title}</h1>
+            <h1 className="max-w-[700px] mx-auto leading-[2.2rem] text-[2.2rem] md:leading-[3.5rem] mb-[18px] font-[700]">{title}</h1>
             {/* author readtime date and author profile pic  */}
             <section className="flex max-w-[700px] mx-auto mb-[40px]">
                 <Image

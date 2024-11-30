@@ -3,17 +3,18 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { IoIosMail } from "react-icons/io";
+import { usePathname } from "next/navigation";
 
 export default function LoginForm() {
 
     const [userEmail, setUserEmail] = useState<string>('');
+    const pathname = usePathname();
 
     function submitEmailLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
         e.preventDefault();
         signIn("email", {
             email: userEmail,
-            callbackUrl: "/"
-
+            callbackUrl: `${window.location.origin}/${pathname}`
         })
     }
 
@@ -24,7 +25,7 @@ export default function LoginForm() {
                 <div className="mx-auto w-fit mb-1 flex items-stretch justify-center p-0 rounded-md border border-blue-500">
                     <button
                         onClick={() => signIn('google', {
-                            callbackUrl: "/"
+                            callbackUrl: `${window.location.origin}/${pathname}`
                         })}
                         type="button"
                         className="flex items-center justify-center text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none focus:ring-[#4285F4]/50 dark:focus:ring-[#4285F4]/55 rounded-sm text-center text-[.95rem] pe-3 whitespace-nowrap"

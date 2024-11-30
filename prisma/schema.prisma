@@ -25,7 +25,8 @@ model User {
   blogs         Blog[]
   blogImages    Image[]
   comments      Comment[]
-  replyComments ReplyComment[]
+  commentLikes  CommentLike[]
+  blogLikes     BlogLike[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   createdAt DateTime @default(now())
@@ -84,7 +85,8 @@ model Blog {
   id String @id @default(cuid())
   title String
   description String?
-  likes Int @default(0)
+  likes    BlogLike[]
+  likeCount  Int   @default(0)
   readDuration Int @default(0)
   coverPhotoUrl String?
   coverPhotoAlt String?
@@ -156,26 +158,37 @@ model Image {
   createdAt DateTime  @default(now()) 
 }
 
-
 model Comment {
-  id String @id @default(cuid())
-  text String
-  likes       Int         @default(0)
-  createdAt   DateTime    @default(now()) 
-  replies ReplyComment[]
-  userId String
-  blogId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
+  id         String    @id @default(cuid())
+  text       String
+  likeCount  Int       @default(0)
+  likes      CommentLike[]
+  createdAt  DateTime  @default(now())
+  userId     String
+  blogId     String
+  parentId   String?   // Null for top-level comments; set for replies
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog      @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  parent     Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies    Comment[] @relation("CommentReplies")
+
+  @@index([parentId]) // Optional: Improves performance when querying replies
 }
 
-model ReplyComment {
-  id String @id @default(cuid())
-  text String
-  likes       Int         @default(0)
-  createdAt   DateTime    @default(now()) 
-  userId String
-  commentId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade )
+model BlogLike {
+  id      String   @id @default(cuid())
+  userId  String
+  blogId  String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog    Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  @@unique([userId, blogId]) // Ensure a user can like a blog only once
+}
+
+model CommentLike {
+  id      String   @id @default(cuid())
+  userId  String
+  commentId  String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  @@unique([userId, commentId]) // Ensure a user can like a blog only once
 }

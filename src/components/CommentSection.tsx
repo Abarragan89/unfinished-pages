@@ -9,10 +9,14 @@ import { BarLoader } from "react-spinners";
 import axios from "axios";
 import { Comment } from "../../types/comment";
 import TextareaLabel from "./FormInputs/TextareaLabel";
+import { useRouter, usePathname } from "next/navigation";
+import LoginModal from "./Modals/LoginModal";
 
 export default function CommentSection({ blogId, blogComments }: { blogId: string, blogComments: Comment[] }) {
 
     const session: Session = useSession();
+    const router = useRouter();
+    const pathname = usePathname()
     const [userComment, setUserComment] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [blogCommentState, setBlogCommentState] = useState<Comment[]>(blogComments)
@@ -21,9 +25,12 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
         alert('showing comment modal')
     }
 
-    function showLoginModal(): void {
-        alert("show login modal")
-    }
+    const handleShowLoginModal = () => {
+        // Use router.push with the new query parameter
+        router.push(`${window.location.origin}/${pathname}?showModal=login`, {
+            scroll: false
+        })
+    };
 
     async function addCommentHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -44,6 +51,7 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
 
     return (
         <section className="relative max-w-[700px] mx-auto pb-5 pt-5">
+            <LoginModal />
             <SubheadingTitle title="Comments" />
             {session.status === 'authenticated' ?
                 <form
@@ -55,11 +63,12 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
                             handleStateChange={setUserComment}
                             userText={userComment}
                             characterLimit={1000}
+                            placeholderText={'Add comment'}
                         />
                     </div>
                     <button
                         type="submit"
-                        className={`absolute right-[10px] top-[65px] h-[30px] ${userComment ? '' : 'opacity-[.5] pointer-events-none'}`}
+                        className={`absolute right-[10px] top-[75px] h-[30px] ${userComment ? '' : 'opacity-[.5] pointer-events-none'}`}
                     >
                         {isLoading ?
                             <BarLoader
@@ -79,7 +88,28 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
                     </button>
                 </form>
                 :
-                <p className="text-center">Login To Comment on this post</p>
+                // Textbox leads to login
+                <>
+                    <div className="relative" onClick={handleShowLoginModal}>
+                        <div className="mb-10 pointer-events-none">
+                            <TextareaLabel
+                                handleStateChange={setUserComment}
+                                userText={userComment}
+                                characterLimit={1000}
+                                placeholderText={'Add comment'}
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className={`absolute right-[10px] top-[75px] h-[30px] opacity-[.5] pointer-events-none`}
+                        >
+                            <IoSendSharp
+                                color="black"
+                                size={22}
+                            />
+                        </button>
+                    </div>
+                </>
             }
 
             {blogCommentState && blogCommentState?.map((commentData) => (

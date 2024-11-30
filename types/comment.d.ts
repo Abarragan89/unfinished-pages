@@ -4,7 +4,7 @@ import { BlogData } from "./blog";
 export interface Comment {
     id: string;
     text: string;
-    likes: number;
+    likes: CommentLike[];
     createdAt: Date;
     replies: ReplyComment[];
     userId: string;
@@ -13,13 +13,20 @@ export interface Comment {
     blog: BlogData; // Assuming `Blog` is another interface you have defined
 }
 
-export interface ReplyComment {
-    id: string;
-    text: string;
-    likes: number;
-    createdAt: Date;
-    userId: string;
-    commentId: string;
-    user: UserData; // Assuming `User` is another interface you have defined
-    comment: Comment; // Relationship back to the parent comment
+
+interface CommentLike {
+    id: string;           // Unique identifier for the like
+    userId?: string;       // The ID of the user who liked the comment
+    commentId?: string;    // The ID of the comment that was liked
+    user?: {
+        id: string;         // The user's ID
+        name?: string;      // Optional: The user's name
+        email: string;      // The user's email
+    };
+    comment?: {
+        id: string;         // The comment's ID
+        text: string;       // The text of the comment
+        likes: number;      // The number of likes the comment has
+        createdAt: Date;    // When the comment was created
+    };
 }

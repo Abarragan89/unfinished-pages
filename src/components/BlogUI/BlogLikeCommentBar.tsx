@@ -4,9 +4,10 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoShareOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { Session } from "../../../types/users";
+import { CommentLike } from "../../../types/comment";
 
 interface Props {
-    likes: number;
+    likes: CommentLike[];
 }
 
 export default function BlogLikeCommentBar({ likes }: Props) {
@@ -29,7 +30,7 @@ export default function BlogLikeCommentBar({ likes }: Props) {
                     onClick={session.status === 'authenticated' ? addLike : showLoginMenu}
                     className="text-[1.5rem] mr-[2px] hover:cursor-pointer"
                 />
-                <p className="mr-5 text-[.95rem]">{likes}</p>
+                <p className="mr-5 text-[.95rem]">{likes.length}</p>
                 <BiMessageRounded
                     onClick={session.status === 'authenticated' ? showAddCommentModal : showLoginMenu}
                     className="text-[1.5rem] mr-[2px] hover:cursor-pointer"

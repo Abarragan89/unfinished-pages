@@ -1,4 +1,4 @@
-import { UserImage } from "./users";
+import { UserImage, UserData } from "./users";
 
 export interface BlogData {
     id?: string;
@@ -7,7 +7,7 @@ export interface BlogData {
     date?: string;
     coverPhotoUrl?: string;
     coverPhotoAlt?: string;
-    likes?: number;
+    likes?: BlogLike[];
     isPublished?: boolean;
     publishedDate?: Date;
     content?: BlogContent;
@@ -40,4 +40,20 @@ export interface BlogContent {
     image?: UserImage
     url?: string;
     videoUrl?: string;
+}
+
+interface BlogLike {
+    id: string;           // Unique identifier for the like
+    userId: string;       // The ID of the user who liked the blog
+    blogId: string;       // The ID of the blog that was liked
+    user: {
+        id: string;         // The user's ID
+        name?: string;      // Optional: The user's name (assuming the User model has a name field)
+        email: string;      // The user's email
+    };
+    blog: {
+        id: string;         // The blog's ID
+        title: string;      // The title of the blog
+        description?: string; // Optional: A brief description of the blog
+    };
 }

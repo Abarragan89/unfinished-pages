@@ -66,11 +66,15 @@ export default async function getBlogData(blogId: string) {
                     },
                 },
                 comments: {
-                    orderBy: { likes: 'desc' },
+                    orderBy: { likeCount: 'desc' },
                     select: {
                         id: true,
                         text: true,
-                        likes: true,
+                        likes: {
+                            select: {
+                                id: true,
+                            }
+                        },
                         createdAt: true,
                         user: {
                             select: {
@@ -79,7 +83,7 @@ export default async function getBlogData(blogId: string) {
                             }
                         },
                         replies: {
-                            orderBy: { likes: 'desc' },
+                            orderBy: { likeCount: 'desc' },
                             select: {
                                 text: true,
                                 likes: true,

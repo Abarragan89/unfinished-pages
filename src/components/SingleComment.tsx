@@ -3,27 +3,46 @@ import { useState } from "react";
 import Image from "next/image"
 import { CiHeart } from "react-icons/ci";
 import { IoChevronDownOutline } from "react-icons/io5";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa6";
 import { FiChevronLeft } from "react-icons/fi";
 import { Session } from "../../types/users";
 import { Comment } from "../../types/comment";
 import { formatDate } from "../../utils/formatDate";
+import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
 
 export default function SingleComment({ session, commentData }: { session: Session, commentData: Comment }) {
     const [showReplies, setShowReplies] = useState<boolean>(false)
+    const [isLikedByUser, setIsLikeByUser] = useState<boolean>(commentData.likes.some((like) => like.userId === session.data?.user?.id))
+    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData?.likes?.length || 0)
 
-    function showLoginModal(): void {
-        alert("show login modal")
-    }
+    const router = useRouter();
+    const pathname = usePathname()
+
+    const handleShowLoginModal = () => {
+        // Use router.push with the new query parameter
+        router.push(`${window.location.origin}/${pathname}?showModal=login`, {
+            scroll: false
+        })
+    };
+
     function showAddCommentReplyModal(): void {
         alert('show add comment replay modal')
     }
 
-    async function toggleCommentLike() {
+    async function toggleCommentLike(toggleOption: string) {
         try {
-            const { data } = await axios.put('/api/userRoutes/comments', {
-                isLiking: true
+            await axios.put('/api/userRoutes/comments', {
+                commentId: commentData.id,
             })
+            if (toggleOption === 'add') {
+                setIsLikeByUser(true)
+                setTotalCommentLikes(prev => prev + 1)
+            } else if (toggleOption === 'remove') {
+                setIsLikeByUser(false)
+                setTotalCommentLikes(prev => prev - 1)
+            }
         } catch (error) {
             console.log('error adding comment ', error)
         }
@@ -45,11 +64,18 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                         <p className="leading-none text-[.95rem] text-[var(--gray-500)]">{formatDate(commentData.createdAt)}</p>
                     </div>
                     <div className="flex items-center text-[var(--gray-600)]">
-                        <CiHeart
-                            onClick={session.status === 'authenticated' ? toggleCommentLike : showLoginModal}
-                            size={23}
-                            className="hover:cursor-pointer" />
-                        <p className="text-[.93rem]">{commentData.likes}</p>
+                        {isLikedByUser ?
+                            <FaHeart
+                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('remove') : handleShowLoginModal}
+                                size={20}
+                                className="hover:cursor-pointer text-[var(--brown-100)]" />
+                            :
+                            <FaRegHeart
+                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('add') : handleShowLoginModal}
+                                size={20}
+                                className="hover:cursor-pointer" />
+                        }
+                        <p className="text-[.93rem] ml-1">{totalCommentLikes}</p>
                     </div>
                 </div>
             </div>
@@ -60,11 +86,11 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                     className="w-fit mr-0 flex justify-end text-[var(--gray-600)] items-center hover:cursor-pointer"
                 >
                     <p>replies</p>
-                    <p className="text-[.9rem] ml-[4px]">{commentData.replies.length}</p>
+                    <p className="text-[.9rem] ml-[4px]">{commentData?.replies?.length || 0}</p>
                     {showReplies ? <FiChevronLeft size={18} /> : <IoChevronDownOutline />}
                 </div>
                 <p
-                    onClick={session.status === 'authenticated' ? showAddCommentReplyModal : showLoginModal}
+                    onClick={session.status === 'authenticated' ? showAddCommentReplyModal : handleShowLoginModal}
                     className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]"
                 >
                     Reply
