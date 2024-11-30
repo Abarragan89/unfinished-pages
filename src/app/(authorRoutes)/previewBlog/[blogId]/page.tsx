@@ -48,7 +48,9 @@ export default async function page({ params }: { params: { blogId: string } }) {
             />
 
             {/* This will be the likes/comment button bar */}
-            <BlogLikeCommentBar />
+            <BlogLikeCommentBar
+                likes={blogData.likes}
+            />
 
             {/* This is the Blog Image */}
             <Image
