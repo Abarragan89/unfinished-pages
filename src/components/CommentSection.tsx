@@ -21,10 +21,6 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [blogCommentState, setBlogCommentState] = useState<Comment[]>(blogComments)
 
-    function showAddCommentModal(): void {
-        alert('showing comment modal')
-    }
-
     const handleShowLoginModal = () => {
         // Use router.push with the new query parameter
         router.push(`${window.location.origin}/${pathname}?showModal=login`, {
