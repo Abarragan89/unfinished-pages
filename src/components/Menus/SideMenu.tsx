@@ -148,7 +148,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                 &&
                 <menu
                     ref={sideMenuRef}
-                    className="fixed z-20 top-0 bottom-0 left-0 border border-r-gray-300 bg-[var(--off-white)] w-[350px] animate-slideInFromLeft custom-low-lifted-shadow">
+                    className="fixed z-[99] top-0 bottom-0 left-0 border border-r-gray-300 bg-[var(--off-white)] w-[350px] animate-slideInFromLeft custom-low-lifted-shadow">
                     <MdOutlineArrowBack
                         onClick={router.back}
                         size={25}

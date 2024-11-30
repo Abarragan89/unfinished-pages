@@ -9,14 +9,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         if (!userId) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
         }
-        
-        const { coverPhotoUrl } = await request.json();
+
+        const { coverPhotoUrl, coverPhotoAlt } = await request.json();
 
         if (coverPhotoUrl) {
             // set the image url to s3 bucket uplaod
             await prisma.blog.update({
                 where: { id: params.id },
-                data: { coverPhotoUrl }
+                data: { coverPhotoUrl, coverPhotoAlt }
             })
 
             return NextResponse.json({ coverPhotoUrl }, { status: 200 })

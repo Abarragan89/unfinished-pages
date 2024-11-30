@@ -84,7 +84,6 @@ model Blog {
   description String?
   date DateTime @default(now())
   likes Int @default(0)
-  dislikes Int @default(0)
   readDuration Int @default(0)
   coverPhotoUrl String?
   coverPhotoAlt String?

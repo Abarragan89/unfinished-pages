@@ -5,7 +5,11 @@ import { IoShareOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { Session } from "../../../types/users";
 
-export default function BlogLikeCommentBar() {
+interface Props {
+    likes: number;
+}
+
+export default function BlogLikeCommentBar({ likes }: Props) {
 
     const session: Session = useSession();
     function showLoginMenu(): void {
@@ -25,7 +29,7 @@ export default function BlogLikeCommentBar() {
                     onClick={session.status === 'authenticated' ? addLike : showLoginMenu}
                     className="text-[1.5rem] mr-[2px] hover:cursor-pointer"
                 />
-                <p className="mr-5 text-[.95rem]">93</p>
+                <p className="mr-5 text-[.95rem]">{likes}</p>
                 <BiMessageRounded
                     onClick={session.status === 'authenticated' ? showAddCommentModal : showLoginMenu}
                     className="text-[1.5rem] mr-[2px] hover:cursor-pointer"

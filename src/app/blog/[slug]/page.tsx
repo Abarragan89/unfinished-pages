@@ -5,7 +5,6 @@ import { BlogData } from "../../../../types/blog";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import getBlogData from "@/app/services/getBlogData";
-import { headers } from 'next/headers'
 import formatContentToDescendantType from "../../../../utils/formatBlogContent"
 import { BlogContent } from "../../../../types/blog"
 import { Descendant } from "slate"
@@ -14,6 +13,50 @@ import BlogMetaDetails from "@/components/BlogUI/BlogMetaDetails"
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
 import consolidateCodeBlocks from "../../../../utils/consolidateCodeBlocks"
 import BlogContentSection from "@/components/BlogUI/BlogContentSection"
+import { Metadata } from 'next';
+
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const { slug } = params;
+    const blogId = slug.split('-').pop() as string;
+
+    // Fetch blog data
+    const blogData = await getBlogData(blogId);
+
+    if (!blogData) {
+        return {
+            title: 'Blog Not Found',
+            description: 'The requested blog could not be found.',
+        };
+    }
+
+    return {
+        title: blogData.title,
+        description: blogData.description || 'Read this amazing blog!',
+        openGraph: {
+            type: 'article',
+            title: blogData.title,
+            description: blogData.description as string,
+            url: `https://www.unfinishedpages.com/blog/${blogData.title.replace(/ /g, '-')}-${blogData.id}`,
+            images: blogData.coverPhotoUrl ? [blogData.coverPhotoUrl] : undefined,
+            siteName: 'Unfinished Pages',
+            publishedTime: blogData.publishedDate.toISOString(),
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: blogData.title,
+            description: blogData.description as string,
+            images: blogData.coverPhotoUrl ? [blogData.coverPhotoUrl] : undefined,
+        },
+        alternates: {
+            canonical: `https://www.unfinishedpages.com/blog/${blogData.title.replace(/ /g, '-')}-${blogData.id}`
+        },
+        robots: {
+            index: true,
+            follow: true,
+        }
+    };
+}
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
@@ -71,7 +114,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
-
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] m-[5%] rounded-md">
             <ScrollToTop />
@@ -88,14 +130,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
 
             {/* This will be the likes/comment button bar */}
-            <BlogLikeCommentBar />
+            <BlogLikeCommentBar
+                likes={blogData.likes}
+
+
+            />
 
             {/* This is the Blog Image */}
             <Image
                 src={blogData.coverPhotoUrl as string}
                 width={700}
                 height={394}
-                alt="Image of thing, should replace with data"
+                alt={blogData.coverPhotoAlt as string}
                 className="block mx-auto mb-[25px] md:mb-[40px]"
             />
 

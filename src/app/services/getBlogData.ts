@@ -11,10 +11,12 @@ export default async function getBlogData(blogId: string) {
                 title: true,
                 description: true,
                 coverPhotoUrl: true,
+                coverPhotoAlt: true,
                 date: true,
                 likes: true,
                 isPublished: true,
                 readDuration: true,
+                publishedDate: true,
                 user: {
                     select: {
                         name: true,
