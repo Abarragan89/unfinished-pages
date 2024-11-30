@@ -106,7 +106,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
             // Save image to Database for Blog
             await axios.put(
                 `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
-                { coverPhotoUrl: pictureURL, coverPhotoAlt: imageAlt }
+                { coverPhotoUrl: pictureURL, coverPhotoAlt: imageAlt.trim() }
             )
 
             setImagePreview(pictureURL);

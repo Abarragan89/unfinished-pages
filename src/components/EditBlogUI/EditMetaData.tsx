@@ -22,8 +22,8 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
         try {
             setIsDetailsSaving(true);
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogDetails`, {
-                blogTitle,
-                blogDescription,
+                blogTitle: blogTitle.trim(),
+                blogDescription: blogDescription.trim()
             });
             setIsDetailsSaving(false);
             setIsDetailsSavable(false);
@@ -62,7 +62,7 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                     </div>
                     <textarea
                         onChange={(e) => { setBlogDescription(e.target.value); setIsDetailsSavable(true) }}
-                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[.95rem]"
+                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-500)] text-[.95rem]"
                         id="blog-title"
                         maxLength={150}
                         value={blogDescription}

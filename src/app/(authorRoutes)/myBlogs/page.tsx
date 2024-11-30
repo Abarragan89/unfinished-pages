@@ -39,7 +39,7 @@ export default async function page() {
                                 title={blog.title}
                                 coverPhotoUrl={blog.coverPhotoUrl as string}
                                 description={blog.description as string}
-                                date={formatDate(blog.date.toString())}
+                                date={formatDate(blog.updatedAt.toString())}
                                 likes={blog.likes}
                             />
                         </Link>

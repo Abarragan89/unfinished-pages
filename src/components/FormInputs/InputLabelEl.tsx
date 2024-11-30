@@ -14,17 +14,17 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
                 <div className="flex justify-between mx-1">
                     <label
                         className="text-[.875rem]"
-                        htmlFor="cover-image-alt"
+                        htmlFor={labelText}
                     >{labelText}</label>
                     {characterLimit &&
-                        <p className="text-[.85rem]">{userText.length}/characterLimit</p>
+                        <p className="text-[.85rem]">{userText.length}/{characterLimit}</p>
                     }
                 </div>
             }
 
             <input
                 type="text"
-                id="cover-image-alt"
+                id={labelText}
                 autoFocus={autofocus}
                 maxLength={characterLimit ?? undefined}
                 onChange={(e) => handleStateChange(e.target.value)}

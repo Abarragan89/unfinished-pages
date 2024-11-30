@@ -24,6 +24,8 @@ model User {
   sessions      Session[]
   blogs         Blog[]
   blogImages    Image[]
+  comments      Comment[]
+  replyComments ReplyComment[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   createdAt DateTime @default(now())
@@ -82,13 +84,13 @@ model Blog {
   id String @id @default(cuid())
   title String
   description String?
-  date DateTime @default(now())
   likes Int @default(0)
   readDuration Int @default(0)
   coverPhotoUrl String?
   coverPhotoAlt String?
   isPublished Boolean @default(false)
   content ContentBlock[]
+  comments Comment[]
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   publishedDate DateTime  @default(now()) 
@@ -152,4 +154,28 @@ model Image {
   contentBlocks ContentBlock[]
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now()) 
+}
+
+
+model Comment {
+  id String @id @default(cuid())
+  text String
+  likes       Int         @default(0)
+  createdAt   DateTime    @default(now()) 
+  replies ReplyComment[]
+  userId String
+  blogId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
+}
+
+model ReplyComment {
+  id String @id @default(cuid())
+  text String
+  likes       Int         @default(0)
+  createdAt   DateTime    @default(now()) 
+  userId String
+  commentId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade )
 }

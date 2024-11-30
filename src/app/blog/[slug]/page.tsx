@@ -14,6 +14,7 @@ import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
 import consolidateCodeBlocks from "../../../../utils/consolidateCodeBlocks"
 import BlogContentSection from "@/components/BlogUI/BlogContentSection"
 import { Metadata } from 'next';
+import { Comment } from "../../../../types/comment";
 
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -107,7 +108,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     }
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
-
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
     return (
@@ -120,7 +120,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 coverImgAlt={'Blog cover image'}
                 coverImgURL={blogData.coverPhotoUrl as string}
                 readingLength={blogData.readDuration}
-                publishDate={blogData.date.toLocaleDateString('en-US',
+                publishDate={blogData.updatedAt.toLocaleDateString('en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
                 )}
             />
@@ -128,8 +128,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
             {/* This will be the likes/comment button bar */}
             <BlogLikeCommentBar
                 likes={blogData.likes}
-
-
             />
 
             {/* This is the Blog Image */}
@@ -148,7 +146,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
             {/* Comment Section */}
             <hr className="mt-[50px]" />
-            <CommentSection />
+            <CommentSection 
+                blogId={blogData.id}
+                blogComments={blogData.comments as Comment[]}
+            />
 
             {/* This is the related posts in the same category */}
             <hr className="mt-[50px]" />

@@ -12,8 +12,8 @@ export default async function getBlogData(blogId: string) {
                 description: true,
                 coverPhotoUrl: true,
                 coverPhotoAlt: true,
-                date: true,
                 likes: true,
+                updatedAt: true,
                 isPublished: true,
                 readDuration: true,
                 publishedDate: true,
@@ -65,6 +65,35 @@ export default async function getBlogData(blogId: string) {
                         }
                     },
                 },
+                comments: {
+                    orderBy: { likes: 'desc' },
+                    select: {
+                        id: true,
+                        text: true,
+                        likes: true,
+                        createdAt: true,
+                        user: {
+                            select: {
+                                name: true,
+                                image: true,
+                            }
+                        },
+                        replies: {
+                            orderBy: { likes: 'desc' },
+                            select: {
+                                text: true,
+                                likes: true,
+                                createdAt: true,
+                                user: {
+                                    select: {
+                                        name: true,
+                                        image: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
         })
         return blogData;

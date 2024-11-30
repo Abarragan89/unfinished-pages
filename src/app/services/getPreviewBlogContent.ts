@@ -25,7 +25,7 @@ export default async function getPreviewBlogContent(userId: string, blogId: stri
                 title: true,
                 description: true,
                 coverPhotoUrl: true,
-                date: true,
+                updatedAt: true,
                 likes: true,
                 isPublished: true,
                 readDuration: true,

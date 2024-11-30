@@ -42,7 +42,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
                 coverImgAlt={'Blog cover image'}
                 coverImgURL={blogData.coverPhotoUrl as string}
                 readingLength={blogData.readDuration}
-                publishDate={blogData.date.toLocaleDateString('en-US',
+                publishDate={blogData.updatedAt.toLocaleDateString('en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
                 )}
             />
