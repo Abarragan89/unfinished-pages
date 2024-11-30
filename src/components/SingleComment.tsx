@@ -16,6 +16,7 @@ export default function SingleComment({ session, commentData }: { session: Sessi
     const [showReplies, setShowReplies] = useState<boolean>(false)
     const [isLikedByUser, setIsLikeByUser] = useState<boolean>(commentData.likes.some((like) => like.userId === session.data?.user?.id))
     const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData?.likes?.length || 0)
+    const [showReplyTextarea, setShowReplyTextarea] = useState<boolean>(false);
 
     const router = useRouter();
     const pathname = usePathname()
