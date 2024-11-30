@@ -42,6 +42,8 @@ export async function PUT(request: NextRequest) {
     try {
         const userId = request.headers.get('x-user-id');
 
+        const { isLiking } = await request.json();
+        console.log('likeing ', isLiking)
 
 
 

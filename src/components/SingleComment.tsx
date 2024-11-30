@@ -7,9 +7,9 @@ import { FiChevronLeft } from "react-icons/fi";
 import { Session } from "../../types/users";
 import { Comment } from "../../types/comment";
 import { formatDate } from "../../utils/formatDate";
+import axios from "axios";
 
 export default function SingleComment({ session, commentData }: { session: Session, commentData: Comment }) {
-
     const [showReplies, setShowReplies] = useState<boolean>(false)
 
     function showLoginModal(): void {
@@ -19,8 +19,14 @@ export default function SingleComment({ session, commentData }: { session: Sessi
         alert('show add comment replay modal')
     }
 
-    async function addLike() {
-        alert('you added a like')
+    async function toggleCommentLike() {
+        try {
+            const { data } = await axios.put('/api/userRoutes/comments', {
+                isLiking: true
+            })
+        } catch (error) {
+            console.log('error adding comment ', error)
+        }
     }
 
     return (
@@ -40,7 +46,7 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                     </div>
                     <div className="flex items-center text-[var(--gray-600)]">
                         <CiHeart
-                            onClick={session.status === 'authenticated' ? addLike : showLoginModal}
+                            onClick={session.status === 'authenticated' ? toggleCommentLike : showLoginModal}
                             size={23}
                             className="hover:cursor-pointer" />
                         <p className="text-[.93rem]">{commentData.likes}</p>

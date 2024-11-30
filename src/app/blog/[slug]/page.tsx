@@ -15,7 +15,7 @@ import consolidateCodeBlocks from "../../../../utils/consolidateCodeBlocks"
 import BlogContentSection from "@/components/BlogUI/BlogContentSection"
 import { Metadata } from 'next';
 import { Comment } from "../../../../types/comment";
-
+import { cleanTitleForURL } from "../../../../utils/stringManipulation";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const { slug } = params;
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
             type: 'article',
             title: blogData.title,
             description: blogData.description as string,
-            url: `https://www.unfinishedpages.com/blog/${blogData.title.replace(/ /g, '-')}-${blogData.id}`,
+            url: `https://www.unfinishedpages.com/blog/${cleanTitleForURL(blogData.title)}-${blogData.id}`,
             images: blogData.coverPhotoUrl ? [blogData.coverPhotoUrl] : undefined,
             siteName: 'Unfinished Pages',
             publishedTime: blogData.publishedDate.toISOString(),
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
             images: blogData.coverPhotoUrl ? [blogData.coverPhotoUrl] : undefined,
         },
         alternates: {
-            canonical: `https://www.unfinishedpages.com/blog/${blogData.title.replace(/ /g, '-')}-${blogData.id}`
+            canonical: `https://www.unfinishedpages.com/blog/${cleanTitleForURL(blogData.title)}-${blogData.id}`
         },
         robots: {
             index: true,
@@ -146,7 +146,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
             {/* Comment Section */}
             <hr className="mt-[50px]" />
-            <CommentSection 
+            <CommentSection
                 blogId={blogData.id}
                 blogComments={blogData.comments as Comment[]}
             />

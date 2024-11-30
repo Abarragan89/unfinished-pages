@@ -9,6 +9,7 @@ import LoginModal from "@/components/Modals/LoginModal";
 import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
+import { cleanTitleForURL } from "../../utils/stringManipulation";
 
 export default async function Home() {
 
@@ -111,7 +112,7 @@ export default async function Home() {
           <Carousel>
             {blogData.map((blog) => {
               return (
-                <Link key={blog.id} href={`/blog/${blog.title?.replace(/ /g, '-')}-${blog.id}`} className="embla__slide">
+                <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide">
                   <BlogCard
                     id={blog.id}
                     title={blog.title}
