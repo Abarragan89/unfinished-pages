@@ -13,7 +13,8 @@ export default function Page({ params }: { params: { slug: string } }) {
             title: 'Boost Your Creativity with These Proven Techniques',
             description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
             date: 'September 12, 2023',
-            likes: 53,
+            likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -21,7 +22,8 @@ export default function Page({ params }: { params: { slug: string } }) {
             title: 'Mastering the Art of Productivity: Tips for Daily Success',
             description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
             date: 'August 29, 2024',
-            likes: 120,
+            likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -29,7 +31,8 @@ export default function Page({ params }: { params: { slug: string } }) {
             title: 'Healthy Living Hacks: Simple Changes for a Better Life',
             description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
             date: 'July 12, 2023',
-            likes: 892,
+            likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -37,7 +40,8 @@ export default function Page({ params }: { params: { slug: string } }) {
             title: 'Exploring the Future of AI: Trends and Innovations Ahead',
             description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
             date: 'Decemeber 25, 2024',
-            likes: 2,
+            likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         }
     ]
