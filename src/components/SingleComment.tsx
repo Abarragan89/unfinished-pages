@@ -176,6 +176,7 @@ export default function SingleComment({ session, commentData, blogId }: { sessio
                 >
                     {replyCommentState && replyCommentState.map((reply: Comment, index: number) => (
                         <CommentReplySection
+                            key={index}
                             handleShowLoginModal={handleShowLoginModal}
                             session={session}
                             replyCommentData={reply}
