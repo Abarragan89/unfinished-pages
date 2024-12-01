@@ -13,6 +13,7 @@ export default async function getBlogData(blogId: string) {
                 coverPhotoUrl: true,
                 coverPhotoAlt: true,
                 likes: true,
+                likeCount: true,
                 updatedAt: true,
                 isPublished: true,
                 readDuration: true,
@@ -70,6 +71,7 @@ export default async function getBlogData(blogId: string) {
                     select: {
                         id: true,
                         text: true,
+                        likeCount: true,
                         likes: {
                             select: {
                                 id: true,
@@ -85,11 +87,18 @@ export default async function getBlogData(blogId: string) {
                         replies: {
                             orderBy: { likeCount: 'desc' },
                             select: {
+                                id: true,
                                 text: true,
-                                likes: true,
+                                likeCount: true,
+                                likes: {
+                                    select: {
+                                        id: true
+                                    }
+                                },
                                 createdAt: true,
                                 user: {
                                     select: {
+                                        id: true,
                                         name: true,
                                         image: true
                                     }

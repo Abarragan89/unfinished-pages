@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../../utils/prisma';
 
-// Route to create a blog with a title, user ID, and date
+// Route to create a new comment on a blog
 export async function POST(request: NextRequest) {
     try {
         const { text, blogId, } = await request.json()
@@ -20,6 +20,11 @@ export async function POST(request: NextRequest) {
                 createdAt: true,
                 id: true,
                 text: true,
+                likes: {
+                    select: {
+                        id: true
+                    }
+                },
                 user: {
                     select: {
                         name: true,
@@ -30,7 +35,7 @@ export async function POST(request: NextRequest) {
             }
 
         });
-        return NextResponse.json({ message: 'Blog created successfully', comment: newComment });
+        return NextResponse.json({ message: 'comment sucessfully added', comment: newComment });
     } catch (error) {
         console.error('Error saving Blog Content ', error);
         return NextResponse.json({ error: 'failed to parse blog content' })

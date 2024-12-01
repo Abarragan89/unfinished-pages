@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image"
-import { CiHeart } from "react-icons/ci";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
@@ -11,12 +10,19 @@ import { Comment } from "../../types/comment";
 import { formatDate } from "../../utils/formatDate";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
+import TextareaLabel from "./FormInputs/TextareaLabel";
+import { IoSendSharp } from "react-icons/io5";
+import { BarLoader } from "react-spinners";
+import CommentReplySection from "./CommentReplySection";
 
-export default function SingleComment({ session, commentData }: { session: Session, commentData: Comment }) {
+export default function SingleComment({ session, commentData, blogId }: { session: Session, commentData: Comment, blogId: string }) {
     const [showReplies, setShowReplies] = useState<boolean>(false)
     const [isLikedByUser, setIsLikeByUser] = useState<boolean>(commentData.likes.some((like) => like.userId === session.data?.user?.id))
-    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData?.likes?.length || 0)
+    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData.likeCount)
     const [showReplyTextarea, setShowReplyTextarea] = useState<boolean>(false);
+    const [replyText, setReplyText] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [replyCommentState, setReplyCommentState] = useState<Comment[]>(commentData.replies)
 
     const router = useRouter();
     const pathname = usePathname()
@@ -28,14 +34,32 @@ export default function SingleComment({ session, commentData }: { session: Sessi
         })
     };
 
-    function showAddCommentReplyModal(): void {
-        alert('show add comment replay modal')
+
+    async function addCommentReplyHandler(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        try {
+            setIsLoading(true);
+            const { data } = await axios.post('/api/userRoutes/commentReplies', {
+                text: replyText.trim(),
+                blogId: blogId,
+                commentId: commentData.id
+            })
+            setReplyCommentState(prev => [data.comment, ...prev])
+        } catch (error) {
+            console.log('error adding comment ', error)
+        } finally {
+            setIsLoading(false);
+            setReplyText('');
+            setShowReplyTextarea(false)
+            setShowReplies(true)
+        }
     }
 
-    async function toggleCommentLike(toggleOption: string) {
+    // This to toggle likes in main comment
+    async function toggleCommentLike(toggleOption: string, commentId: string) {
         try {
             await axios.put('/api/userRoutes/comments', {
-                commentId: commentData.id,
+                commentId
             })
             if (toggleOption === 'add') {
                 setIsLikeByUser(true)
@@ -67,12 +91,12 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                     <div className="flex items-center text-[var(--gray-600)]">
                         {isLikedByUser ?
                             <FaHeart
-                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('remove') : handleShowLoginModal}
+                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('remove', commentData.id) : handleShowLoginModal}
                                 size={20}
                                 className="hover:cursor-pointer text-[var(--brown-100)]" />
                             :
                             <FaRegHeart
-                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('add') : handleShowLoginModal}
+                                onClick={session.status === 'authenticated' ? () => toggleCommentLike('add', commentData.id) : handleShowLoginModal}
                                 size={20}
                                 className="hover:cursor-pointer" />
                         }
@@ -80,7 +104,45 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                     </div>
                 </div>
             </div>
-            <p className="text-[1rem] px-[50px] mt-2">{commentData.text}</p>
+            <p className="text-[1rem] px-[50px] mt-0">{commentData.text}</p>
+
+            {/* Conditionally render reply form */}
+            {showReplyTextarea &&
+                <form
+                    onSubmit={(e) => addCommentReplyHandler(e)}
+                    className="relative w-[80%] mx-auto mt-[-10px]"
+                >
+                    <div>
+                        <TextareaLabel
+                            handleStateChange={setReplyText}
+                            userText={replyText}
+                            characterLimit={1000}
+                            placeholderText={'Add comment'}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className={`absolute right-[10px] top-[75px] h-[30px] ${replyText ? '' : 'opacity-[.5] pointer-events-none'}`}
+                    >
+                        {isLoading ?
+                            <BarLoader
+                                color={'black'}
+                                width={15}
+                                height={2}
+                                loading={isLoading}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                            :
+                            <IoSendSharp
+                                color="black"
+                                size={22}
+                            />
+                        }
+                    </button>
+                </form>
+            }
+
             <div className="flex justify-between items-center text-[.975rem] mx-14 mt-2">
                 <div
                     onClick={() => setShowReplies(prev => !prev)}
@@ -90,12 +152,21 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                     <p className="text-[.9rem] ml-[4px]">{commentData?.replies?.length || 0}</p>
                     {showReplies ? <FiChevronLeft size={18} /> : <IoChevronDownOutline />}
                 </div>
-                <p
-                    onClick={session.status === 'authenticated' ? showAddCommentReplyModal : handleShowLoginModal}
-                    className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]"
-                >
-                    Reply
-                </p>
+                {showReplyTextarea ?
+                    <p
+                        onClick={session.status === 'authenticated' ? () => setShowReplyTextarea(false) : handleShowLoginModal}
+                        className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]"
+                    >
+                        Cancel
+                    </p>
+                    :
+                    <p
+                        onClick={session.status === 'authenticated' ? () => setShowReplyTextarea(true) : handleShowLoginModal}
+                        className="hover:cursor-pointer text-[.95rem] underline text-[var(--brown-500)] opacity-[0.7] hover:opacity-[1]"
+                    >
+                        Reply
+                    </p>
+                }
             </div>
 
             {/* Replies */}
@@ -103,54 +174,13 @@ export default function SingleComment({ session, commentData }: { session: Sessi
                 <div style={{ transform: "scale(0.88)" }}
                     className=""
                 >
-                    {commentData.replies.map((reply, index) => (
-                        <div key={index} className="mb-4 border-l ps-4">
-                            <div className="flex items-center">
-                                <Image
-                                    src={"/images/defaultProfilePic.png"}
-                                    width={40}
-                                    height={40}
-                                    alt="profile pic of blog author"
-                                    className="rounded-[50px] w-[40px]"
-                                />
-                                <div className="flex justify-between items-center w-full ml-3">
-                                    <div>
-                                        <p className="leading-none text-[.95rem] text-[var(--brown-500)]">Anthony Barragan</p>
-                                        <p className="leading-none text-[.95rem] text-[var(--gray-500)]">2 days ago</p>
-                                    </div>
-                                    <div className="flex items-center text-[var(--gray-600)]">
-                                        <CiHeart size={23} />
-                                        <p className="text-[.93rem]">93</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="text-[1rem] px-[50px] mt-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus doloremque, eum aliquid voluptatum suscipit facere quaerat, nobis itaque saepe harum quia, corporis sequi perferendis! Aut similique sint qui nemo nulla!</p>
-                        </div>
+                    {replyCommentState && replyCommentState.map((reply: Comment, index: number) => (
+                        <CommentReplySection
+                            handleShowLoginModal={handleShowLoginModal}
+                            session={session}
+                            replyCommentData={reply}
+                        />
                     ))}
-
-                    {/* <div className="mb-4 border-l ps-4">
-                        <div className="flex items-center">
-                            <Image
-                                src={"/images/defaultProfilePic.png"}
-                                width={40}
-                                height={40}
-                                alt="profile pic of blog author"
-                                className="rounded-[50px] w-[40px]"
-                            />
-                            <div className="flex justify-between items-center w-full ml-3">
-                                <div>
-                                    <p className="leading-none text-[.95rem] text-[var(--brown-500)]">Anthony Barragan</p>
-                                    <p className="leading-none text-[.95rem] text-[var(--gray-500)]">2 days ago</p>
-                                </div>
-                                <div className="flex items-center text-[var(--gray-600)]">
-                                    <CiHeart size={23} />
-                                    <p className="text-[.93rem]">93</p>
-                                </div>
-                            </div>
-                        </div>
-                        <p className="text-[1rem] px-[50px] mt-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus doloremque, eum aliquid voluptatum suscipit facere quaerat, nobis itaque saepe harum quia, corporis sequi perferendis! Aut similique sint qui nemo nulla!</p>
-                    </div> */}
-
                 </div>
             }
         </div>

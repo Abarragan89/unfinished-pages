@@ -113,6 +113,7 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
                     key={commentData.id}
                     session={session}
                     commentData={commentData}
+                    blogId={blogId}
                 />
             ))}
         </section>

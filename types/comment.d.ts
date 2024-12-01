@@ -5,8 +5,9 @@ export interface Comment {
     id: string;
     text: string;
     likes: CommentLike[];
+    likeCount: number;
     createdAt: Date;
-    replies: ReplyComment[];
+    replies: Comment[];
     userId: string;
     blogId: string;
     user: UserData; // Assuming `User` is another interface you have defined
@@ -17,7 +18,8 @@ export interface Comment {
 interface CommentLike {
     id: string;           // Unique identifier for the like
     userId?: string;       // The ID of the user who liked the comment
-    commentId?: string;    // The ID of the comment that was liked
+    commentId?: string;  // The ID of the comment that was liked
+    parentId?: string;
     user?: {
         id: string;         // The user's ID
         name?: string;      // Optional: The user's name
