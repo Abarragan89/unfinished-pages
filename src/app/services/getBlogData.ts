@@ -67,6 +67,7 @@ export default async function getBlogData(blogId: string) {
                     },
                 },
                 comments: {
+                    where: { parentId: null },
                     orderBy: { likeCount: 'desc' },
                     select: {
                         id: true,
