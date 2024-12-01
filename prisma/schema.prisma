@@ -15,10 +15,10 @@ datasource db {
 
 model User {
   id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
+  name          String?         @db.VarChar(150)
+  email         String          @unique @db.VarChar(320)
   emailVerified DateTime?
-  image  String?
+  image         String?
   isAuthor      Boolean         @default(false)
   accounts      Account[]
   sessions      Session[]
@@ -83,13 +83,13 @@ model Authenticator {
 
 model Blog {
   id String @id @default(cuid())
-  title String
-  description String?
+  title String  @db.VarChar(65)
+  description String? @db.VarChar(150)
   likes    BlogLike[]
   likeCount  Int   @default(0)
   readDuration Int @default(0)
   coverPhotoUrl String?
-  coverPhotoAlt String?
+  coverPhotoAlt String? @db.VarChar(100)
   isPublished Boolean @default(false)
   content ContentBlock[]
   comments Comment[]
@@ -148,7 +148,7 @@ model AnchorLinksInListItems {
 model Image {
   id String @id @default(cuid())
   url String
-  alt String
+  alt String @db.VarChar(100)
   width Int
   height Int
   isBlogCover Boolean
@@ -160,7 +160,7 @@ model Image {
 
 model Comment {
   id         String    @id @default(cuid())
-  text       String
+  text       String    @db.VarChar(1000)
   likeCount  Int       @default(0)
   likes      CommentLike[]
   createdAt  DateTime  @default(now())

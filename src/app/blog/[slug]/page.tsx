@@ -68,6 +68,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
             date: 'September 12, 2023',
             likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -76,6 +77,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
             date: 'August 29, 2024',
             likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -84,6 +86,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
             date: 'July 12, 2023',
             likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         },
         {
@@ -92,6 +95,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
             date: 'Decemeber 25, 2024',
             likes: [],
+            likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
         }
     ]
