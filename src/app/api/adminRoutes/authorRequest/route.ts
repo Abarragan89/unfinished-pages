@@ -4,10 +4,6 @@ import { prisma } from '../../../../../utils/prisma';
 export async function PUT(request: NextRequest) {
     try {
         const { requestResponseText, action, requestId } = await request.json()
-
-        console.log('requ', requestResponseText)
-        console.log('action ', action);
-        console.log('request id ', requestId)
         // If declined:
         if (action === 'decline') {
             // set the message
@@ -36,8 +32,6 @@ export async function PUT(request: NextRequest) {
                 });
             });
         }
-        console.log('Request approved and user set as an author.');
-
         return NextResponse.json({ message: 'success' }, { status: 200 })
     } catch (error) {
         console.error('Error saving Blog Content ', error);

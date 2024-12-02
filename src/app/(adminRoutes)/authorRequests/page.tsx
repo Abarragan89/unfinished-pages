@@ -36,7 +36,7 @@ export default async function page() {
             />
 
             {requests.length > 0 ? requests.map((request) => {
-                if (request.status === 'Pending') {
+                if (request.status === 'pending') {
                     return (
                         <AuthorRequestCard
                             key={request.id}

@@ -5,7 +5,6 @@ import AvatarNotLoggedIn from "./AvatarNotLoggedIn"
 
 export default function AvatarMenu({ onClose  }: { onClose: () => void }) {
     const session: Session = useSession();
-    console.log('session ', session)
     return (
         <div
             className="absolute animate-slideInFromRight z-10 top-[45px] right-[-20px] min-w-fit p-[15px_20px_10px_20px] w-fit rounded-bl-md border-l custom-avatar-menu-shadow bg-[var(--off-white)]"

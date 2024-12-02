@@ -14,11 +14,10 @@ export default async function page() {
     const userId = headersList.get('x-user-id')
     const isAuthor = headersList.get('x-is-author') === 'true' ? true : false;
 
+
     if (!userId) {
         throw new Error('You must be logged in')
     }
-
-    console.log('is author', isAuthor)
 
     const blogs = await prisma.blog.findMany(
         {

@@ -6,6 +6,7 @@ import axios from "axios";
 import SubmitButton from "../Buttons/SubmitButton";
 import { AuthorRequest } from "../../../types/users";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function BecomeAnAuthor({ userId }: { userId: string }) {
 
@@ -106,7 +107,7 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
                 </form>
                 :
                 <>
-                    {requestStatus.status === 'Pending' &&
+                    {requestStatus.status === 'pending' &&
                         <p className="text-center text-[var(--brown-500)] my-4">We are reviewing your information and will notify by email when we make our decision.</p>
                     }
                     {requestStatus.status === 'declined' &&
@@ -115,6 +116,15 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
                             <p className="text-center my-4 bg-[var(--gray-100)] border border-[var(--gray-300)] rounded-sm p-2">{requestStatus.replyMessage}</p>
                             <button
                                 onClick={acknowledgeDeclinedStatus}
+                                className="custom-small-btn block mx-auto bg-[var(--success)]"
+                            >Acknowledge</button>
+                        </>
+                    }
+                    {requestStatus.status === 'approved' &&
+                        <>
+                            <p className="text-center text-[var(--brown-500)] my-4">Congratulations, You've been approved to be an author! You must log out and log back in to start writing.</p>
+                            <button
+                                onClick={() => signOut({ callbackUrl: '/' })}
                                 className="custom-small-btn block mx-auto bg-[var(--success)]"
                             >Acknowledge</button>
                         </>

@@ -18,7 +18,6 @@ export default function CreateBlog() {
             const { data } = await axios.post('/api/authorRoutes', {
                 title: blogTitle.trim(),
             });
-            console.log('data ', data)
             router.replace(`/editBlog/${data.blog.id}`);
         } catch (error) {
             if (axios.isAxiosError(error)) {

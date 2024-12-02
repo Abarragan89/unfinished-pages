@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
     const isAuthor = token?.isAuthor;
 
     // Separate author and user routes
-    const authorRoutes = ['/api/authorRoutes', '/editBlog', '/previewBlog'];
+    const authorRoutes = ['/api/authorRoutes', '/editBlog', '/previewBlog', '/myBlogs'];
     const isApiRoute = pathname.startsWith('/api/');
     const response = NextResponse.next();
 

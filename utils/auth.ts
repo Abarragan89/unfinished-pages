@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
         },
         // Used for client side UI rendering
         session: async ({ session }) => {
-            console.log('session', session)
             if (session?.user?.email) {
                 const dbUser = await prisma.user.findUnique({
                     where: { email: session.user.email },
