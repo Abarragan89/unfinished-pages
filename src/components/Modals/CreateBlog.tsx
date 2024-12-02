@@ -8,7 +8,8 @@ import { BarLoader } from "react-spinners";
 export default function CreateBlog() {
     const router = useRouter();
     const [blogTitle, setBlogTitle] = useState<string>('');
-    const [isCreating, setIsCreating] = useState<boolean>(false)
+    const [isCreating, setIsCreating] = useState<boolean>(false);
+    const [errorMsg, setErrorMsg] = useState<string>('')
 
     async function createBlogHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -17,11 +18,18 @@ export default function CreateBlog() {
             const { data } = await axios.post('/api/authorRoutes', {
                 title: blogTitle.trim(),
             });
-
-            setIsCreating(false);
+            console.log('data ', data)
             router.replace(`/editBlog/${data.blog.id}`);
         } catch (error) {
-            console.error('Error creating blog', error);
+            if (axios.isAxiosError(error)) {
+                // Narrow down to AxiosError type
+                setErrorMsg(error.response?.data?.error || 'An unexpected error occurred');
+            } else {
+                console.error('Unexpected error', error);
+                setErrorMsg('An unexpected error occurred');
+            }
+        } finally {
+            setIsCreating(false);
         }
     }
 
@@ -48,6 +56,7 @@ export default function CreateBlog() {
                         <p className="text-[var(--brown-500)]">{blogTitle.length}/65</p>
                     </div>
                 </div>
+                {errorMsg && <p className="text-center text-[var(--danger)] text-[.935rem] mb-[-10px]">{errorMsg}</p>}
                 <button
                     type="submit"
                     className="custom-small-btn bg-[var(--off-black)] mt-4 h-[30px]"

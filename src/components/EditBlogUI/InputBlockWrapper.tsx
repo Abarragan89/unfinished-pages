@@ -1,4 +1,5 @@
 import { BarLoader } from "react-spinners";
+import SubmitButton from "../Buttons/SubmitButton";
 
 interface Props {
     children: React.ReactNode;
@@ -18,7 +19,7 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
             </h3>
             <button
                 type="button"
-                className={`absolute right-[15px] h-[30px] top-[10px] custom-small-btn bg-[var(--off-black)] ${isButtonAble ? '' : 'opacity-[.5] pointer-events-none'}`}
+                className={`absolute right-[15px] top-[10px] h-[30px] custom-small-btn bg-[var(--off-black)] ${isButtonAble ? '' : 'opacity-[.5] pointer-events-none'}`}
                 onClick={UIStateTrigger ? undefined : saveHandler}
             >
                 {UIStateTrigger ?
@@ -34,7 +35,6 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
                     'Save'
                 }
             </button>
-
             {children}
         </section>
     )

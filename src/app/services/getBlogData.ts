@@ -67,6 +67,7 @@ export default async function getBlogData(blogId: string) {
                     },
                 },
                 comments: {
+                    // only get top level comments but populate their replies
                     where: { parentId: null },
                     orderBy: { likeCount: 'desc' },
                     select: {

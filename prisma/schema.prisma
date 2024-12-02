@@ -20,6 +20,7 @@ model User {
   emailVerified DateTime?
   image         String?
   isAuthor      Boolean         @default(false)
+  isAdmin       Boolean         @default(true)
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
@@ -27,6 +28,7 @@ model User {
   comments      Comment[]
   commentLikes  CommentLike[]
   blogLikes     BlogLike[]
+  authorRequest AuthorRequest?
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   createdAt DateTime @default(now())
@@ -192,3 +194,15 @@ model CommentLike {
   comment Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   @@unique([userId, commentId]) // Ensure a user can like a blog only once
 }
+
+model AuthorRequest {
+    id      String   @id @default(cuid())
+    aboutText String @db.VarChar(1000)
+    whyBlogText String @db.VarChar(1000)
+    topicsText String @db.VarChar(500)
+    status String     @default("Pending")
+    replyMessage String? @db.VarChar(500)
+    userId  String   @unique
+    user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime  @default(now()) 
+}   

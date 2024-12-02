@@ -116,7 +116,6 @@ html {
 
 .custom-small-btn {
   appearance: none;
-  /* background-color: var(--off-black); */
   border-radius: 5px;
   box-sizing: border-box;
   color: var(--off-white);

@@ -12,7 +12,7 @@ export default async function getPublishedBlogs() {
             description: true,
             publishedDate: true,
             coverPhotoUrl: true,
-            likes: true,
+            likeCount: true,
             isPublished: true,
         }
     })

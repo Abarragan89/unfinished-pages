@@ -7,10 +7,19 @@ import { prisma } from "../../../../utils/prisma";
 import { headers } from 'next/headers'
 import { formatDate } from "../../../../utils/formatDate";
 import ScrollToTop from "@/components/ScrollToTop";
+import BecomeAnAuthor from "@/components/Modals/BecomeAnAuthor";
 
 export default async function page() {
     const headersList = headers()
     const userId = headersList.get('x-user-id')
+    const isAuthor = headersList.get('x-is-author') === 'true' ? true : false;
+
+    if (!userId) {
+        throw new Error('You must be logged in')
+    }
+
+    console.log('is author', isAuthor)
+
     const blogs = await prisma.blog.findMany(
         {
             where: { userId: userId as string },
@@ -20,9 +29,12 @@ export default async function page() {
         <main className="pt-[50px] min-h-[100vh]">
             <ScrollToTop />
             <CreateBlog />
+            <BecomeAnAuthor
+                userId={userId}
+            />
             <SubheadingTitle title="My Blogs" />
             <div className="absolute right-[25px] top-[80px]">
-                <Link href={'/myBlogs?showModal=createBlog'} className="flex items-center custom-small-btn bg-[var(--off-black)]">
+                <Link href={isAuthor ? '/myBlogs?showModal=createBlog' : '/myBlogs?showModal=becomeAnAuthor'} className="flex items-center custom-small-btn bg-[var(--off-black)]">
                     <HiPencilSquare size={16} />
                     <span className="ml-2">Write</span>
                 </Link>

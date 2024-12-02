@@ -28,38 +28,29 @@ export const authOptions: NextAuthOptions = {
         strategy: 'jwt'
     },
     callbacks: {
-        async signIn({ user }) {
-            try {
-                // const emailDomain = user.email?.split('@')[1];
-
-                // if (emailDomain !== 'villagecharteracademy.com') {
-                //     // If the email domain is not allowed, reject the sign-in
-                //     return false;
-                // }
-                // // Check if the user exists in the database
-                // const existingUser = await prisma.user.findUnique({
-                //     where: { id: user.id }
-                // });
-
-                // if (!existingUser) {
-                //     // Create a new user if they don't exist
-                //     await prisma.user.create({
-                //         data: {
-                //             id: user.id || '',
-                //             email: user.email || '',
-                //             username: user.name || '',
-                //             image: user.image || '',
-                //         }
-                //     });
-                // }
-
-                return true;
-            } catch (error) {
-                console.error('Error checking or creating user:', error);
-                return false;
+        // Used for server-side middleware authentication/authorization
+        async jwt({ token }) {
+            // If this is the first sign-in, attach isAuthor to the token
+            if (token.sub) {
+                const dbUser = await prisma.user.findUnique({
+                    where: { id: token.sub },
+                    select: { isAuthor: true }, // Fetch only the necessary field
+                });
+                token.isAuthor = dbUser?.isAuthor || false;
             }
+            return token;
         },
+        // Used for client side UI rendering
         session: async ({ session }) => {
+            console.log('session', session)
+            if (session?.user?.email) {
+                const dbUser = await prisma.user.findUnique({
+                    where: { email: session.user.email },
+                    select: { isAuthor: true, isAdmin: true }, // Fetch only the necessary field
+                });
+                session.isAuthor = dbUser?.isAuthor || false;
+                session.isAdmin = dbUser?.isAdmin || false
+            }
             return session;
         },
     }
