@@ -54,7 +54,7 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
             }
         }
         checkRequestStatus();
-    }, [])
+    }, [userId])
 
     async function acknowledgeDeclinedStatus() {
         try {
@@ -108,11 +108,11 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
                 :
                 <>
                     {requestStatus.status === 'pending' &&
-                        <p className="text-center text-[var(--brown-500)] my-4">We are reviewing your information and will notify by email when we make our decision.</p>
+                        <p className="text-center text-[var(--brown-500)] my-4">We are reviewing your information and will notify you by email when we make our decision.</p>
                     }
                     {requestStatus.status === 'declined' &&
                         <>
-                            <p className="text-center text-[var(--brown-500)] my-4">Unfortunately, you were decline author status for the following reason:</p>
+                            <p className="text-center text-[var(--brown-500)] my-4">Unfortunately, you were declined author status for the following reason:</p>
                             <p className="text-center my-4 bg-[var(--gray-100)] border border-[var(--gray-300)] rounded-sm p-2">{requestStatus.replyMessage}</p>
                             <button
                                 onClick={acknowledgeDeclinedStatus}
@@ -122,7 +122,7 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
                     }
                     {requestStatus.status === 'approved' &&
                         <>
-                            <p className="text-center text-[var(--brown-500)] my-4">Congratulations, You've been approved to be an author! You must log out and log back in to start writing.</p>
+                            <p className="text-center text-[var(--brown-500)] my-4">Congratulations, You&apos;ve been approved to be an author! You must log out and log back in to start writing.</p>
                             <button
                                 onClick={() => signOut({ callbackUrl: '/' })}
                                 className="custom-small-btn block mx-auto bg-[var(--success)]"
