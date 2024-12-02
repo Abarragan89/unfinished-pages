@@ -23,7 +23,48 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(authorRequest, { status: 200 })
 
     } catch (error) {
+        console.error('Error creating author request ', error);
+        return NextResponse.json({ error: 'failed to parse blog content' })
+    }
+}
+
+export async function GET(request: NextRequest) {
+    try {
+        const userId = request.headers.get('x-user-id');
+
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
+        }
+
+        const authorRequest = await prisma.authorRequest.findUnique({
+            where: { userId: userId }
+        })
+
+        return NextResponse.json(authorRequest, { status: 200 })
+
+    } catch (error) {
         console.error('Error saving Blog Content ', error);
         return NextResponse.json({ error: 'failed to parse blog content' })
     }
 }
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const userId = request.headers.get('x-user-id');
+
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
+        }
+        // delete request
+        await prisma.authorRequest.delete({
+            where: { userId: userId }
+        })
+
+        return NextResponse.json({ message: 'success' }, { status: 200 })
+
+    } catch (error) {
+        console.error('Error saving Blog Content ', error);
+        return NextResponse.json({ error: 'failed to parse blog content' })
+    }
+}
+

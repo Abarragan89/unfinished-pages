@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         }
 
         const authorRequest = await prisma.authorRequest.findUnique({
-            where: { userId: params.id }
+            where: { userId: userId }
         })
 
         return NextResponse.json(authorRequest, { status: 200 })
@@ -30,7 +30,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         }
         // delete request
         await prisma.authorRequest.delete({
-            where: { userId: params.id }
+            where: { userId: userId }
         })
 
         return NextResponse.json({ message: 'success' }, { status: 200 })

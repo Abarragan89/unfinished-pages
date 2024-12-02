@@ -15,8 +15,8 @@ export default async function page() {
     const isAuthor = headersList.get('x-is-author') === 'true' ? true : false;
 
 
-    if (!userId) {
-        throw new Error('You must be logged in')
+    if (!userId || !isAuthor) {
+        throw new Error('No authorized to see this page')
     }
 
     const blogs = await prisma.blog.findMany(
@@ -33,7 +33,7 @@ export default async function page() {
             />
             <SubheadingTitle title="My Blogs" />
             <div className="absolute right-[25px] top-[80px]">
-                <Link href={isAuthor ? '/myBlogs?showModal=createBlog' : '/myBlogs?showModal=becomeAnAuthor'} className="flex items-center custom-small-btn bg-[var(--off-black)]">
+                <Link href={'/myBlogs?showModal=createBlog'} className="flex items-center custom-small-btn bg-[var(--off-black)]">
                     <HiPencilSquare size={16} />
                     <span className="ml-2">Write</span>
                 </Link>

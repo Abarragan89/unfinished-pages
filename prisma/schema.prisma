@@ -197,11 +197,11 @@ model CommentLike {
 
 model AuthorRequest {
     id      String   @id @default(cuid())
-    aboutText String @db.VarChar(1000)
-    whyBlogText String @db.VarChar(1000)
-    topicsText String @db.VarChar(500)
+    aboutText String @db.VarChar(3000)
+    whyBlogText String @db.VarChar(3000)
+    topicsText String @db.VarChar(3000)
     status String     @default("pending")
-    replyMessage String? @db.VarChar(500)
+    replyMessage String? @db.VarChar(1000)
     userId  String   @unique
     user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt DateTime  @default(now()) 

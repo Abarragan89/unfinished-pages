@@ -6,6 +6,7 @@ export default async function page() {
 
     const requests = await prisma.authorRequest.findMany(
         {
+            where: { status: 'pending' },
             orderBy: {
                 createdAt: 'desc'
             },
@@ -28,13 +29,13 @@ export default async function page() {
 
         },
     )
+    console.log('request ', requests)
 
     return (
         <main className="pt-[50px] min-h-[100vh]">
             <SubheadingTitle
-                title="Review Requests"
+                title="Author Requests"
             />
-
             {requests.length > 0 ? requests.map((request) => {
                 if (request.status === 'pending') {
                     return (
@@ -46,7 +47,7 @@ export default async function page() {
                 }
             })
                 :
-                <p className="text-center text-[1.1rem]">No requests to review</p>
+                <p className="text-center text-[1rem]">No requests to review</p>
             }
 
         </main>

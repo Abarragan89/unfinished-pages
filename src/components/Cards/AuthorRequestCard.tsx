@@ -63,7 +63,7 @@ export default function AuthorRequestCard({ request }: { request: AuthorRequest 
                 <TextareaLabel
                     handleStateChange={setRequestResponseText}
                     userText={requestResponseText}
-                    characterLimit={500}
+                    characterLimit={1000}
                     labelText='Comment'
                 />
                 <div className='flex justify-around mt-4'>

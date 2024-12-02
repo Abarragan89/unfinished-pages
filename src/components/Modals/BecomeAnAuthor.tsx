@@ -8,7 +8,7 @@ import { AuthorRequest } from "../../../types/users";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
-export default function BecomeAnAuthor({ userId }: { userId: string }) {
+export default function BecomeAnAuthor({ userId }: { userId?: string }) {
 
     const router = useRouter();
 
@@ -21,21 +21,23 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
     async function handleAuthorRequest(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setIsLoading(true);
-        try {
-            const { data } = await axios.post('/api/userRoutes/authorRequest', {
-                aboutText,
-                whyBlogText,
-                topicsText
-            })
-            if (data === null) {
-                setRequestState(null)
-            } else {
-                setRequestState(data)
+        if (userId) {
+            try {
+                const { data } = await axios.post('/api/userRoutes/authorRequest', {
+                    aboutText,
+                    whyBlogText,
+                    topicsText
+                })
+                if (data === null) {
+                    setRequestState(null)
+                } else {
+                    setRequestState(data)
+                }
+            } catch (error) {
+                console.log('error ', error)
+            } finally {
+                setIsLoading(false)
             }
-        } catch (error) {
-            console.log('error ', error)
-        } finally {
-            setIsLoading(false)
         }
     }
 
@@ -43,7 +45,7 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
     useEffect(() => {
         async function checkRequestStatus() {
             try {
-                const { data } = await axios.get(`/api/userRoutes/authorRequest/${userId}`)
+                const { data } = await axios.get(`/api/userRoutes/authorRequest`)
                 if (data === null) {
                     setRequestState(null)
                 } else {
@@ -58,7 +60,7 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
 
     async function acknowledgeDeclinedStatus() {
         try {
-            await axios.delete(`/api/userRoutes/authorRequest/${userId}`)
+            await axios.delete(`/api/userRoutes/authorRequest`)
             setRequestState(null)
         } catch (error) {
             console.log('error deleting author request', error)
@@ -68,7 +70,6 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
     }
 
     return (
-
         <ModalWrapper
             title="Request Author Status"
             urlParam="becomeAnAuthor"
@@ -76,26 +77,33 @@ export default function BecomeAnAuthor({ userId }: { userId: string }) {
             {!requestStatus ?
                 <form
                     onSubmit={(e) => handleAuthorRequest(e)}
-                    className="w-[315px] md:w-[380px]"
+                    className="w-full md:w-[380px]"
                 >
-                    <TextareaLabel
-                        handleStateChange={setWhyBlogText}
-                        userText={whyBlogText}
-                        labelText="Why do you want to become an author?"
-                        characterLimit={1000}
-                    />
-                    <TextareaLabel
-                        handleStateChange={setAboutText}
-                        userText={aboutText}
-                        labelText="Tell us about yourself."
-                        characterLimit={1000}
-                    />
-                    <TextareaLabel
-                        handleStateChange={setTopicsText}
-                        userText={topicsText}
-                        labelText="What topics will you blog about?"
-                        characterLimit={500}
-                    />
+                    <p className="text-[.835rem] text-center text-[var(--gray-600)] italic mt-[-5px] mb-3">We take these responses as examples of your writing style and ability. Show us what you got!</p>
+                    <div className="mt-4">
+                        <TextareaLabel
+                            handleStateChange={setWhyBlogText}
+                            userText={whyBlogText}
+                            labelText="Why do you want to become an author?"
+                            characterLimit={3000}
+                        />
+                    </div>
+                    <div className="mt-4 w-full">
+                        <TextareaLabel
+                            handleStateChange={setAboutText}
+                            userText={aboutText}
+                            labelText="Tell us about yourself."
+                            characterLimit={3000}
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <TextareaLabel
+                            handleStateChange={setTopicsText}
+                            userText={topicsText}
+                            labelText="What topics will you blog about?"
+                            characterLimit={3000}
+                        />
+                    </div>
                     <div className="w-fit mx-auto mt-4">
                         <SubmitButton
                             isSubmittable={!!whyBlogText && !!aboutText && !!topicsText}
