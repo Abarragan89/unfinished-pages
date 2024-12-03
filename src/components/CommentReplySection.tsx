@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import { Comment } from "../../types/comment";
@@ -11,15 +11,24 @@ export default function CommentReplySection({
     replyCommentData,
     session,
     handleShowLoginModal
-}
+    }
     :
     {
         replyCommentData: Comment,
         session: Session
         handleShowLoginModal: () => void;
     }) {
-    const [isLikedByUser, setIsLikeByUser] = useState<boolean>(replyCommentData.likes.some((like) => like.userId === session.data?.user?.id))
-    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(replyCommentData.likeCount)
+
+    const [isLikedByUser, setIsLikeByUser] = useState<boolean>(false)
+    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(replyCommentData.likeCount || 0)
+
+
+    useEffect(() => {
+        if (session.data?.user?.id && replyCommentData.likes.length > 0) {
+            const isLiked = replyCommentData.likes.some((like) => like.userId === session?.data?.user?.id);
+            setIsLikeByUser(isLiked);
+        }
+    }, [replyCommentData?.likes, session.data?.user?.id]);
 
     // This to toggle replies an comment likes.
     async function toggleCommentLike(toggleOption: string, commentId: string) {
@@ -67,7 +76,7 @@ export default function CommentReplySection({
                                 size={20}
                                 className="hover:cursor-pointer" />
                         }
-                        <p className="text-[.93rem] ml-1">{totalCommentLikes}</p>
+                        <p className="text-[.93rem] ml-1">{totalCommentLikes?.toString()}</p>
                     </div>
                 </div>
             </div>

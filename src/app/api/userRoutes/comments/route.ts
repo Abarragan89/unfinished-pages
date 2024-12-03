@@ -20,6 +20,9 @@ export async function POST(request: NextRequest) {
                 createdAt: true,
                 id: true,
                 text: true,
+                _count: {
+                    select: {replies: true}
+                },
                 likes: {
                     select: {
                         id: true

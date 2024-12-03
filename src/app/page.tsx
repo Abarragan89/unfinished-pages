@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
+import { Comment } from "../../types/comment";
 
 export default async function Home() {
 
@@ -58,48 +59,9 @@ export default async function Home() {
     }
   ];
 
-
-  // const blogData: BlogData[] = [
-  //   {
-  //     id: '1',
-  //     title: 'Boost Your Creativity with These Proven Techniques',
-  //     description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
-  //     date: 'September 12, 2023',
-  //     likes: 53,
-  //     dislikes: 11,
-  //     coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-  //   },
-  //   {
-  //     id: '2',
-  //     title: 'Mastering the Art of Productivity: Tips for Daily Success',
-  //     description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
-  //     date: 'August 29, 2024',
-  //     likes: 120,
-  //     dislikes: 25,
-  //     coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-  //   },
-  //   {
-  //     id: '3',
-  //     title: 'Healthy Living Hacks: Simple Changes for a Better Life',
-  //     description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
-  //     date: 'July 12, 2023',
-  //     likes: 892,
-  //     dislikes: 30,
-  //     coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-  //   },
-  //   {
-  //     id: '4',
-  //     title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-  //     description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-  //     date: 'Decemeber 25, 2024',
-  //     likes: 2,
-  //     dislikes: 1,
-  //     coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-  //   }
-  // ]
-
   const blogData = await getPublishedBlogs() as BlogData[];
 
+  console.log('data in published blogs', blogData)
 
   return (
     <main>
@@ -114,17 +76,16 @@ export default async function Home() {
               return (
                 <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide">
                   <BlogCard
-                    id={blog.id}
                     title={blog.title}
                     description={blog.description}
                     date={blog.date}
-                    likes={blog.likes}
+                    likeCount={blog.likeCount}
                     coverPhotoUrl={blog.coverPhotoUrl}
+                    totalCommentCount={blog?._count?.comments ?? 0}
                   />
                 </Link>
               )
             })}
-
           </Carousel>
         </CardSection>
       </div>

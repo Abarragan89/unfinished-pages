@@ -17,7 +17,6 @@ export interface Session {
     status: string;
     isAuthor?: boolean;
     isAdmin?: boolean;
-    email?: string;
     update: (data: Partial<Data>) => void;
 }
 

@@ -1,13 +1,19 @@
 import { UserData } from "./users";
 import { BlogData } from "./blog";
 
+export interface Count {
+    replies: number;
+    comments: number;
+}
+
 export interface Comment {
     id: string;
-    text: string;
+    text?: string;
     likes: CommentLike[];
     likeCount: number;
     createdAt: Date;
     replies: Comment[];
+    _count: Count;
     userId: string;
     blogId: string;
     user: UserData; // Assuming `User` is another interface you have defined

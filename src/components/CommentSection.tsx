@@ -46,7 +46,7 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
     }
 
     return (
-        <section className="relative max-w-[700px] mx-auto pb-5 pt-5">
+        <section className="relative max-w-[700px] mx-auto pb-5 pt-5" id="comment-section-main">
             <LoginModal />
             <SubheadingTitle title="Comments" />
             {session.status === 'authenticated' ?

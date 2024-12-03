@@ -69,7 +69,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             date: 'September 12, 2023',
             likes: [],
             likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
+            comments: []
         },
         {
             id: '2',
@@ -78,7 +79,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             date: 'August 29, 2024',
             likes: [],
             likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
+            comments: []
         },
         {
             id: '3',
@@ -87,7 +89,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             date: 'July 12, 2023',
             likes: [],
             likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
+            comments: []
         },
         {
             id: '4',
@@ -96,7 +99,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             date: 'Decemeber 25, 2024',
             likes: [],
             likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
+            comments: []
         }
     ]
 
@@ -110,6 +114,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (!blogData) {
         throw new Error('Could not find blog data')
     }
+
+    console.log('comment blog', blogData)
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
@@ -132,6 +138,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             {/* This will be the likes/comment button bar */}
             <BlogLikeCommentBar
                 likes={blogData.likes}
+                blogId={blogData.id}
+                commentCount={blogData._count.comments}
             />
 
             {/* This is the Blog Image */}
@@ -164,12 +172,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         return (
                             <Link key={blog.id} href={`/blog/${blog.title}`} className="embla__slide">
                                 <BlogCard
-                                    id={blog.id}
                                     title={blog.title}
                                     description={blog.description}
                                     date={blog.date}
-                                    likes={blog.likes}
+                                    likeCount={blog.likeCount}
                                     coverPhotoUrl={blog.coverPhotoUrl}
+                                    totalCommentCount={4}
                                 />
                             </Link>
                         )

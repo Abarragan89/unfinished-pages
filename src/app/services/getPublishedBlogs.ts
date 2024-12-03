@@ -14,6 +14,11 @@ export default async function getPublishedBlogs() {
             coverPhotoUrl: true,
             likeCount: true,
             isPublished: true,
+            _count: {
+                select: {
+                    comments: true
+                }
+            }
         }
     })
     return publishedBlogs;

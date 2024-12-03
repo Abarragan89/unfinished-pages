@@ -45,10 +45,11 @@ export const authOptions: NextAuthOptions = {
             if (session?.user?.email) {
                 const dbUser = await prisma.user.findUnique({
                     where: { email: session.user.email },
-                    select: { isAuthor: true, isAdmin: true }, // Fetch only the necessary field
+                    select: { isAuthor: true, isAdmin: true, id: true }, // Fetch only the necessary field
                 });
                 session.isAuthor = dbUser?.isAuthor || false;
-                session.isAdmin = dbUser?.isAdmin || false
+                session.isAdmin = dbUser?.isAdmin || false;
+                session.user.id = dbUser?.id;
             }
             return session;
         },

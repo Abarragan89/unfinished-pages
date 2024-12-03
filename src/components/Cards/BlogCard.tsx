@@ -1,7 +1,15 @@
 import Image from "next/image";
 import { FaRegHeart } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
-import { BlogData } from "../../../types/blog";
+
+interface Props {
+    title?: string;
+    description?: string;
+    date?: string;
+    likeCount: number;
+    coverPhotoUrl?: string;
+    totalCommentCount: number;
+}
 
 export default function BlogCard({
     title,
@@ -9,7 +17,9 @@ export default function BlogCard({
     date,
     likeCount,
     coverPhotoUrl,
-}: BlogData) {
+    totalCommentCount,
+}: Props) {
+
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
             {/* Your slide content here */}
@@ -30,7 +40,7 @@ export default function BlogCard({
                         </div>
                         <div className="flex items-center">
                             <FiMessageCircle />
-                            <p className=" ml-1">15</p>
+                            <p className=" ml-1">{totalCommentCount}</p>
                         </div>
                     </div>
                 </div>

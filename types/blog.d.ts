@@ -1,3 +1,4 @@
+import { Comment } from "./comment";
 import { UserImage, UserData } from "./users";
 
 export interface BlogData {
@@ -13,6 +14,10 @@ export interface BlogData {
     publishedDate?: Date;
     content?: BlogContent;
     readDuration?: number;
+    comments?: Comment[]
+    _count?: {
+        comments?: number
+    }
 }
 
 export interface NestedListChildren {

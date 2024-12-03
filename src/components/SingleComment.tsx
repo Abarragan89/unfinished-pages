@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image"
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
@@ -17,15 +17,24 @@ import CommentReplySection from "./CommentReplySection";
 
 export default function SingleComment({ session, commentData, blogId }: { session: Session, commentData: Comment, blogId: string }) {
     const [showReplies, setShowReplies] = useState<boolean>(false)
-    const [isLikedByUser, setIsLikeByUser] = useState<boolean>(commentData.likes.some((like) => like.userId === session.data?.user?.id))
-    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData.likeCount)
+    const [isLikedByUser, setIsLikeByUser] = useState<boolean>(false)
+
+    const [totalCommentLikes, setTotalCommentLikes] = useState<number>(commentData.likeCount || 0)
     const [showReplyTextarea, setShowReplyTextarea] = useState<boolean>(false);
     const [replyText, setReplyText] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [replyCommentState, setReplyCommentState] = useState<Comment[]>(commentData.replies)
 
     const router = useRouter();
-    const pathname = usePathname()
+    const pathname = usePathname();
+
+    useEffect(() => {
+        if (session.data?.user?.id && commentData.likes.length > 0) {
+            console.log('crayon ', commentData.likes)
+            const isLiked = commentData.likes.some((like) => like.userId === session?.data?.user?.id);
+            setIsLikeByUser(isLiked);
+        }
+    }, [commentData?.likes, session?.data?.user?.id]);
 
     const handleShowLoginModal = () => {
         // Use router.push with the new query parameter
@@ -100,7 +109,7 @@ export default function SingleComment({ session, commentData, blogId }: { sessio
                                 size={20}
                                 className="hover:cursor-pointer" />
                         }
-                        <p className="text-[.93rem] ml-1">{totalCommentLikes}</p>
+                        <p className="text-[.93rem] ml-1">{totalCommentLikes?.toString()}</p>
                     </div>
                 </div>
             </div>

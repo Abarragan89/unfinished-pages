@@ -2,7 +2,6 @@ import { prisma } from "../../../utils/prisma";
 
 export default async function getBlogData(blogId: string) {
     try {
-
         // Get Data if above checks don't fail
         const blogData = await prisma.blog.findUnique({
             where: { id: blogId },
@@ -18,6 +17,9 @@ export default async function getBlogData(blogId: string) {
                 isPublished: true,
                 readDuration: true,
                 publishedDate: true,
+                _count: {
+                    select: { comments: true }
+                },
                 user: {
                     select: {
                         name: true,
@@ -77,6 +79,7 @@ export default async function getBlogData(blogId: string) {
                         likes: {
                             select: {
                                 id: true,
+                                userId: true,
                             }
                         },
                         createdAt: true,
@@ -94,7 +97,8 @@ export default async function getBlogData(blogId: string) {
                                 likeCount: true,
                                 likes: {
                                     select: {
-                                        id: true
+                                        id: true,
+                                        userId: true,
                                     }
                                 },
                                 createdAt: true,
@@ -111,6 +115,7 @@ export default async function getBlogData(blogId: string) {
                 }
             },
         })
+        console.log('blog data ', blogData)
         return blogData;
     } catch (error) {
         console.log('error getting blog data', error)
