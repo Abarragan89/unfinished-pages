@@ -139,6 +139,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 likes={blogData.likes}
                 blogId={blogData.id}
                 commentCount={blogData._count.comments}
+                // These props are only for live sites for the share options
+                blogUrl={`https://www.unfinishedpages.com/blog/${cleanTitleForURL(blogData.title)}-${blogId}`}
+                blogDescription={blogData.description as string}
+                blogTitle={blogData.title}
             />
 
             {/* This is the Blog Image */}

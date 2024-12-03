@@ -17,6 +17,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
     const isAuthor = sessionData?.data?.isAuthor;
 
     const listElStyles = 'mb-2 flex items-center bg-var(--brown-500) text-[.95rem] text-left mb-5 hover:cursor-pointer hover:text-[var(--brown-300)]'
+    
     return (
         <>
             <BecomeAnAuthor

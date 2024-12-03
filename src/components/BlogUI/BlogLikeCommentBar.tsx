@@ -6,23 +6,30 @@ import { FaRegHeart } from "react-icons/fa6";
 import { IoShareOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { Session } from "../../../types/users";
-import { Comment, CommentLike } from "../../../types/comment";
+import { CommentLike } from "../../../types/comment";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import ShareBlogOptions from "../ShareBlogOptions";
 
 interface Props {
     likes: CommentLike[];
     // blog Id only needed for non preview blog UI
     blogId?: string;
     commentCount: number;
+    // data for the share links only necessary for live blog
+    blogUrl?: string
+    blogDescription?: string;
+    blogTitle?: string;
+
 }
 
-export default function BlogLikeCommentBar({ likes, blogId, commentCount }: Props) {
+export default function BlogLikeCommentBar({ likes, blogId, commentCount, blogUrl, blogDescription, blogTitle }: Props) {
 
     const session: Session = useSession();
     const [isBlogLikedByUser, setIsBlogLikeByUser] = useState<boolean>(false);
     const [totalCommentLikes, setTotalCommentLikes] = useState<number>(likes.length);
+    const [showShareOptions, setShowShareOption] = useState<boolean>(false)
 
     const router = useRouter();
     const pathname = usePathname();
@@ -93,7 +100,23 @@ export default function BlogLikeCommentBar({ likes, blogId, commentCount }: Prop
                 </Link>
                 <p className="text-[.95rem]">{commentCount?.toString()}</p>
             </div>
-            <IoShareOutline className="text-[1.55rem] text-[var(--gray-500) hover:cursor-pointer" />
+            <div className="relative">
+                <IoShareOutline
+                    onClick={() => setShowShareOption(true)}
+                    className="text-[1.55rem] text-[var(--gray-500) hover:cursor-pointer"
+                />
+
+                <aside className="absolute right-[-10px] top-[35px]">
+                    {showShareOptions &&
+                        <ShareBlogOptions
+                            blogUrl={blogUrl as string}
+                            blogDescription={blogDescription as string}
+                            toggleShareOptionsView={setShowShareOption}
+                            blogTitle={blogTitle as string}
+                        />
+                    }
+                </aside>
+            </div>
         </section>
     )
 }

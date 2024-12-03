@@ -42,6 +42,11 @@ html {
   background-color: white;
 }
 
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 .custom-large-btn {
   align-self: center;
   background-color: transparent;
@@ -131,7 +136,7 @@ html {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  transition: .1s;
+  transition: 0.1s;
 }
 
 .custom-small-btn:disabled {

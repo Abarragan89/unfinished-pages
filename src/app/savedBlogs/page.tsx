@@ -18,7 +18,6 @@ export default async function page() {
     }
 
     const blogs = await getUserSavedBlogs(userId) as BlogData[]
-    console.log('blogs ', blogs)
 
     return (
         <main className="pt-[50px] min-h-[100vh]">

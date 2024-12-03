@@ -10,7 +10,6 @@ import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
-import { Comment } from "../../types/comment";
 
 export default async function Home() {
 

@@ -24,6 +24,7 @@ export default function DeletePhotoSubMenu({ photoId, onClickHandler, closeMenuS
             document.removeEventListener("mouseup", handleClickOutside);
         };
     }, [closeMenuState]);
+    
     return (
         <menu
             ref={deleteSubMenu}
