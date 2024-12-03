@@ -12,17 +12,18 @@ export async function middleware(request: NextRequest) {
 
     const pathname = request.nextUrl.pathname;
     const isAuthor = token?.isAuthor;
+    const isAdmin = token?.isAdmin;
 
     // Separate author and user routes
     const authorRoutes = ['/api/authorRoutes', '/editBlog', '/previewBlog', '/myBlogs'];
-    const isApiRoute = pathname.startsWith('/api/');
+    const isApi = pathname.startsWith('/api/');
     const response = NextResponse.next();
 
     // Handle author-specific routes    
     if (authorRoutes.some(route => pathname.startsWith(route))) {
         // handle redirects or messages
         if (!isAuthor) {
-            if (isApiRoute) {
+            if (isApi) {
                 // Send message if trying to access protected api
                 return NextResponse.json({ error: 'For Authors Only' }, { status: 403 });
             } else {
@@ -35,13 +36,33 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    // set headers if middleware checks pass
+    const adminRoutes = ['/api/adminRoutes', '/authorRequests'];
+    if (adminRoutes.some(route => pathname.startsWith(route))) {
+        // handle redirects or messages
+        if (!isAdmin) {
+            if (isApi) {
+                // Send message if trying to access protected api
+                return NextResponse.json({ error: 'For Admin Only' }, { status: 403 });
+            } else {
+                // Redirect unauthorized users attempting to access author routes
+                return NextResponse.json({ error: 'Admin Page Only' }, { status: 403 })
+            }
+        } else {
+            // set the headers
+            response.headers.set('x-is-admin', String(isAdmin));
+        }
+    }
+
+    // set headers to basic user (not author or admin) middleware checks pass
     response.headers.set('x-user-id', token.sub as string); // Add the user ID to headers
     return response;
 }
 
 export const config = {
     matcher: [
+        // Admin Routes
+        '/api/adminRoutes',
+        '/authorRequests',
         // Author Routes
         '/api/authorRoutes/:path*',
         '/editBlog/:path*',

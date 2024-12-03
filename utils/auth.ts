@@ -34,9 +34,10 @@ export const authOptions: NextAuthOptions = {
             if (token.sub) {
                 const dbUser = await prisma.user.findUnique({
                     where: { id: token.sub },
-                    select: { isAuthor: true }, // Fetch only the necessary field
+                    select: { isAuthor: true, isAdmin: true }, // Fetch only the necessary field
                 });
                 token.isAuthor = dbUser?.isAuthor || false;
+                token.isAdmin = dbUser?.isAdmin || false;
             }
             return token;
         },
