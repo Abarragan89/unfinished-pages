@@ -52,6 +52,7 @@ export default async function page() {
                                 likeCount={blog.likeCount}
                                 coverPhotoUrl={blog.coverPhotoUrl}
                                 totalCommentCount={blog?._count?.comments ?? 0}
+                                isPublished={blog.isPublished}
                             />
                         </Link>
                     )
