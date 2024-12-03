@@ -15,7 +15,9 @@
   --off-white: rgb(252, 250, 246);
   --off-black: rgb(36, 36, 36);
   --danger: rgb(149, 12, 12);
+  --danger-transparent: rgba(149, 12, 12, 0.5);
   --success: rgb(25, 107, 25);
+  --success-transparent: rgb(25, 107, 25, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -204,4 +206,8 @@ html {
 
 .custom-thin-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--brown-300); /* Thumb color when hovered */
+}
+
+.custom-banner-text-shadow {
+  text-shadow: -1px 1px black;
 }

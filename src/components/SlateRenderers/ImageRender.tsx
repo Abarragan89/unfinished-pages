@@ -6,7 +6,7 @@ type SlateProps = RenderElementProps
 // Component to render image elements
 export default function ImageRender({ attributes, element }: SlateProps) {
     return (
-        <div {...attributes}>
+        <div {...attributes} className="pointer-events-none">
             {element.type === 'image' && element?.image?.url ? (
                 <Image
                     src={element.image.url}

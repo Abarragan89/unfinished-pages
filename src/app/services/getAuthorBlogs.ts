@@ -4,7 +4,6 @@ import { prisma } from "../../../utils/prisma";
 export default async function getAuthorBlogs(userId: string) {
     const publishedBlogs = await prisma.blog.findMany({
         where: {
-            isPublished: true,
             userId
         },
         select: {

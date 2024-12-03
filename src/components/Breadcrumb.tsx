@@ -39,7 +39,7 @@ const Breadcrumb = () => {
         setBreadCrumbLinks(links)
     }, [pathNames])
 
-    const listItemElStyles = 'border-l px-2 border-[var(--gray-500)] text-[.95rem] first:border-l-0 tracking-wide'
+    const listItemElStyles = 'border-l px-2 border-[var(--gray-500)] text-[.95rem] first:border-l-0 tracking-wide hover:text-[var(--brown-100)]'
     const nonActiveListItemStyles = 'text-[var(--brown-500)]'
     const activeListItemStyles = 'underline text-[var(--brown-100)] pointer-events-none'
 

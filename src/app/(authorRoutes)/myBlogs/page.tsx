@@ -3,9 +3,7 @@ import BlogCard from "@/components/Cards/BlogCard"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle"
 import { HiPencilSquare } from "react-icons/hi2";
 import CreateBlog from "@/components/Modals/CreateBlog";
-import { prisma } from "../../../../utils/prisma";
 import { headers } from 'next/headers'
-import { formatDate } from "../../../../utils/formatDate";
 import { BlogData } from "../../../../types/blog";
 import ScrollToTop from "@/components/ScrollToTop";
 import BecomeAnAuthor from "@/components/Modals/BecomeAnAuthor";
@@ -23,7 +21,6 @@ export default async function page() {
 
     const blogs = await getAuthorBlogs(userId) as BlogData[]
 
-    console.log('my blogs data ', blogs)
     return (
         <main className="pt-[50px] min-h-[100vh]">
             <ScrollToTop />

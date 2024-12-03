@@ -23,7 +23,6 @@ export default function BlogLikeCommentBar({ likes, blogId, commentCount }: Prop
     const session: Session = useSession();
     const [isBlogLikedByUser, setIsBlogLikeByUser] = useState<boolean>(false);
     const [totalCommentLikes, setTotalCommentLikes] = useState<number>(likes.length);
-    const [totalComments, setTotalComments] = useState<number>(0);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -46,6 +45,8 @@ export default function BlogLikeCommentBar({ likes, blogId, commentCount }: Prop
 
 
     async function toggleBlogLike(toggleOption: string) {
+        // there will not be a blog id if it is in preview mode
+        if (!blogId) return;
         try {
             await axios.put('/api/userRoutes/blogLike', {
                 blogId

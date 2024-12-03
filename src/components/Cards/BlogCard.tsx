@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FaRegHeart } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
+import Banner from "../EditBlogUI/Banner";
 
 interface Props {
     title?: string;
@@ -24,14 +25,25 @@ export default function BlogCard({
 }: Props) {
 
     return (
-        <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
+        <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white relative">
             {/* Your slide content here */}
             {/* show banner for authors to show published status */}
             {isPublished !== null &&
                 isPublished ?
-                <p>Published</p>
+                <div className="absolute top-10 left-0 right-0">
+                    <Banner
+                        text="Published"
+                        color="green"
+                    />
+                </div>
+
                 :
-                <p>Draft</p>
+                <div className="absolute top-10 left-0 right-0">
+                    <Banner
+                        text="Draft"
+                        color="red"
+                    />
+                </div>
             }
             <Image
                 src={coverPhotoUrl ? coverPhotoUrl : "/images/blogs/fillerImg.png"}

@@ -6,6 +6,8 @@ import ScrollToTop from "@/components/ScrollToTop"
 import getEditBlogContents from "@/app/services/getEditBlogContent"
 import Link from "next/link"
 import PublishDeleteBlogBtns from "@/components/Buttons/PublishDeleteBlogBtns"
+import Banner from "@/components/EditBlogUI/Banner"
+import { cleanTitleForURL } from "../../../../../utils/stringManipulation"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
 
@@ -17,7 +19,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     if (!userId) {
         throw new Error('Unauthorized access')
     }
-    
+
     // get Blog Data
     const blogData = await getEditBlogContents(userId, blogId)
 
@@ -29,6 +31,20 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     return (
         <main className="pt-[50px] relative">
             <ScrollToTop />
+            <div className="mb-[30px]">
+                {blogData.isPublished ?
+                    <Banner
+                        text="Published"
+                        color="green"
+                        link={`/blog/${cleanTitleForURL(blogData.title)}-${blogData.id}`}
+                    />
+                    :
+                    <Banner
+                        text="Draft"
+                        color="red"
+                    />
+                }
+            </div>
             <SubheadingTitle title={'Create Blog'} />
             <div className="flex absolute top-[10px] right-[2.5%] pe-2">
                 <Link
