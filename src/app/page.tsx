@@ -61,8 +61,6 @@ export default async function Home() {
 
   const blogData = await getPublishedBlogs() as BlogData[];
 
-  console.log('data in published blogs', blogData)
-
   return (
     <main>
       <Suspense>

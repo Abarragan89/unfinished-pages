@@ -6,8 +6,10 @@ import CreateBlog from "@/components/Modals/CreateBlog";
 import { prisma } from "../../../../utils/prisma";
 import { headers } from 'next/headers'
 import { formatDate } from "../../../../utils/formatDate";
+import { BlogData } from "../../../../types/blog";
 import ScrollToTop from "@/components/ScrollToTop";
 import BecomeAnAuthor from "@/components/Modals/BecomeAnAuthor";
+import getAuthorBlogs from "@/app/services/getAuthorBlogs";
 
 export default async function page() {
     const headersList = headers()
@@ -19,11 +21,9 @@ export default async function page() {
         throw new Error('No authorized to see this page')
     }
 
-    const blogs = await prisma.blog.findMany(
-        {
-            where: { userId: userId as string },
-            orderBy: { updatedAt: 'desc' }
-        });
+    const blogs = await getAuthorBlogs(userId) as BlogData[]
+
+    console.log('my blogs data ', blogs)
     return (
         <main className="pt-[50px] min-h-[100vh]">
             <ScrollToTop />
@@ -46,12 +46,12 @@ export default async function page() {
                             scroll={true}
                         >
                             <BlogCard
-                                id={blog.id}
                                 title={blog.title}
-                                coverPhotoUrl={blog.coverPhotoUrl as string}
-                                description={blog.description as string}
-                                date={formatDate(blog.updatedAt.toString())}
+                                description={blog.description}
+                                date={blog.date}
                                 likeCount={blog.likeCount}
+                                coverPhotoUrl={blog.coverPhotoUrl}
+                                totalCommentCount={blog?._count?.comments ?? 0}
                             />
                         </Link>
                     )

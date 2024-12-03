@@ -67,12 +67,12 @@ export default function Page({ params }: { params: { slug: string } }) {
                 {blogData.map((blog, index) => (
                     <div className="mb-[30px]" key={index}>
                         <BlogCard
-                            id={blog.id}
                             title={blog.title}
-                            coverPhotoUrl={blog.coverPhotoUrl as string}
-                            description={blog.description as string}
-                            date={formatDate(blog!.date!.toString())}
-                            likes={blog.likes}
+                            description={blog.description}
+                            date={blog.date}
+                            likeCount={blog.likeCount}
+                            coverPhotoUrl={blog.coverPhotoUrl}
+                            totalCommentCount={4}
                         />
                     </div>
                 ))}
