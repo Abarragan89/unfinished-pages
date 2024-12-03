@@ -28,6 +28,9 @@ export default async function getPreviewBlogContent(userId: string, blogId: stri
                 updatedAt: true,
                 likes: true,
                 isPublished: true,
+                _count: {
+                    select: {comments: true}
+                },
                 readDuration: true,
                 user: {
                     select: {

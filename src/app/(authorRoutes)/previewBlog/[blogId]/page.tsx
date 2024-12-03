@@ -50,6 +50,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
             {/* This will be the likes/comment button bar */}
             <BlogLikeCommentBar
                 likes={blogData.likes}
+                commentCount={blogData._count.comments}
             />
 
             {/* This is the Blog Image */}

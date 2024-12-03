@@ -9,7 +9,7 @@ interface Props {
     likeCount: number;
     coverPhotoUrl?: string;
     totalCommentCount: number;
-    isPublished?:boolean | null
+    isPublished?: boolean | null
 }
 
 export default function BlogCard({
@@ -19,7 +19,7 @@ export default function BlogCard({
     likeCount,
     coverPhotoUrl,
     totalCommentCount,
-    // will be null for cards that do not belong to authors
+    // will be null for cards that do not belong to authors. Author cards will pass either true or false
     isPublished = null
 }: Props) {
 
@@ -27,7 +27,12 @@ export default function BlogCard({
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white">
             {/* Your slide content here */}
             {/* show banner for authors to show published status */}
-            {isPublished !== null}
+            {isPublished !== null &&
+                isPublished ?
+                <p>Published</p>
+                :
+                <p>Draft</p>
+            }
             <Image
                 src={coverPhotoUrl ? coverPhotoUrl : "/images/blogs/fillerImg.png"}
                 width={320}

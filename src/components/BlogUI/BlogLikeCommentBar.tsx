@@ -13,7 +13,8 @@ import Link from "next/link";
 
 interface Props {
     likes: CommentLike[];
-    blogId: string;
+    // blog Id only needed for non preview blog UI
+    blogId?: string;
     commentCount: number;
 }
 
