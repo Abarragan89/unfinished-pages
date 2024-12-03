@@ -49,5 +49,6 @@ export const config = {
         // User Routes
         '/api/userRoutes/:path*',
         '/myBlogs',
+        '/savedBlogs'
     ]
 }

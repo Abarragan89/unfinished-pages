@@ -183,6 +183,7 @@ model BlogLike {
   blogId  String
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog    Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now()) 
   @@unique([userId, blogId]) // Ensure a user can like a blog only once
 }
 

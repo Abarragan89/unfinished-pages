@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <footer className="bg-[var(--off-black)] text-gray-200 py-8 mt-[60px]">
+        <footer className="bg-[var(--off-black)] text-gray-200 py-8">
             <div className="container mx-auto px-4">
                 {/* Logo and Navigation */}
                 <div className="flex flex-col justify-center md:flex-row items-center justify-between gap-4 md:gap-8">

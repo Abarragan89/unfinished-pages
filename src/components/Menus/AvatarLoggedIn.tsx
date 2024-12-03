@@ -16,7 +16,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
     const isAdmin = sessionData?.data?.isAdmin;
     const isAuthor = sessionData?.data?.isAuthor;
 
-    const listElStyles = 'mb-2 flex items-center bg-var(--brown-500) text-[.95rem] text-left mb-5 hover:cursor-pointer hover:text-[var(--brown-100)]'
+    const listElStyles = 'mb-2 flex items-center bg-var(--brown-500) text-[.95rem] text-left mb-5 hover:cursor-pointer hover:text-[var(--brown-300)]'
     return (
         <>
             <BecomeAnAuthor
@@ -28,39 +28,39 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
             <ul className="text-center ml-3">
                 {isAuthor &&
                     <li className={listElStyles}>
-                        <HiPencilSquare size={20} className="text-[var(--brown-300)]" />
+                        <HiPencilSquare size={20} />
                         <Link href='/myBlogs' onClick={onClose} className="ml-3">My Blogs</Link>
                     </li>
                 }
 
                 <li className={listElStyles}>
-                    <FaHeart size={17} className="text-[var(--brown-300)]" />
-                    <Link href='/myBlogs' onClick={onClose} className="ml-3">Saved Blogs</Link>
+                    <FaHeart size={17} />
+                    <Link href='/savedBlogs' onClick={onClose} className="ml-3">Saved Blogs</Link>
                 </li>
 
 
                 {/* Admin Only */}
                 {isAdmin &&
                     <li className={listElStyles}>
-                        <BsPersonPlusFill size={20} className="text-[var(--brown-300)]" />
+                        <BsPersonPlusFill size={20} />
                         <Link href='/authorRequests' onClick={onClose} className="ml-3">Author Requests</Link>
                     </li>
                 }
 
                 {!isAuthor &&
                     <li className={listElStyles}>
-                        <LuNewspaper size={20} className="text-[var(--brown-300)]" />
+                        <LuNewspaper size={20} />
                         <Link href='?showModal=becomeAnAuthor' className="ml-3">Author Request</Link>
                     </li>
                 }
 
                 <li className={listElStyles}>
-                    <IoIosNotifications size={20} className="text-[var(--brown-300)]" />
+                    <IoIosNotifications size={20} />
                     <Link href='/' onClick={onClose} className="ml-3">Notifications</Link>
                 </li>
 
                 <li className={listElStyles}>
-                    <IoSettingsSharp size={20} className="text-[var(--brown-300)]" />
+                    <IoSettingsSharp size={20} />
                     <Link href='/' onClick={onClose} className="ml-3">Settings</Link>
                 </li>
 

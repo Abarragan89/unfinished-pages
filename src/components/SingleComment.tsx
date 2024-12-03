@@ -30,7 +30,6 @@ export default function SingleComment({ session, commentData, blogId }: { sessio
 
     useEffect(() => {
         if (session.data?.user?.id && commentData.likes.length > 0) {
-            console.log('crayon ', commentData.likes)
             const isLiked = commentData.likes.some((like) => like.userId === session?.data?.user?.id);
             setIsLikeByUser(isLiked);
         }

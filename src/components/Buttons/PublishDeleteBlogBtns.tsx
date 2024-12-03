@@ -98,7 +98,7 @@ export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished 
                 btnText="Unpublish"
                 errorMsg={errorMsg}
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-[60px]">
                 {
                     publishedStatus ?
                         <Link
