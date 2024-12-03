@@ -29,7 +29,6 @@ export default async function page() {
 
         },
     )
-    console.log('request ', requests)
 
     return (
         <main className="pt-[50px] min-h-[100vh]">

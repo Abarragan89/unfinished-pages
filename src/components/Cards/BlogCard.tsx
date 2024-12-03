@@ -23,28 +23,28 @@ export default function BlogCard({
     // will be null for cards that do not belong to authors. Author cards will pass either true or false
     isPublished = null
 }: Props) {
-
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white relative">
             {/* Your slide content here */}
             {/* show banner for authors to show published status */}
-            {isPublished !== null &&
-                isPublished ?
-                <div className="absolute top-10 left-0 right-0">
-                    <Banner
-                        text="Published"
-                        color="green"
-                    />
-                </div>
-
-                :
-                <div className="absolute top-10 left-0 right-0">
-                    <Banner
-                        text="Draft"
-                        color="red"
-                    />
-                </div>
-            }
+            {/* need parentheses because both sides fo the && still get evaluated adn terniary is rendered */}
+            {isPublished !== null && (
+                isPublished ? (
+                    <div className="absolute top-10 left-0 right-0">
+                        <Banner
+                            text="Published"
+                            color="green"
+                        />
+                    </div>
+                ) : (
+                    <div className="absolute top-10 left-0 right-0">
+                        <Banner
+                            text="Draft"
+                            color="red"
+                        />
+                    </div>
+                )
+            )}
             <Image
                 src={coverPhotoUrl ? coverPhotoUrl : "/images/blogs/fillerImg.png"}
                 width={320}

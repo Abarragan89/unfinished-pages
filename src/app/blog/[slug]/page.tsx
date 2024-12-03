@@ -115,7 +115,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         throw new Error('Could not find blog data')
     }
 
-    console.log('comment blog', blogData)
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);

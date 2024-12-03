@@ -115,7 +115,6 @@ export default async function getBlogData(blogId: string) {
                 }
             },
         })
-        console.log('blog data ', blogData)
         return blogData;
     } catch (error) {
         console.log('error getting blog data', error)
