@@ -14,6 +14,9 @@ export default async function getBlogData(blogId: string) {
                 likes: true,
                 likeCount: true,
                 updatedAt: true,
+                categories: {
+                    select: { name: true, displayName: true }
+                },
                 isPublished: true,
                 readDuration: true,
                 publishedDate: true,

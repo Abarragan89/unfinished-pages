@@ -59,6 +59,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
                 description={blogData.description || ""}
                 coverPhotoUrl={blogData.coverPhotoUrl || ""}
                 blogId={blogId as string}
+                categories={blogData.categories}
             />
             <SlateRichText
                 blogId={blogId as string}

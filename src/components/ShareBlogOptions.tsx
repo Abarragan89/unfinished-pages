@@ -5,10 +5,10 @@ import {
     RedditIcon,
     TwitterShareButton,
     TwitterIcon,
-    WhatsappShareButton,
-    WhatsappIcon,
     LinkedinShareButton,
     LinkedinIcon,
+    PinterestShareButton,
+    PinterestIcon,
 } from 'next-share'
 import { useEffect, useRef, useState } from 'react';
 import { VscLink } from "react-icons/vsc";
@@ -18,9 +18,10 @@ interface Props {
     blogDescription: string;
     toggleShareOptionsView: React.Dispatch<React.SetStateAction<boolean>>;
     blogTitle: string;
+    blogCoverPhotoUrl: string;
 }
 
-export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShareOptionsView, blogTitle }: Props) {
+export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShareOptionsView, blogTitle, blogCoverPhotoUrl }: Props) {
 
     const [showSuccessfulCopyText, setShowSuccessfulCopyText] = useState<boolean>(false)
     const shareMenu = useRef<HTMLDivElement | null>(null);
@@ -54,7 +55,7 @@ export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShare
     }, []);
 
     return (
-        <div className="bg-[var(--off-white)] px-5 pb-4 pt-2 custom-low-lifted-shadow border border-[var(--paper-color)] rounded-sm" ref={shareMenu}>
+        <div className="bg-[var(--off-white)] px-4 pb-4 pt-3 custom-low-lifted-shadow border border-[var(--paper-color)] rounded-sm text-[var(--gray-700)]" ref={shareMenu}>
             <p className='text-[.9rem] mb-2'>Share</p>
             <div className='flex justify-around'>
                 <div className='flex flex-col items-center justify-center w-[60px]'>
@@ -86,20 +87,18 @@ export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShare
                         <TwitterIcon size={32} round />
                     </TwitterShareButton>
                     <p className='text-[.75rem]'>X</p>
-
                 </div>
 
                 <div className='flex flex-col items-center justify-center w-[60px]'>
-                    <WhatsappShareButton
-                        url={blogUrl as string}
-                        title={blogTitle}
-                        separator=":: "
+                    <PinterestShareButton
+                        url={blogUrl}
+                        media={blogCoverPhotoUrl as string}
                     >
-                        <WhatsappIcon size={32} round />
-                    </WhatsappShareButton>
-                    <p className='text-[.75rem]'>WhatsApp</p>
-
+                        <PinterestIcon size={32} round />
+                    </PinterestShareButton>
+                    <p className='text-[.75rem]'>Pinterest</p>
                 </div>
+
                 <div className='flex flex-col items-center justify-center w-[60px]'>
                     <LinkedinShareButton url={blogUrl as string}>
                         <LinkedinIcon size={32} round />
@@ -111,7 +110,7 @@ export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShare
             <div className='relative'>
                 {showSuccessfulCopyText &&
                     <p
-                    className='absolute top-[-30px] right-[25px] text-[.875rem] bg-white border border-[var(--gray-300)] rounded-md p-[3px] px-[8px] text-[var(--gray-600)] custom-low-lifted-shadow'
+                        className='absolute top-[-30px] right-[25px] text-[.875rem] bg-white border border-[var(--gray-300)] rounded-md p-[3px] px-[8px] text-[var(--gray-600)] custom-low-lifted-shadow'
                     >Link Copied!</p>
                 }
                 <button className='text-[.875rem] flex justify-center items-center block mx-auto mt-2 hover:text-[var(--brown-300)] active:text-[var(--off-black)]' onClick={handleCopy}>

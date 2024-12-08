@@ -27,6 +27,9 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 title: true,
                 description: true,
                 isPublished: true,
+                categories: {
+                    select: { name: true, displayName: true }
+                },
                 coverPhotoUrl: true,
                 content: {
                     orderBy: { orderNumber: 'asc' },

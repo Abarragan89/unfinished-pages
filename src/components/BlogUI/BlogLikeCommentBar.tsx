@@ -21,10 +21,10 @@ interface Props {
     blogUrl?: string
     blogDescription?: string;
     blogTitle?: string;
-
+    blogCoverPhotoUrl?: string;
 }
 
-export default function BlogLikeCommentBar({ likes, blogId, commentCount, blogUrl, blogDescription, blogTitle }: Props) {
+export default function BlogLikeCommentBar({ likes, blogId, commentCount, blogUrl, blogDescription, blogTitle, blogCoverPhotoUrl }: Props) {
 
     const session: Session = useSession();
     const [isBlogLikedByUser, setIsBlogLikeByUser] = useState<boolean>(false);
@@ -113,6 +113,7 @@ export default function BlogLikeCommentBar({ likes, blogId, commentCount, blogUr
                             blogDescription={blogDescription as string}
                             toggleShareOptionsView={setShowShareOption}
                             blogTitle={blogTitle as string}
+                            blogCoverPhotoUrl={blogCoverPhotoUrl as string}
                         />
                     }
                 </aside>

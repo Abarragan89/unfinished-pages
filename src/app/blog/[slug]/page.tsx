@@ -143,6 +143,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 blogUrl={`https://www.unfinishedpages.com/blog/${cleanTitleForURL(blogData.title)}-${blogId}`}
                 blogDescription={blogData.description as string}
                 blogTitle={blogData.title}
+                blogCoverPhotoUrl={blogData.coverPhotoUrl as string}
+
             />
 
             {/* This is the Blog Image */}

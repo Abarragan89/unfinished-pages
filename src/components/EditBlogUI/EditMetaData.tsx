@@ -3,27 +3,34 @@ import { useState } from "react"
 import UploadImageInput from "./UploadImageInput";
 import InputBlockWrapper from "./InputBlockWrapper";
 import axios from "axios";
+import SelectAreaEl from "../FormInputs/SelectAreaEl";
 
 interface Props {
     title: string;
     description: string;
     coverPhotoUrl: string;
-    blogId: string
+    blogId: string;
+    categories: { [key: string]: string }[]
 }
 
-export default function EditMetaData({ title, description, coverPhotoUrl, blogId }: Props) {
+export default function EditMetaData({ title, description, coverPhotoUrl, blogId, categories }: Props) {
 
     const [blogTitle, setBlogTitle] = useState<string>(title);
     const [blogDescription, setBlogDescription] = useState<string>(description);
     const [isDetailsSavable, setIsDetailsSavable] = useState<boolean>(false);
     const [isDetailsSaving, setIsDetailsSaving] = useState<boolean>(false);
+    const [blogCategories, setBlogCategories] = useState<{ [key: string]: string }[]>(categories)
+    
+    console.log('blogcategories ', blogCategories)
 
     async function saveDetailsHandler() {
+        console.log('blog categories', blogCategories)
         try {
             setIsDetailsSaving(true);
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogDetails`, {
                 blogTitle: blogTitle.trim(),
-                blogDescription: blogDescription.trim()
+                blogDescription: blogDescription.trim(),
+                blogCategories: blogCategories
             });
             setIsDetailsSaving(false);
             setIsDetailsSavable(false);
@@ -62,7 +69,7 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                     </div>
                     <textarea
                         onChange={(e) => { setBlogDescription(e.target.value); setIsDetailsSavable(true) }}
-                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-500)] text-[.95rem]"
+                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[.95rem]"
                         id="blog-title"
                         maxLength={150}
                         value={blogDescription}
@@ -70,6 +77,16 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                         cols={30}
                     />
                 </div>
+
+                <div className="mt-4">
+                    <SelectAreaEl
+                        toggleSavable={setIsDetailsSavable}
+                        blogCategories={blogCategories}
+                        setBlogCategories={setBlogCategories}
+                    />
+                </div>
+
+
                 <UploadImageInput
                     blogId={blogId}
                     coverPhotoUrl={coverPhotoUrl}

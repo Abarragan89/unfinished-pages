@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
+import { prisma } from "../../utils/prisma";
 
 export default async function Home() {
 

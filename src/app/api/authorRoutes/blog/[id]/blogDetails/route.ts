@@ -10,19 +10,46 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
 
         const { id: blogId } = params
-        const { blogTitle: title, blogDescription: description } = await request.json();
+        const { blogTitle: title, blogDescription: description, blogCategories: categories } = await request.json();
 
         if (!title) {
             return NextResponse.json({ error: 'title is required' })
         }
 
-        const updatedBlog = await prisma.blog.update({
-            where: { id: blogId },
-            data: {
-                title,
-                description
-            }
-        })
+        const updatedBlog = await prisma.$transaction(async (prisma) => {
+            // Get the current categories associated with the blog
+            const blog = await prisma.blog.findUnique({
+                where: { id: blogId },
+                select: {
+                    categories: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            });
+
+            // Format current categories to use in disconnect
+            const disconnectCategories = blog?.categories.map((category) => ({
+                name: category.name
+            }));
+
+            // Update the blog and categories
+            return await prisma.blog.update({
+                where: { id: blogId },
+                data: {
+                    title,
+                    description,
+                    categories: {
+                        disconnect: disconnectCategories,
+                        connect: categories.map((category: { [key: string]: string }) => ({
+                            name: category.name,
+                            displayName: category.displayName
+                        }))
+                    }
+                }
+            });
+        });
 
         return NextResponse.json({ message: updatedBlog })
     } catch (error) {

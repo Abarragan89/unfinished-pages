@@ -94,11 +94,19 @@ model Blog {
   coverPhotoAlt String? @db.VarChar(100)
   isPublished Boolean @default(false)
   content ContentBlock[]
+  categories BlogCategory[]
   comments Comment[]
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   publishedDate DateTime  @default(now()) 
   updatedAt DateTime @updatedAt
+}
+
+model BlogCategory {
+  id String @id @default(cuid())
+  name String @unique
+  displayName String @unique
+  blog Blog[]
 }
 
 model ContentBlock {
