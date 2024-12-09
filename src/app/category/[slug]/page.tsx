@@ -1,67 +1,16 @@
 import Image from "next/image"
+import Link from "next/link";
 import MainHeading from "@/components/Headings/MainHeading";
 import { BlogData } from "../../../../types/blog";
 import BlogCard from "@/components/Cards/BlogCard";
 import ScrollToTop from "@/components/ScrollToTop";
+import SearchInCategory from "@/components/SearchInCategory";
+import getBlogsByCategory from "@/app/services/getBlogsByCategory";
+import { cleanTitleForURL } from "../../../../utils/stringManipulation";
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
 
-    const blogData: BlogData[] = [
-        {
-            id: '1',
-            title: 'Boost Your Creativity with These Proven Techniques',
-            description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
-            date: 'September 12, 2023',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-        {
-            id: '2',
-            title: 'Mastering the Art of Productivity: Tips for Daily Success',
-            description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
-            date: 'August 29, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-        {
-            id: '3',
-            title: 'Healthy Living Hacks: Simple Changes for a Better Life',
-            description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
-            date: 'July 12, 2023',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-        {
-            id: '4',
-            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-            date: 'Decemeber 25, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-        {
-            id: '4',
-            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-            date: 'Decemeber 25, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-        {
-            id: '4',
-            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-            date: 'Decemeber 25, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        },
-    ]
+    const blogsData = await getBlogsByCategory(params.slug) as BlogData[]
 
 
     const acceptableSlugs = ['other', 'short-stories', 'DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'technology', 'travel-food', 'business-technology']
@@ -84,19 +33,25 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <MainHeading title={params.slug.toUpperCase().replace(/-/g, ' & ')} />
                 </div>
             </header>
+            {/* Search Bar */}
+            <div className="my-8 max-w-[500px] w-[80%] mx-auto">
+                <SearchInCategory
+                    category={params.slug.replace(/-/g, ' & ')}
+                />
+            </div>
             {/* This is the related posts in the same category */}
             <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
-                {blogData.map((blog, index) => (
-                    <div className="mb-[30px]" key={index}>
+                {blogsData.map((blog, index) => (
+                    <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide mb-[30px]">
                         <BlogCard
                             title={blog.title}
                             description={blog.description}
                             date={blog.date}
                             likeCount={blog.likeCount}
                             coverPhotoUrl={blog.coverPhotoUrl}
-                            totalCommentCount={4}
+                            totalCommentCount={blog?._count?.comments ?? 0}
                         />
-                    </div>
+                    </Link>
                 ))}
             </div>
         </main>

@@ -8,7 +8,7 @@ export default function SearchInput({ placeholder, inputWidth }: { placeholder: 
         <>
             {
                 inputWidth === 'full' ?
-                    <div className="relative w-[80%]">
+                    <div className="relative w-[100%]">
                         <IoSearchOutline className="absolute rounded-l-sm pt-[4px] h-[60%] w-[30px] text-[var(--brown-300)]" />
                         <input type="input" className="input-browser-reset p-[3px_10px_3px_30px] text-[.95rem] text-center w-full border border-[var(--gray-300)] custom-low-lifted-shadow mb-3 h-[33px]
                         " placeholder={placeholder} />
