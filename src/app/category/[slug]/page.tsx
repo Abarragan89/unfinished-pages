@@ -43,8 +43,31 @@ export default function Page({ params }: { params: { slug: string } }) {
             likes: [],
             likeCount: 0,
             coverPhotoUrl: '/images/topicCardImgs/family.jpg'
-        }
+        },
+        {
+            id: '4',
+            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
+            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
+            date: 'Decemeber 25, 2024',
+            likes: [],
+            likeCount: 0,
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+        },
+        {
+            id: '4',
+            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
+            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
+            date: 'Decemeber 25, 2024',
+            likes: [],
+            likeCount: 0,
+            coverPhotoUrl: '/images/topicCardImgs/family.jpg'
+        },
     ]
+
+
+    const acceptableSlugs = ['DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'technology', 'travel-food', 'business-technology']
+
+    if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
 
     return (
         <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] rounded-md">
@@ -59,7 +82,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     priority
                 />
                 <div className={`absolute top-[33%] w-full`}>
-                    <MainHeading title={params.slug.toUpperCase()} />
+                    <MainHeading title={params.slug.toUpperCase().replace(/-/g, ' & ')} />
                 </div>
             </header>
             {/* This is the related posts in the same category */}

@@ -1,11 +1,13 @@
 import Link from "next/link"
 import { GiBookshelf } from "react-icons/gi";
-import { FaCross } from "react-icons/fa";
 import { MdFamilyRestroom } from "react-icons/md";
 import { FaSchool } from "react-icons/fa";
 import { MdOutlineComputer } from "react-icons/md";
-import { RiGovernmentLine } from "react-icons/ri";
+import { GiAirplaneDeparture } from "react-icons/gi";
+import { IoFitnessOutline } from "react-icons/io5";
+import { IoIosHammer } from "react-icons/io";
 
+import { PiTelevisionLight } from "react-icons/pi";
 
 export default function TopicsSubMenu() {
 
@@ -13,32 +15,40 @@ export default function TopicsSubMenu() {
 
     return (
         <div
-            className="absolute animate-growIn top-[42px] left-[-5px] p-[20px_20px_5px_20px] w-[180px] rounded-b-md border-l custom-avatar-menu-shadow bg-[var(--off-white)]"
+            className="absolute animate-growIn top-[42px] left-[-5px] p-[20px_20px_5px_20px] w-[220px] rounded-b-md border-l custom-avatar-menu-shadow bg-[var(--off-white)]"
         >
             <ul>
                 <li className={`${liStyles}`}>
                     <GiBookshelf size={18} className="mr-2" />
-                    <Link href='/category/philosophy'>Philosophy</Link>
-                </li>
-                <li className={`${liStyles}`}>
-                    <FaCross size={18} className="mr-2" />
-                    <Link href='/category/religion'>Religion</Link>
-                </li>
-                <li className={`${liStyles}`}>
-                    <MdFamilyRestroom size={18} className="mr-2" />
-                    <Link href='/category/family'>Family</Link>
+                    <Link href='/category/politics-philosophy'>Politics | Philosphy</Link>
                 </li>
                 <li className={`${liStyles}`}>
                     <FaSchool size={18} className="mr-2" />
-                    <Link href='/category/education'>Education</Link>
+                    <Link href='/category/education-career'>Education | Career</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <MdFamilyRestroom size={18} className="mr-2" />
+                    <Link href='/category/family-relationships'>Family | Relationships</Link>
                 </li>
                 <li className={`${liStyles}`}>
                     <MdOutlineComputer size={18} className="mr-2" />
-                    <Link href='/category/technology'>Technology</Link>
+                    <Link href='/category/business-technology'>Business | Technology</Link>
                 </li>
                 <li className={`${liStyles}`}>
-                    <RiGovernmentLine size={18} className="mr-2" />
-                    <Link href='/category/government'>Government</Link>
+                    <GiAirplaneDeparture size={18} className="mr-2" />
+                    <Link href='/category/travel-food'>Travel | Food</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <IoFitnessOutline size={18} className="mr-2" />
+                    <Link href='/category/health-fitness'>Health | Fitness</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <PiTelevisionLight size={19} className="mr-2" />
+                    <Link href='/category/entertainment-sports'>Entertainment | Sports</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <IoIosHammer size={18} className="mr-2" />
+                    <Link href='/category/DIY'>DIY</Link>
                 </li>
             </ul>
         </div>
