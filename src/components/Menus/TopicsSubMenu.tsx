@@ -6,8 +6,12 @@ import { MdOutlineComputer } from "react-icons/md";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { IoFitnessOutline } from "react-icons/io5";
 import { IoIosHammer } from "react-icons/io";
-
+import { PiBookOpenText } from "react-icons/pi";
 import { PiTelevisionLight } from "react-icons/pi";
+import { TbAlignBoxLeftTopFilled } from "react-icons/tb";
+import { TbSquareLetterO } from "react-icons/tb";
+
+
 
 export default function TopicsSubMenu() {
 
@@ -47,8 +51,16 @@ export default function TopicsSubMenu() {
                     <Link href='/category/entertainment-sports'>Entertainment | Sports</Link>
                 </li>
                 <li className={`${liStyles}`}>
+                    <PiBookOpenText size={18} className="mr-2" />
+                    <Link href='/category/short-stories'>Short Stories</Link>
+                </li>
+                <li className={`${liStyles}`}>
                     <IoIosHammer size={18} className="mr-2" />
                     <Link href='/category/DIY'>DIY</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <TbSquareLetterO size={18} className="mr-2" />
+                    <Link href='/category/other'>Other</Link>
                 </li>
             </ul>
         </div>

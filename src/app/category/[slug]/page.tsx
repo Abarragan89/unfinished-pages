@@ -1,7 +1,6 @@
 import Image from "next/image"
 import MainHeading from "@/components/Headings/MainHeading";
 import { BlogData } from "../../../../types/blog";
-import { formatDate } from "../../../../utils/formatDate";
 import BlogCard from "@/components/Cards/BlogCard";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -65,7 +64,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     ]
 
 
-    const acceptableSlugs = ['DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'technology', 'travel-food', 'business-technology']
+    const acceptableSlugs = ['other', 'short-stories', 'DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'technology', 'travel-food', 'business-technology']
 
     if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
 
