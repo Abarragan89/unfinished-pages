@@ -5,6 +5,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import Link from "next/link";
 import NextImage from 'next/image';
 import axios from "axios";
+import InputLabelEl from "../FormInputs/InputLabelEl";
 
 
 export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: string, coverPhotoUrl: string }) {
@@ -121,35 +122,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
     }
 
     return (
-        <div className="mt-6">
-            {!file &&
-                <label
-                    className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[280px]'} mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
-                    htmlFor="cover-image-upload"
-                >
-                    {isUpLoading ?
-                        <PulseLoader
-                            color={'white'}
-                            loading={isUpLoading}
-                            size={7}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
-                        />
-                        :
-                        imagePreview ?
-                            'Change Cover Photo'
-                            :
-                            'Add Cover Photo'
-                    }
-                    <input
-                        id="cover-image-upload"
-                        type="file"
-                        className="hidden"
-                        accept="image/jpeg, image/png, image/webp"
-                        onChange={(e) => handleFileChange(e)}
-                    />
-                </label>
-            }
+        <section>
             {
                 imagePreview ?
                     <>
@@ -158,12 +131,12 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                             height={200}
                             src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
                             alt="Preview"
-                            className="mx-auto mt-5 w-auto h-auto"
+                            className="mx-auto w-auto h-auto"
                         />
                     </>
                     :
                     <div className="flex flex-col justify-center items-center">
-                        <p className="font-bold mt-3">Cover Photo Requirements</p>
+                        <p className="font-bold">Cover Photo Requirements</p>
                         <ul className="text-[.9rem]">
                             <li className="my-1 flex items-center">
                                 <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
@@ -195,6 +168,34 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                         </ul>
                     </div>
             }
+            {!file &&
+                <label
+                    className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[260px]'} mt-5 mx-auto custom-small-btn bg-[var(--off-black)]`}
+                    htmlFor="cover-image-upload"
+                >
+                    {isUpLoading ?
+                        <PulseLoader
+                            color={'white'}
+                            loading={isUpLoading}
+                            size={7}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        :
+                        imagePreview ?
+                            'Change Cover Photo'
+                            :
+                            'Add Cover Photo'
+                    }
+                    <input
+                        id="cover-image-upload"
+                        type="file"
+                        className="hidden"
+                        accept="image/jpeg, image/png, image/webp"
+                        onChange={(e) => handleFileChange(e)}
+                    />
+                </label>
+            }
             <p
                 className={`text-[.925rem] ${fileIsAccepted ? 'text-green-700' : 'text-red-700'} text-center mt-3 italic`}
             >{message}</p>
@@ -202,19 +203,12 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 file &&
                 <>
                     <div className="flex flex-col max-w-[270px] w-[90%] mx-auto mt-2">
-                        <div className="flex justify-between mx-1">
-                            <label
-                                className="text-[.875rem]"
-                                htmlFor="cover-image-alt"
-                            >Photo Description</label>
-                            <p className="text-[.85rem]">{imageAlt.length}/100</p>
-                        </div>
-                        <input
-                            type="text"
-                            id="cover-image-alt"
-                            maxLength={100}
-                            onChange={(e) => setImageAlt(e.target.value)}
-                            className="input-browser-reset w-full border border-[var(--brown-500)] mx-auto block px-2 py-[2px] text-[.95rem]"
+
+                        <InputLabelEl 
+                            userText={imageAlt}
+                            handleStateChange={setImageAlt}
+                            labelText="Photo Description"
+                            characterLimit={100}
                         />
                     </div>
                     <button
@@ -235,6 +229,6 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                     </button>
                 </>
             }
-        </div>
+        </section>
     );
 }

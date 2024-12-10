@@ -8,6 +8,8 @@ import Link from "next/link"
 import PublishDeleteBlogBtns from "@/components/Buttons/PublishDeleteBlogBtns"
 import Banner from "@/components/EditBlogUI/Banner"
 import { cleanTitleForURL } from "../../../../../utils/stringManipulation"
+import UploadImageInput from "@/components/EditBlogUI/UploadImageInput"
+import InputBlockWrapper from "@/components/EditBlogUI/InputBlockWrapper"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
 
@@ -57,10 +59,19 @@ export default async function editBlog({ params }: { params: { blogId: string } 
             <EditMetaData
                 title={blogData.title}
                 description={blogData.description || ""}
-                coverPhotoUrl={blogData.coverPhotoUrl || ""}
                 blogId={blogId as string}
                 categories={blogData.categories}
+                tags={blogData.tags as string}
             />
+            <InputBlockWrapper
+                subtitle="Cover Photo"
+                showSaveButton={false}
+            >
+                <UploadImageInput
+                    blogId={blogId as string}
+                    coverPhotoUrl={blogData.coverPhotoUrl || ""}
+                />
+            </InputBlockWrapper>
             <SlateRichText
                 blogId={blogId as string}
                 blogContent={blogData.content as []}

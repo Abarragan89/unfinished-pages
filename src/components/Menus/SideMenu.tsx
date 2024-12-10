@@ -11,6 +11,7 @@ import SearchInput from "../FormInputs/SearchInput";
 import { BsThreeDots } from "react-icons/bs";
 import CannotDeleteModal from "../Modals/CannotDeleteModal";
 import DeletePhotoSubMenu from "./DeletePhotoSubMenu";
+import InputLabelEl from "../FormInputs/InputLabelEl";
 
 interface Props {
     onClickHandler: (image: UserImage) => void;
@@ -174,16 +175,12 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         className="rounded-sm"
                                     />
                                     <div className="flex flex-col text-[.85rem] text-[var(--brown-500)] mt-3">
-                                        <label htmlFor="photoAlt">
-                                            Photo Description
-                                            <span className="ml-10 text-[.8rem] text-[var(--brown-500)]">{imageAlt.length}/100</span>
-                                        </label>
-                                        <input type="text"
-                                            required
-                                            maxLength={100}
-                                            onChange={(e) => { setImageAlt(e.target.value) }}
-                                            className="input-browser-reset text-[.925rem] w-[190px] py-[3px] px-[8px] border border-[var(--brown-500)] text-[.9rem]"
-                                            placeholder="" />
+                                        <InputLabelEl
+                                            userText={imageAlt}
+                                            handleStateChange={setImageAlt}
+                                            characterLimit={100}
+                                            labelText="Photo Description"
+                                        />
                                     </div>
                                     <button className={`custom-small-btn bg-[var(--off-black)] mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'} ${isUpLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                                         {isUpLoading ?

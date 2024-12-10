@@ -10,12 +10,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
 
         const { id: blogId } = params
-        const { blogTitle: title, blogDescription: description, blogCategories: categories } = await request.json();
+        const { blogTitle: title, blogDescription: description, blogCategories: categories, blogTags: tags  } = await request.json();
 
         if (!title) {
             return NextResponse.json({ error: 'title is required' })
         }
 
+        // get current blogs categories so i can disconnect and reset categories
         const updatedBlog = await prisma.$transaction(async (prisma) => {
             // Get the current categories associated with the blog
             const blog = await prisma.blog.findUnique({
@@ -40,6 +41,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 data: {
                     title,
                     description,
+                    tags,
                     categories: {
                         disconnect: disconnectCategories,
                         connect: categories.map((category: { [key: string]: string }) => ({

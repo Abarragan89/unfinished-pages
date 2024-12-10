@@ -95,6 +95,7 @@ model Blog {
   isPublished Boolean @default(false)
   content ContentBlock[]
   categories BlogCategory[]
+  tags String? @db.VarChar(200)
   comments Comment[]
   userId   String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

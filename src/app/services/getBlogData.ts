@@ -9,6 +9,7 @@ export default async function getBlogData(blogId: string) {
                 id: true,
                 title: true,
                 description: true,
+                tags: true,
                 coverPhotoUrl: true,
                 coverPhotoAlt: true,
                 likes: true,

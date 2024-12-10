@@ -2,6 +2,7 @@
 import ModalWrapper from "./ModalWrapper";
 import { useState } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
+import InputLabelEl from "../FormInputs/InputLabelEl";
 
 interface Props {
     onConfirmHandler: () => Promise<void>;
@@ -25,11 +26,10 @@ export default function ConfirmWithText({ onConfirmHandler, confirmText, urlPara
                 className="flex flex-col items-center"
             >
                 <p className="text-center text-[var(--brown-500)] mx-5">Type <span className="text-[var(--danger)] underline">{confirmText}</span> to confirm.</p>
-                <input
-                    type="text"
-                    autoFocus
-                    onChange={(e) => setUserInput(e.target.value)}
-                    className="input-browser-reset w-60 mt-4 py-[5px] px-[10px] border-2 border-[var(--gray-300)] mx-4"
+
+                <InputLabelEl
+                    userText={userInput}
+                    handleStateChange={setUserInput}
                 />
                 {errorMsg &&
                     <p

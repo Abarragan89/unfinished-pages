@@ -1,36 +1,35 @@
 "use client"
 import { useState } from "react"
-import UploadImageInput from "./UploadImageInput";
 import InputBlockWrapper from "./InputBlockWrapper";
 import axios from "axios";
 import SelectAreaEl from "../FormInputs/SelectAreaEl";
+import InputLabelEl from "../FormInputs/InputLabelEl";
 
 interface Props {
     title: string;
     description: string;
-    coverPhotoUrl: string;
     blogId: string;
-    categories: { [key: string]: string }[]
+    categories: { [key: string]: string }[];
+    tags: string;
 }
 
-export default function EditMetaData({ title, description, coverPhotoUrl, blogId, categories }: Props) {
+export default function EditMetaData({ title, description, blogId, categories, tags }: Props) {
 
     const [blogTitle, setBlogTitle] = useState<string>(title);
     const [blogDescription, setBlogDescription] = useState<string>(description);
+    const [blogTags, setBlogTags] = useState<string>(tags || '');
     const [isDetailsSavable, setIsDetailsSavable] = useState<boolean>(false);
     const [isDetailsSaving, setIsDetailsSaving] = useState<boolean>(false);
     const [blogCategories, setBlogCategories] = useState<{ [key: string]: string }[]>(categories)
-    
-    console.log('blogcategories ', blogCategories)
 
     async function saveDetailsHandler() {
-        console.log('blog categories', blogCategories)
         try {
             setIsDetailsSaving(true);
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogDetails`, {
                 blogTitle: blogTitle.trim(),
                 blogDescription: blogDescription.trim(),
-                blogCategories: blogCategories
+                blogCategories: blogCategories,
+                blogTags: blogTags.trim(),
             });
             setIsDetailsSaving(false);
             setIsDetailsSavable(false);
@@ -38,6 +37,12 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
             console.log('Error updating blog details:', error);
         }
     }
+
+    function handleInputStateChange(value:string) {
+        setBlogTags(value)
+        setIsDetailsSavable(true)
+    }
+
     return (
         <form>
             <InputBlockWrapper
@@ -46,6 +51,7 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                 subtitle="Blog Details"
                 UIStateTrigger={isDetailsSaving}
             >
+                {/* Textarea Input */}
                 <div className="flex flex-col">
                     <div className="flex justify-between mx-1 tracking-wide">
                         <label htmlFor="blog-title" className="text-[.95rem]">Title</label>
@@ -62,6 +68,7 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                         cols={30}
                     />
                 </div>
+                {/* Textarea Input */}
                 <div className="flex flex-col mt-4">
                     <div className="flex justify-between mx-1 tracking-wide">
                         <label htmlFor="blog-title" className="text-[.95rem]">Description</label>
@@ -77,7 +84,7 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                         cols={30}
                     />
                 </div>
-
+                {/* Category Input */}
                 <div className="mt-4">
                     <SelectAreaEl
                         toggleSavable={setIsDetailsSavable}
@@ -85,12 +92,16 @@ export default function EditMetaData({ title, description, coverPhotoUrl, blogId
                         setBlogCategories={setBlogCategories}
                     />
                 </div>
-
-
-                <UploadImageInput
-                    blogId={blogId}
-                    coverPhotoUrl={coverPhotoUrl}
-                />
+                {/* Tag Input */}
+                <div className="mt-4">
+                    <InputLabelEl
+                        userText={blogTags}
+                        handleStateChange={handleInputStateChange}
+                        labelText="Tags"
+                        characterLimit={200}
+                        placeholderText="finance, first day of school, artificial intelligence, software development, "
+                    />
+                </div>
             </InputBlockWrapper >
         </form>
 

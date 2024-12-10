@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
             {/* This is the related posts in the same category */}
             <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
-                {blogsData.map((blog, index) => (
+                {blogsData.map((blog) => (
                     <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide mb-[30px]">
                         <BlogCard
                             title={blog.title}

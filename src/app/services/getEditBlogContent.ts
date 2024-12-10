@@ -26,6 +26,7 @@ export default async function getEditBlogContents(userId: string, blogId: string
                 id: true,
                 title: true,
                 description: true,
+                tags: true,
                 isPublished: true,
                 categories: {
                     select: { name: true, displayName: true }

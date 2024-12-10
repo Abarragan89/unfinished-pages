@@ -3,10 +3,11 @@ interface Props {
     handleStateChange: (textInput: string) => void;
     autofocus?: boolean;
     characterLimit?: number;
-    labelText: string;
+    labelText?: string;
+    placeholderText?: string;
 }
 
-export default function InputLabelEl({ handleStateChange, userText, autofocus = false, characterLimit, labelText }: Props) {
+export default function InputLabelEl({ handleStateChange, userText, autofocus = false, characterLimit, labelText, placeholderText }: Props) {
     return (
         <div className="flex flex-col w-fit mx-auto mt-2 w-full">
 
@@ -21,14 +22,15 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
                     }
                 </div>
             }
-
             <input
                 type="text"
                 id={labelText}
+                value={userText}
+                placeholder={placeholderText ?? undefined}
                 autoFocus={autofocus}
                 maxLength={characterLimit ?? undefined}
                 onChange={(e) => handleStateChange(e.target.value)}
-                className="input-browser-reset border-2 border-[var(--brown-300)] mx-auto block px-2 py-[2px] w-full"
+                className="input-browser-reset text-[.95rem] border-2 border-[var(--gray-300)] focus:border-[var(--brown-300)] mx-auto block px-2 py-[3px] w-full"
             />
         </div>
     )
