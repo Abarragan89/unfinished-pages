@@ -31,6 +31,7 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
     async function addCommentHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
+            // add comment
             setIsLoading(true);
             const { data } = await axios.post('/api/userRoutes/comments', {
                 text: userComment.trim(),
@@ -38,6 +39,13 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
             })
             setBlogCommentState(prev => [data.comment, ...prev])
             setUserComment('');
+
+            // create notifications
+            await axios.post('/api/userRoutes/notifications', {
+                blogId,
+                commenterId: session.data?.user?.id,
+                blogSlug: pathname.split('/')[2]
+            })
         } catch (error) {
             console.log('error adding comment ', error)
         } finally {

@@ -19,12 +19,14 @@ model User {
   email         String          @unique @db.VarChar(320)
   emailVerified DateTime?
   image         String?
+  isNotificationsOn Boolean     @default(true)
   isAuthor      Boolean         @default(false)
   isAdmin       Boolean         @default(true)
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
   blogImages    Image[]
+  notifications Notification[]
   comments      Comment[]
   commentLikes  CommentLike[]
   blogLikes     BlogLike[]
@@ -83,6 +85,18 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+model Notification {
+    id          String   @id @default(cuid())
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    blogId      String
+    blog        Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+    url         String
+    message     String
+    createdAt   DateTime @default(now())
+    isRead      Boolean  @default(false)
+}
+
 model Blog {
   id String @id @default(cuid())
   title String  @db.VarChar(65)
@@ -95,6 +109,7 @@ model Blog {
   isPublished Boolean @default(false)
   content ContentBlock[]
   categories BlogCategory[]
+  notifications Notification[]
   tags String? @db.VarChar(200)
   comments Comment[]
   userId   String

@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     try {
         const { text, blogId, } = await request.json()
         const userId = request.headers.get('x-user-id');
-
         if (!userId) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
         }

@@ -3,10 +3,10 @@ import BlogCard from "@/components/Cards/BlogCard"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle"
 import CreateBlog from "@/components/Modals/CreateBlog";
 import { headers } from 'next/headers'
-import { BlogData } from "../../../types/blog";
+import { BlogData } from "../../../../types/blog";
 import ScrollToTop from "@/components/ScrollToTop";
-import getUserSavedBlogs from "../services/getUserSavedBlogs";
-import { cleanTitleForURL } from "../../../utils/stringManipulation";
+import getUserSavedBlogs from "../../services/getUserSavedBlogs";
+import { cleanTitleForURL } from "../../../../utils/stringManipulation";
 
 export default async function page() {
     const headersList = headers()
