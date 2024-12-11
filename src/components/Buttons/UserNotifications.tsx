@@ -26,19 +26,20 @@ export default function UserNotifications({ userId, allNotifications }: { userId
 
     return (
         <section className='max-w-[600px] mx-auto'>
-            <form
-                className='text-right'
-                onSubmit={(e) => deleteAllNotificationsHandler(e)}>
-                <SubmitButton
-                    isLoading={isLoading}
-                    isSubmittable={true}
-                    color='red'
-                >
-                    Clear
-                </SubmitButton>
-            </form>
+            {userNotifications?.length > 0 &&
+                <form
+                    className='text-right'
+                    onSubmit={(e) => deleteAllNotificationsHandler(e)}>
+                    <SubmitButton
+                        isLoading={isLoading}
+                        isSubmittable={true}
+                        color='red'
+                    >
+                        Clear
+                    </SubmitButton>
+                </form>}
             {
-                userNotifications && userNotifications.map((notification: Notification) => (
+                userNotifications?.length > 0 ? userNotifications.map((notification: Notification) => (
                     <Link
                         href={`/blog/${notification.url}`}
                         key={notification.id}
@@ -67,6 +68,8 @@ export default function UserNotifications({ userId, allNotifications }: { userId
                         <p className="text-[.875rem] text-center text-[var(--gray-600)] mt-1">(Click to view)</p>
                     </Link>
                 ))
+                    :
+                    <p className='text-center text-[1.1rem]'>No New Notifications</p>
             }
         </section>
     )
