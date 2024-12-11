@@ -3,6 +3,7 @@ interface UserData {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+    isAuthor?: string
 }
 
 export interface Data {

@@ -22,6 +22,7 @@ model User {
   isNotificationsOn Boolean     @default(true)
   isAuthor      Boolean         @default(false)
   isAdmin       Boolean         @default(true)
+  notificationSettings String   @default("Always")
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
