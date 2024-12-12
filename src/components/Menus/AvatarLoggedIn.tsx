@@ -29,8 +29,6 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
         getNotifications();
     }, [sessionData.data?.user?.id])
 
-    console.log('user notifications ', userNotifications)
-
     const listElStyles = 'mb-2 flex items-center bg-var(--brown-500) text-[.95rem] text-left mb-5 hover:cursor-pointer hover:text-[var(--brown-300)]'
 
     return (
@@ -77,7 +75,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
                         <li className={`${listElStyles} relative`}>
                             {userNotifications?.length > 0 &&
                                 <p
-                                    className="absolute top-[-7px] leading-[.98rem] pt-[2px] right-[30px] text-white text-[.75rem] bg-[var(--danger)] w-[19px] h-[19px] rounded-[50px] text-center"
+                                    className="absolute top-[2px] leading-[.98rem] pt-[2px] left-[-20px] text-white text-[.75rem] bg-[var(--danger)] w-[19px] h-[19px] rounded-[50px] text-center"
                                 >{userNotifications?.length}
                                 </p>}
                             <IoIosNotifications size={20} />

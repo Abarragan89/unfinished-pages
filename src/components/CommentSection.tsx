@@ -12,7 +12,7 @@ import TextareaLabel from "./FormInputs/TextareaLabel";
 import { useRouter, usePathname } from "next/navigation";
 import LoginModal from "./Modals/LoginModal";
 
-export default function CommentSection({ blogId, blogComments }: { blogId: string, blogComments: Comment[] }) {
+export default function CommentSection({ blogId, blogComments, blogTitle }: { blogId: string, blogComments: Comment[], blogTitle: string }) {
 
     const session: Session = useSession();
     const router = useRouter();
@@ -41,10 +41,13 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
             setUserComment('');
 
             // create notifications
-            await axios.post('/api/userRoutes/notifications', {
+            await axios.post('/api/userRoutes/notifications/addedComment', {
                 blogId,
-                commenterId: session.data?.user?.id,
-                blogSlug: pathname.split('/')[2]
+                commentorId: session.data?.user?.id,
+                blogSlug: pathname.split('/')[2],
+                commentorName: session.data?.user?.name,
+                commentText: userComment.trim(),
+                blogTitle,
             })
         } catch (error) {
             console.log('error adding comment ', error)
@@ -122,6 +125,7 @@ export default function CommentSection({ blogId, blogComments }: { blogId: strin
                     session={session}
                     commentData={commentData}
                     blogId={blogId}
+                    blogTitle={blogTitle}
                 />
             ))}
         </section>

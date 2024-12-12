@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../../../utils/prisma';
 
-// Get all messages marked as unread
+// Get all messages marked as unread for Menu
 export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
     try {
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
         })
         return NextResponse.json(notifications, { status: 200 })
     } catch (error) {
-        console.log('error gettign notifications ', error)
+        console.log('error getting notifications ', error)
         return NextResponse.json({ error })
     }
 }

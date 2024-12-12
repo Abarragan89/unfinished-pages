@@ -15,7 +15,7 @@ import { IoSendSharp } from "react-icons/io5";
 import { BarLoader } from "react-spinners";
 import CommentReplySection from "./CommentReplySection";
 
-export default function SingleComment({ session, commentData, blogId }: { session: Session, commentData: Comment, blogId: string }) {
+export default function SingleComment({ session, commentData, blogId, blogTitle }: { session: Session, commentData: Comment, blogId: string, blogTitle: string }) {
     const [showReplies, setShowReplies] = useState<boolean>(false)
     const [isLikedByUser, setIsLikeByUser] = useState<boolean>(false)
 
@@ -42,7 +42,6 @@ export default function SingleComment({ session, commentData, blogId }: { sessio
         })
     };
 
-
     async function addCommentReplyHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
@@ -52,7 +51,20 @@ export default function SingleComment({ session, commentData, blogId }: { sessio
                 blogId: blogId,
                 commentId: commentData.id
             })
+
             setReplyCommentState(prev => [data.comment, ...prev])
+
+            // create notifications. Someone replied to your comment
+            await axios.post('/api/userRoutes/notifications/replyToComment', {
+                blogId,
+                replierId: session.data?.user?.id,
+                commentOwnerId: commentData.user.id,
+                replierName: session.data?.user?.name,
+                blogSlug: pathname.split('/')[2],
+                commentText: replyText.trim(),
+                blogTitle
+            })
+
         } catch (error) {
             console.log('error adding comment ', error)
         } finally {

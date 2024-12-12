@@ -4,6 +4,7 @@ interface UserData {
     email?: string | null;
     image?: string | null;
     isAuthor?: string
+    isParentCommentOwner?: string
 }
 
 export interface Data {

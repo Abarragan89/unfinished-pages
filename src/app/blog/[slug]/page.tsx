@@ -165,6 +165,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <hr className="mt-[50px]" />
             <CommentSection
                 blogId={blogData.id}
+                blogTitle={blogData.title}
                 blogComments={blogData.comments as Comment[]}
             />
 

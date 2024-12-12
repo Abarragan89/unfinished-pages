@@ -91,6 +91,7 @@ export default async function getBlogData(blogId: string) {
                             select: {
                                 name: true,
                                 image: true,
+                                id: true
                             }
                         },
                         replies: {
