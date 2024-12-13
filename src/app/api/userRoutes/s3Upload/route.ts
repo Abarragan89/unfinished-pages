@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
         const imageFile = formData.get('file');
-        const imageHeight = formData.get('imageHeight') as string;
+        const imageHeight = formData.get('imageHeight') as string;       // pass this data from the edit, 
         const imageWidth = formData.get('imageWidth') as string;
         const imageAlt = formData.get('imageAlt') as string;
         const isCoverImage = formData.get('isCoverImage');
@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
         }
         // Get User ID
         const userId = request.headers.get('x-user-id');
+        console.log('user id int eh route', userId)
 
         if (!userId) return NextResponse.json({ error: 'User not logged in' })
 

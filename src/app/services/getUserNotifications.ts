@@ -6,10 +6,17 @@ export default async function getUserNotifications(userId: string) {
         where: {
             id: userId
         },
-        select: {
+        include: {
             notifications: {
                 orderBy: {
                     createdAt: 'desc'
+                },
+                include: {
+                    blog: {
+                        select: {
+                            title: true
+                        }
+                    }
                 }
             }
         }

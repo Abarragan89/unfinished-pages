@@ -10,7 +10,6 @@ import { FaHeart } from "react-icons/fa";
 import { Session } from "../../../types/users";
 import { signOut } from "next-auth/react"
 import BecomeAnAuthor from "../Modals/BecomeAnAuthor";
-import getUserNotifications from "@/app/services/getUserNotifications";
 import axios from "axios";
 
 export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () => void, sessionData: Session }) {
@@ -84,7 +83,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
 
                         <li className={listElStyles}>
                             <IoSettingsSharp size={20} />
-                            <Link href='/' onClick={onClose} className="ml-3">Settings</Link>
+                            <Link href='/settings' onClick={onClose} className="ml-3">Settings</Link>
                         </li>
 
                         <li className={listElStyles}>

@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
                     name: true,
                     email: true,
                     id: true,
+                    isNotificationsOn: true,
                 },
             }),
             // Find Author
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
                     name: true,
                     email: true,
                     id: true,
+                    isNotificationsOn: true,
                 },
             }),
         ]);
@@ -67,7 +69,8 @@ export async function POST(request: NextRequest) {
                             userId: user.id as string,
                             blogId,
                             url: blogSlug,
-                            message: `New Comments! ${blogTitle}`,
+                            message: `New Comment!`,
+                            commentText: commentText
                         },
                     });
                     // Only notify users who don't already have a notification
@@ -76,10 +79,14 @@ export async function POST(request: NextRequest) {
             }
         });
 
+        // filter out users that have notifications set to off
+        const usersWithNotificationsOn: UserData[] = usersToNotify.filter(user => user.isNotificationsOn === true)
+
+
         // // Send emails outside the transaction
-        if (usersToNotify.length > 0) {
+        if (usersWithNotificationsOn.length > 0) {
             const blogLink = `${process.env.DOMAIN}/blog/${blogSlug}`;
-            sendAddedCommentEmail(usersToNotify, blogLink, commentorName, commentText, blogTitle);
+            sendAddedCommentEmail(usersWithNotificationsOn, blogLink, commentorName, commentText, blogTitle);
         }
         return NextResponse.json({ message: 'Comment successfully added' });
     } catch (error) {

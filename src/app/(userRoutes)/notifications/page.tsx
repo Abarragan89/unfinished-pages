@@ -19,7 +19,7 @@ export default async function page() {
     await updateNotificationsAsRead(userId)
 
     return (
-        <main className="h-[100vh] mt-[25px]">
+        <main className="min-h-[100vh] mt-[25px]">
             <SubheadingTitle title="Notifications" />
 
             <UserNotifications

@@ -25,7 +25,7 @@ export default async function page() {
             <CreateBlog />
             <SubheadingTitle title="Saved Blogs" />
             <section className="flex flex-wrap justify-around max-w-[1200px] mx-auto ">
-                {blogs.map((blog) => {
+                {blogs.length > 0 ? blogs.map((blog) => {
                     return (
                         <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`}
                             className="my-[20px]"
@@ -42,7 +42,10 @@ export default async function page() {
                             />
                         </Link>
                     )
-                })}
+                })
+                    :
+                    <p className="text-center text-[.95rem]">No blogs have been saved</p>
+                }
             </section>
         </main>
     )

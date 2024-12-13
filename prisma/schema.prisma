@@ -94,6 +94,7 @@ model Notification {
     blog        Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
     url         String
     message     String
+    commentText String?
     createdAt   DateTime @default(now())
     isRead      Boolean  @default(false)
 }

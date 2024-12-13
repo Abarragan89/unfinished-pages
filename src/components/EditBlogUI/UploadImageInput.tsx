@@ -78,6 +78,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         }
     };
 
+    console.log('file ', file)
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         if (!file) return;
@@ -92,7 +93,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         try {
             // Post to the S3 Bucket
             const { data } = await axios.post(
-                `/api/authorRoutes/s3Upload`,
+                `/api/userRoutes/s3Upload`,
                 formData,
                 {
                     headers: {

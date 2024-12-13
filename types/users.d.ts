@@ -4,7 +4,8 @@ interface UserData {
     email?: string | null;
     image?: string | null;
     isAuthor?: string
-    isParentCommentOwner?: string
+    isParentCommentOwner?: string;
+    isNotificationsOn: boolean
 }
 
 export interface Data {

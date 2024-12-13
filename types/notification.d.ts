@@ -11,4 +11,5 @@ export interface Notification {
     message: string;
     createdAt: Date;
     isRead: boolean;
+    commentText?: string | null
 }

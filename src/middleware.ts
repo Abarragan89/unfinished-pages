@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     // Define protected routes
     const authorRoutes = ['/api/authorRoutes', '/editBlog', '/previewBlog', '/myBlogs'];
     const adminRoutes = ['/api/adminRoutes', '/authorRequests'];
-    const userRoutes = ['/api/userRoutes', '/savedBlogs', '/notifications'];
+    const userRoutes = ['/api/userRoutes', '/savedBlogs', '/notifications', '/settings'];
 
     const isProtectedRoute = [...authorRoutes, ...adminRoutes, ...userRoutes].some(route => pathname.startsWith(route));
     const isApi = pathname.startsWith('/api/');
@@ -52,33 +52,33 @@ export async function middleware(request: NextRequest) {
 
     // Apply Content Security Policy (CSP)
     let cspHeader = '';
-    if (process.env.NODE_ENV === 'production') {
-        cspHeader = `
-        default-src 'self';
-        script-src 'self' 'nonce-${nonce}';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' blob: data:;
-        font-src 'self';
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self';
-        frame-ancestors 'none';
-        upgrade-insecure-requests;
-    `;
-    } else if (process.env.NODE_ENV === 'development') {
-        cspHeader = `
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' blob: data: http://localhost:3000;
-        font-src 'self';
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self';
-        frame-ancestors 'none';
-        upgrade-insecure-requests;
-    `;
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //     cspHeader = `
+    //     default-src 'self';
+    //     script-src 'self' 'nonce-${nonce}';
+    //     style-src 'self' 'unsafe-inline';
+    //     img-src 'self' blob: data: http://localhost:3000 https://lh3.googleusercontent.com;
+    //     font-src 'self';
+    //     object-src 'none';
+    //     base-uri 'self';
+    //     form-action 'self';
+    //     frame-ancestors 'none';
+    //     upgrade-insecure-requests;
+    // `;
+    // } else if (process.env.NODE_ENV === 'development') {
+    //     cspHeader = `
+    //     default-src 'self';
+    //     script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000;
+    //     style-src 'self' 'unsafe-inline';
+    //     img-src 'self' blob: data: http://localhost:3000 http://localhost:3000 https://lh3.googleusercontent.com;
+    //     font-src 'self';
+    //     object-src 'none';
+    //     base-uri 'self';
+    //     form-action 'self';
+    //     frame-ancestors 'none';
+    //     upgrade-insecure-requests;
+    // `;
+    // }
 
     const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim();
     response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue);

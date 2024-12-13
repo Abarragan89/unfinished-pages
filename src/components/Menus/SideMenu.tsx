@@ -50,7 +50,7 @@ export default function SideMenu({ onClickHandler }: Props) {
         try {
             // save image to s3 and save it to users images[]
             const { data } = await axios.post(
-                `/api/authorRoutes/s3Upload`,
+                `/api/userRoutes/s3Upload`,
                 formData,
                 {
                     headers: {
