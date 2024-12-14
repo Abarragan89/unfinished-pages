@@ -60,7 +60,6 @@ async function deleteFileFromS3(key: string) {
 
     const command = new DeleteObjectCommand(s3Params);
     await s3Client.send(command);
-    console.log(`Deleted ${key} from S3`);
 }
 
 // The POST is fired as soon as a user creates a new blog

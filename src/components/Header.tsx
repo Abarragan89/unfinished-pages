@@ -17,8 +17,6 @@ export default async function Header() {
         userData = await getUserNavigationData(userId) as UserData;
     }
 
-
-
     return (
         <header className="flex justify-between items-center px-[20px] py-[10px] align-center bg-[var(--off-black)] custom-header-fadeout">
             <div className="flex items-center">

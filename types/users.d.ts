@@ -5,7 +5,7 @@ interface UserData {
     image?: string | null;
     isAuthor?: string
     isParentCommentOwner?: string;
-    isNotificationsOn: boolean
+    isNotificationsOn?: boolean
 }
 
 export interface Data {
