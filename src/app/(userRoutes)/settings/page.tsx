@@ -21,6 +21,7 @@ export default async function page() {
         <main className="min-h-[100vh] mt-[25px]">
             <EditProfilePicModal 
                 userImage={userSettings!.image as string}
+                userId={userId}
             />
             <SubheadingTitle title="Settings" />
             <section className='flex justify-center items-center bg-[var(--paper-color)] p-[20px] relative w-fit mx-auto rounded-md custom-low-lifted-shadow'>

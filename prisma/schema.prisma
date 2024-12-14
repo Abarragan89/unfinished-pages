@@ -175,7 +175,7 @@ model AnchorLinksInListItems {
 
 model Image {
   id String @id @default(cuid())
-  url String
+  url String @unique 
   alt String @db.VarChar(100)
   width Int
   height Int

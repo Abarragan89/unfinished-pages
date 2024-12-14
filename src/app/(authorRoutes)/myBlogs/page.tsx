@@ -6,7 +6,6 @@ import CreateBlog from "@/components/Modals/CreateBlog";
 import { headers } from 'next/headers'
 import { BlogData } from "../../../../types/blog";
 import ScrollToTop from "@/components/ScrollToTop";
-import BecomeAnAuthor from "@/components/Modals/BecomeAnAuthor";
 import getAuthorBlogs from "@/app/services/getAuthorBlogs";
 
 export default async function page() {
@@ -33,7 +32,7 @@ export default async function page() {
                 </Link>
             </div>
             <section className="flex flex-wrap justify-around max-w-[1200px] mx-auto ">
-                {blogs.map((blog) => {
+                {blogs.length > 0 ? blogs.map((blog) => {
                     return (
                         <Link key={blog.id} href={`/editBlog/${blog.id}`}
                             className="my-[20px]"
@@ -50,7 +49,9 @@ export default async function page() {
                             />
                         </Link>
                     )
-                })}
+                }):
+                    <p className="text-center text-[1.05rem]">Write your first blog!</p>
+                }
             </section>
         </main>
     )

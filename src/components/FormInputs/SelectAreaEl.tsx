@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { GiCheckMark } from "react-icons/gi";
 
 

@@ -65,11 +65,16 @@ export async function DELETE(request: NextRequest) {
             new Map(blogsUsingImage.map(blog => [blog.id, blog])).values()
         );
 
-        // if  image is not in use, delete it
+        // delete it from s3 bucket 
+
+
+        // if  image is not in use, delete it from Prisma
         if (uniqueBlogs.length === 0) {
             await prisma.image.delete({
                 where: { id: imageId }
             })
+
+
             return NextResponse.json({ blogs: [] }, { status: 200 });
             // or else, give back the blog titles
         } else {

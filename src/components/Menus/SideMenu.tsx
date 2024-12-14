@@ -107,7 +107,7 @@ export default function SideMenu({ onClickHandler }: Props) {
         }
     }
 
-    async function deleteUserImage(imageId: string) {
+    async function deleteUserImage(imageUrl: string, imageId: string) {
         try {
             const { data } = await axios.delete('/api/authorRoutes/blogImages', {
                 data: { imageId }
@@ -115,7 +115,7 @@ export default function SideMenu({ onClickHandler }: Props) {
 
             // delete blog if not being used in Blog
             if (data.blogs.length === 0) {
-                setUserImages((prev) => prev!.filter((img) => img.id !== imageId));
+                setUserImages((prev) => prev!.filter((img) => img.url !== imageUrl));
                 // or else, show modal with blogs title and links to change 
             } else {
                 setBlogTitlesUsingImage(data.blogs)
@@ -124,7 +124,14 @@ export default function SideMenu({ onClickHandler }: Props) {
                 })
             }
 
-
+            // delete from s3 bucket if from amazon (There is validation in route)
+            await axios.delete('/api/userRoutes/s3Upload', {
+                data: { imageUrl },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
         } catch (error) {
             console.log('error deleting user Image ', error)
         }
@@ -138,7 +145,7 @@ export default function SideMenu({ onClickHandler }: Props) {
         }
     }, [sideMenu])
 
-
+    console.log('user image ', userImages)
     return (
         <>
             <CannotDeleteModal
@@ -242,6 +249,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                     <DeletePhotoSubMenu
                                         closeMenuState={setShowDeleteMenu}
                                         photoId={image.id}
+                                        photoUrl={image.url}
                                         onClickHandler={deleteUserImage}
                                     />
                                 }

@@ -1,9 +1,23 @@
-"use client";
 import Navigation from "./Navigation"
 import Image from "next/image"
 import Link from "next/link"
+import { headers } from 'next/headers'
+import getUserNavigationData from "@/app/services/getUserNavigationData"
+import { UserData } from "../../types/users"
 
-export default function Header() {
+export default async function Header() {
+
+    const headersList = headers()
+    const userId = headersList.get('x-user-id')
+
+    // Check if user is logged in
+    if (!userId) {
+        throw new Error('Unauthorized access')
+    }
+
+
+    const userData = await getUserNavigationData(userId) as UserData;
+
     return (
         <header className="flex justify-between items-center px-[20px] py-[10px] align-center bg-[var(--off-black)] custom-header-fadeout">
             <div className="flex items-center">
@@ -18,7 +32,7 @@ export default function Header() {
                     />
                 </Link>
             </div>
-            <Navigation />
+            <Navigation userData={userData} />
         </header>
     )
 }

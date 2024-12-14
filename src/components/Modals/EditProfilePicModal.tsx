@@ -3,39 +3,35 @@ import ModalWrapper from "./ModalWrapper";
 import React from 'react'
 import { useState } from 'react'
 import Cropper from 'react-easy-crop';
-import getCroppedImg from "../../../utils/cropImage";
+import getCroppedImg, { PixelCrop } from "../../../utils/cropImage";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import axios from "axios";
 
-export default function EditProfilePicModal({ userImage }: { userImage: string }) {
+export default function EditProfilePicModal({ userImage, userId }: { userImage: string, userId: string }) {
 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null)
     const [currentImage, setCurrentImage] = useState<string>('https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000')
-    const [croppedImage, setCroppedImage] = useState(null)
 
-    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    // @ts-expect-error: ignoring first argument in onCropComplete
+    const onCropComplete = (__, croppedAreaPixels: PixelCrop) => {
         setCroppedAreaPixels(croppedAreaPixels)
     }
 
-    async function blobToFile(blobUrl, fileName) {
+    async function blobToFile(blobUrl: string, fileName: string) {
         const response = await fetch(blobUrl);
         const blob = await response.blob();
         return new File([blob], fileName, { type: blob.type });
     };
 
-    console.log('cropped area pixels ', croppedAreaPixels)
-    console.log('crop', crop)
-
     const showCroppedImage = async () => {
         try {
-            const croppedImage = await getCroppedImg(currentImage, croppedAreaPixels);
-            console.log('cropped Image', croppedImage)
+            const croppedImage = await getCroppedImg(currentImage, croppedAreaPixels as PixelCrop) as string;
 
             // Convert Blob to Buffer
-            const photoFile = await blobToFile(croppedImage, 'user-image.jpeg');
+            const photoFile = await blobToFile(croppedImage, `user-${userId}-profile-pic.jpeg`);
 
             const formData = new FormData();
             formData.append('file', photoFile);
@@ -43,6 +39,8 @@ export default function EditProfilePicModal({ userImage }: { userImage: string }
             formData.append('imageWidth', '50');
             formData.append('imageAlt', 'profile-pic')
             formData.append('isCoverImage', 'true')
+
+            // delete the old on from s3 bucket
 
             //   Post to the S3 Bucket
             const { data } = await axios.post(
@@ -54,16 +52,22 @@ export default function EditProfilePicModal({ userImage }: { userImage: string }
                     },
                 }
             );
-
+            
             // Get the pictureURL
             const { pictureURL } = data;
-            setCurrentImage(pictureURL)
+
+            // Set the users profile pic in database
+            await axios.put('/api/userRoutes/settings/profilePicture', {
+                pictureURL,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
         } catch (e) {
             console.error('Error processing cropped image:', e);
         }
     }
-
-
 
     const handleSliderChange = (value: number | number[]) => {
         if (typeof value === 'number') {

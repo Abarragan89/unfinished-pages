@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../../utils/prisma';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 
 const s3Client = new S3Client({
     region: process.env.AWS_S3_REGION as string,
@@ -9,6 +9,15 @@ const s3Client = new S3Client({
         secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY as string
     }
 })
+
+function getS3Key(imageUrl: string): string | boolean {
+    // Check if the URL is a full S3 URL
+    if (imageUrl.includes('.amazonaws.com/')) {
+        return imageUrl.split('.amazonaws.com/')[1];
+    }
+    // If it's already a key (without the full URL)
+    return false;
+}
 
 function getContentType(fileName: string): string {
     const extension = fileName.split('.').pop();
@@ -42,6 +51,18 @@ async function uploadFileToS3(file: Buffer, filename: string) {
     return url;
 }
 
+// Function to delete a file from S3
+async function deleteFileFromS3(key: string) {
+    const s3Params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: key
+    };
+
+    const command = new DeleteObjectCommand(s3Params);
+    await s3Client.send(command);
+    console.log(`Deleted ${key} from S3`);
+}
+
 // The POST is fired as soon as a user creates a new blog
 export async function POST(request: NextRequest) {
     try {
@@ -58,10 +79,8 @@ export async function POST(request: NextRequest) {
         }
         // Get User ID
         const userId = request.headers.get('x-user-id');
-        console.log('user id int eh route', userId)
 
         if (!userId) return NextResponse.json({ error: 'User not logged in' })
-
 
         if (imageFile instanceof File) {
             const buffer = Buffer.from(await imageFile.arrayBuffer());
@@ -90,5 +109,27 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Error uploading photo 123 ', error);
         return NextResponse.json({ error: 'failed to upload image' })
+    }
+}
+
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { imageUrl } = await request.json();
+        console.log(' in the s3 dleete route ', imageUrl)
+        if (!imageUrl) {
+            return NextResponse.json({ error: 'S3 object key is required' }, { status: 400 });
+        }
+
+        // get the key from the url
+        const key = getS3Key(imageUrl);
+        // Delete the file from S3 with key
+        if (key && typeof key === 'string') await deleteFileFromS3(key);
+        
+
+        return NextResponse.json({ message: 'File deleted successfully' }, { status: 200 });
+    } catch (error) {
+        console.error('Error deleting file from S3:', error);
+        return NextResponse.json({ error: error }, { status: 500 });
     }
 }

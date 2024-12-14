@@ -20,7 +20,7 @@ export default function CannotDeleteModal({ blogsUsingImage }: Props) {
                         href={`/editBlog/${blog.id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[.9rem] p-2 rounded-md text-center block mt-2 mb-5 text-[var(--brown-300)] hover tracking-wider hover:cursor-pointer text-[var(--paper-color)] bg-[var(--brown-500)] custom-low-lifted-shadow transition-transform duration-100 hover:scale-105 active:scale-100"
+                        className="p-2 rounded-md text-center block mt-2 mb-5 text-[var(--brown-300)] hover tracking-wider hover:cursor-pointer text-[var(--paper-color)] bg-[var(--brown-500)] custom-low-lifted-shadow transition-transform duration-100 hover:scale-105 active:scale-100"
                     >
                         {blog.title}
                     </Link>

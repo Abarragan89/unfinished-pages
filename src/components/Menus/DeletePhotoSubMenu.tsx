@@ -2,10 +2,11 @@ import { useEffect, useRef } from "react"
 
 interface Props {
     photoId: string;
-    onClickHandler: (photoId: string) => void;
+    onClickHandler: (photoUrl: string, photoId: string) => void;
     closeMenuState: React.Dispatch<React.SetStateAction<string>>;
+    photoUrl: string;
 }
-export default function DeletePhotoSubMenu({ photoId, onClickHandler, closeMenuState }: Props) {
+export default function DeletePhotoSubMenu({ photoUrl, onClickHandler, closeMenuState, photoId }: Props) {
 
     const deleteSubMenu = useRef<HTMLMenuElement | null>(null);
 
@@ -32,7 +33,7 @@ export default function DeletePhotoSubMenu({ photoId, onClickHandler, closeMenuS
         >
 
             <p
-                onClick={() => onClickHandler(photoId)}
+                onClick={() => onClickHandler(photoUrl, photoId)}
                 className="hover:cursor-pointer hover:text-[var(--brown-100)]"
             >Delete</p>
         </menu>

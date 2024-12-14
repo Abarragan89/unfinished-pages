@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image"
 // import Link from "next/link"
 import { useSession } from "next-auth/react";
-import { Session } from "../../types/users";
+import { Session, UserData } from "../../types/users";
 import AvatarMenu from "./Menus/AvatarMenu";
 import SearchInput from "./FormInputs/SearchInput";
 import { FaSortDown } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { FaCaretUp } from "react-icons/fa";
 import TopicsSubMenu from "./Menus/TopicsSubMenu";
 
 
-export default function Navigation() {
+export default function Navigation({ userData }: { userData: UserData }) {
 
     const session: Session = useSession();
     const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
@@ -25,6 +25,8 @@ export default function Navigation() {
     function closeMenu() {
         setShowAvatarMenu(prev => !prev)
     }
+
+    console.log('session ', session)
 
 
     // Handle clicks outside of the menu to close menu
@@ -74,7 +76,7 @@ export default function Navigation() {
                 <li ref={avatarMenuRef}>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
-                        src={session?.data?.user?.image ? session.data?.user.image : "/images/defaultProfilePic.png"}
+                        src={userData.image ? userData.image  : "/images/defaultProfilePic.png"}
                         width={30}
                         height={30}
                         alt={"profile pic of user"}
