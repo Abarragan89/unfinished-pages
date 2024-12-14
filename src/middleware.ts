@@ -54,7 +54,7 @@ export async function middleware(request: NextRequest) {
     let cspHeader = '';
     if (process.env.NODE_ENV === 'production') {
         cspHeader = `
-        default-src 'self';
+        default-src 'self' 'https://www.unfinishedpages.com/';
         script-src 'self' 'nonce-${nonce}';
         style-src 'self' 'unsafe-inline';
         img-src 'self' blob: data: https://*;
