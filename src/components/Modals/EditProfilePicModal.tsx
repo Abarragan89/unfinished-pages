@@ -13,7 +13,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null)
-    const [currentImage, setCurrentImage] = useState<string>('https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000')
+    const [currentImage, setCurrentImage] = useState<string>(userImage)
 
     // @ts-expect-error: ignoring first argument in onCropComplete
     const onCropComplete = (__, croppedAreaPixels: PixelCrop) => {
@@ -40,8 +40,6 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
             formData.append('imageAlt', 'profile-pic')
             formData.append('isCoverImage', 'true')
 
-            // delete the old on from s3 bucket
-
             //   Post to the S3 Bucket
             const { data } = await axios.post(
                 `/api/userRoutes/s3Upload`,
@@ -52,7 +50,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     },
                 }
             );
-            
+
             // Get the pictureURL
             const { pictureURL } = data;
 
@@ -63,6 +61,16 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     'Content-Type': 'application/json'
                 }
             })
+
+            // delete from s3 bucket if from amazon (There is validation in route)
+            await axios.delete('/api/userRoutes/s3Upload', {
+                data: { imageUrl: userImage },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setCurrentImage(pictureURL)
 
         } catch (e) {
             console.error('Error processing cropped image:', e);
@@ -112,7 +120,6 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
     //     }
     // }
 
-    console.log('user image ', userImage)
     return (
         <ModalWrapper
             title="Edit Profile Picture"

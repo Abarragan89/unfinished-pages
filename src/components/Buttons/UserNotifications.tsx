@@ -69,7 +69,7 @@ export default function UserNotifications({ userId, allNotifications }: { userId
 
                             <p className="absolute top-[5px] right-[10px] text-[.875rem] ">{formatDate(notification.createdAt)}</p>
                             <p className='mt-[10px] mb-[5px] font-bold text-[1rem]'>New Comment:</p>
-                            <p className="text-[var(--brown-300)]">"{notification.commentText}"</p>
+                            <p className="text-[var(--brown-300)]">&rdquo;{notification.commentText}&rdquo;</p>
                             <hr className='mb-2 mt-5'></hr>
                             <p className='italic text-[.875rem] text-[var(--gray-500)] mb-3'>{notification.blog.title}</p>
                             <p className="text-[.875rem] text-[var(--gray-500)] mt-1 mb-[-10px]">(Click to view)</p>

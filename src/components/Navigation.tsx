@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image"
-// import Link from "next/link"
 import { useSession } from "next-auth/react";
 import { Session, UserData } from "../../types/users";
 import AvatarMenu from "./Menus/AvatarMenu";
@@ -11,7 +10,7 @@ import { FaCaretUp } from "react-icons/fa";
 import TopicsSubMenu from "./Menus/TopicsSubMenu";
 
 
-export default function Navigation({ userData }: { userData: UserData }) {
+export default function Navigation({ userData }: { userData: UserData | null }) {
 
     const session: Session = useSession();
     const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
@@ -25,9 +24,6 @@ export default function Navigation({ userData }: { userData: UserData }) {
     function closeMenu() {
         setShowAvatarMenu(prev => !prev)
     }
-
-    console.log('session ', session)
-
 
     // Handle clicks outside of the menu to close menu
     useEffect(() => {
@@ -76,7 +72,7 @@ export default function Navigation({ userData }: { userData: UserData }) {
                 <li ref={avatarMenuRef}>
                     <Image
                         className="rounded-[50px] hover:cursor-pointer min-w-[30px]"
-                        src={userData.image ? userData.image  : "/images/defaultProfilePic.png"}
+                        src={userData?.image ? userData.image : "/images/defaultProfilePic.png"}
                         width={30}
                         height={30}
                         alt={"profile pic of user"}

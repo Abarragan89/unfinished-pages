@@ -10,13 +10,14 @@ export default async function Header() {
     const headersList = headers()
     const userId = headersList.get('x-user-id')
 
+    let userData:UserData | null = null;
+
     // Check if user is logged in
-    if (!userId) {
-        throw new Error('Unauthorized access')
+    if (userId) {
+        userData = await getUserNavigationData(userId) as UserData;
     }
 
 
-    const userData = await getUserNavigationData(userId) as UserData;
 
     return (
         <header className="flex justify-between items-center px-[20px] py-[10px] align-center bg-[var(--off-black)] custom-header-fadeout">
