@@ -72,10 +72,10 @@ export default function Navigation({ userData }: { userData: UserData | null }) 
     // render the listelements in the search
     function renderSearchedBlogs(blog: BlogData) {
         return (
-            <li>
+            <li className="px-2">
                 <Link
                     href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`}
-                    className="flex w-[350px] hover:bg-[var(--off-white)] my-2"
+                    className="flex w-[350px] text-[var(--white)] hover:bg-black my-2"
                     onClick={() => setSearchedBlogs([])}
                 >
                     <Image
