@@ -24,7 +24,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  /* :root {
+  :root {
     --brown-100: #65330d;
     --brown-300: #9e8977;
     --brown-500: #ce7c3d;
@@ -44,7 +44,7 @@
     --danger-transparent: rgba(123, 17, 17, 0.5);
     --success: rgb(225, 154, 60);
     --success-transparent: rgba(10, 74, 10, 0.5);
-  } */
+  }
 }
 
 @layer utilities {
