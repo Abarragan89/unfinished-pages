@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { prisma } from '../../../../../../utils/prisma';
+import { prisma } from '../../../../../../../utils/prisma';
 
 // Get a Blog by category name 
 export async function GET(request: NextRequest, { params }: { params: { categoryName: string, keywords: string } }) {

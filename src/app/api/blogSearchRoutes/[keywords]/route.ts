@@ -19,7 +19,7 @@ export async function GET(request: NextRequest, { params }: { params: { keywords
                 id: true,
                 title: true,
                 description: true,
-                publishedDate: true,
+                // publishedDate: true,
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
