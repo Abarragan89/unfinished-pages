@@ -6,25 +6,14 @@ import BlogCard from "@/components/Cards/BlogCard";
 import ScrollToTop from "@/components/ScrollToTop";
 import getBlogsByCategory from "@/app/services/getBlogsByCategory";
 import { cleanTitleForURL } from "../../../../utils/stringManipulation";
-import SearchInput from "@/components/FormInputs/SearchInput";
-import SearchInCategory from "@/components/SearchInCategory";
+// import SearchInCategory from "@/components/SearchInCategory";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
     const blogsData = await getBlogsByCategory(params.slug) as BlogData[]
-
-
     const acceptableSlugs = ['other', 'short-stories', 'diy', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'travel-food', 'business-technology']
-
     if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
-
-    // async function searchBlogsInCategory(input: string) {
-    //     setSearchedUserImages(userImages?.filter(image =>
-    //         image.alt.toLowerCase().includes(input.toLowerCase())
-    //     ) as UserImage[]);
-    // }
-
-
+        
     return (
         <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] rounded-md">
             <ScrollToTop />

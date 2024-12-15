@@ -21,7 +21,7 @@ export default function SideMenu({ onClickHandler }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [userImages, setUserImages] = useState<UserImage[] | null>(null);
-    const [searchedUserImages, setSearchedUserImages] = useState<UserImage[] | null>(null)
+    const [searchedUserImages, setSearchedUserImages] = useState<UserImage[]>([])
     const [message, setMessage] = useState<string>("");
     const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([])
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -192,6 +192,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                             userText={imageAlt}
                                             handleStateChange={setImageAlt}
                                             characterLimit={100}
+                                            autofocus={true}
                                             labelText="Photo Description"
                                         />
                                     </div>
@@ -248,7 +249,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                         <h4 className="text-center text-[1.15rem] tracking-wider border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">Photo Collection</h4>
                     }
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
-                        {userImages && searchUserImages.length === 0 ? userImages?.map((image: UserImage) => (
+                        {userImages && searchedUserImages.length === 0 ? userImages?.map((image: UserImage) => (
                             <div className="relative w-[80%] mx-auto" key={image.id}>
                                 {
                                     showDeleteMenu === image.id &&

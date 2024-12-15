@@ -79,7 +79,7 @@ export default function BecomeAnAuthor({ userId }: { userId?: string }) {
                     onSubmit={(e) => handleAuthorRequest(e)}
                     className="w-full md:w-[380px]"
                 >
-                    <p className="text-[.835rem] text-center text-[var(--gray-600)] italic mt-[-5px] mb-3">We take these responses as examples of your writing style and ability. Show us what you got!</p>
+                    <p className="text-[.835rem] text-center text-[var(--gray-500)] italic mt-[-5px] mb-3">We take these responses as examples of your writing style and ability. Show us what you got!</p>
                     <div className="mt-4">
                         <TextareaLabel
                             handleStateChange={setWhyBlogText}
