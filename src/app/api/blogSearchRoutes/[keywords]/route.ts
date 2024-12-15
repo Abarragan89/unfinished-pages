@@ -9,17 +9,18 @@ export async function GET(request: NextRequest, { params }: { params: { keywords
         const blogs = await prisma.blog.findMany({
             where: {
                 isPublished: true, // Filter by published blogs
-                categories: {
-                    some: {
-                        name: params.keywords, // Match the category by ID
-                    },
-                },
+                OR: [
+                    { title: { contains: params.keywords, mode: "insensitive" } },
+                    { description: { contains: params.keywords, mode: "insensitive" } },
+                    { tags: { contains: params.keywords, mode: "insensitive" } },
+                ],
             },
+            orderBy: { likeCount: 'desc' },
+            take: 10,
             select: {
                 id: true,
                 title: true,
                 description: true,
-                // publishedDate: true,
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest, { params }: { params: { keywords
                 }
             }
         });
-        return NextResponse.json({ message: 'success' })
+        return NextResponse.json(blogs)
     } catch (error) {
         console.log('error ', error)
     }
