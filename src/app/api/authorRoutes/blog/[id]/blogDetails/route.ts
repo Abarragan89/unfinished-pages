@@ -35,8 +35,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 name: category.name
             }));
 
-            console.log('disconneted categories ', disconnectCategories)
-
             // Update the blog and categories
             return await prisma.blog.update({
                 where: { id: blogId },

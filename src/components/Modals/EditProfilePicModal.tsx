@@ -5,15 +5,21 @@ import { useState } from 'react'
 import Cropper from 'react-easy-crop';
 import getCroppedImg, { PixelCrop } from "../../../utils/cropImage";
 import Slider from 'rc-slider';
+import PulseLoader from "react-spinners/PulseLoader";
 import 'rc-slider/assets/index.css';
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function EditProfilePicModal({ userImage, userId }: { userImage: string, userId: string }) {
+
+    const router = useRouter();
 
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null)
-    const [currentImage, setCurrentImage] = useState<string>(userImage)
+    const [currentImage, setCurrentImage] = useState<string>(userImage);
+    const [message, setMessage] = useState<string>('');
+    const [isUpLoading, setIsUploading] = useState<boolean>(false);
 
     // @ts-expect-error: ignoring first argument in onCropComplete
     const onCropComplete = (__, croppedAreaPixels: PixelCrop) => {
@@ -27,6 +33,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
     };
 
     const showCroppedImage = async () => {
+        setIsUploading(true)
         try {
             const croppedImage = await getCroppedImg(currentImage, croppedAreaPixels as PixelCrop) as string;
 
@@ -70,55 +77,50 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                 }
             });
 
-            setCurrentImage(pictureURL)
-
+            setCurrentImage(pictureURL);
+            router.back();
         } catch (e) {
             console.error('Error processing cropped image:', e);
+        } finally {
+            setIsUploading(false)
+
         }
     }
 
     const handleSliderChange = (value: number | number[]) => {
         if (typeof value === 'number') {
-            setZoom(value / 30); // Assuming zoom is scaled between 0 and 5
+            setZoom(value / 30);
         }
     };
 
-    // async function handleSubmit(e: FormEvent) {
-    //     e.preventDefault();
-    //     if (!croppedImage) return;
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        setMessage("");
+        if (file) {
+            // 1.  Check file type
+            const validTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+            if (!validTypes.includes(file.type)) {
+                setMessage("Please upload a JPEG, PNG, or WebP image.");
+                event.target.value = ""; // Reset the input
+                return;
+            }
+            // 2. Check image dimensions
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
 
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-    //     formData.append('imageHeight', imageHeight);
-    //     formData.append('imageWidth', imageWidth);
-    //     formData.append('imageAlt', imageAlt)
-    //     formData.append('isCoverImage', 'true')
+                URL.revokeObjectURL(img.src); // Clean up
+                const reader = new FileReader();
+                reader.onload = () => setCurrentImage(reader.result as string); // Set the image preview source
+                reader.readAsDataURL(file); // Read file as Data URL
 
-    //     try {
-    //         // Post to the S3 Bucket
-    //         const { data } = await axios.post(
-    //             `/api/authorRoutes/s3Upload`,
-    //             formData,
-    //             {
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data',
-    //                 },
-    //             }
-    //         );
-
-    //         // Get the pictureURL
-    //         const { pictureURL } = data;
-
-    //         // Save image to Database for Blog
-    //         await axios.put(
-    //             `/api/authorRoutes/blog/${blogId}/blogCoverImage`,
-    //             { coverPhotoUrl: pictureURL, coverPhotoAlt: imageAlt.trim() }
-    //         )
-
-    //     } catch (error) {
-    //         console.error('Error uploading blog cover image:', error);
-    //     }
-    // }
+            };
+            img.onerror = () => {
+                setMessage("Invalid image file.");
+                event.target.value = ""; // Reset the input
+            };
+        }
+    };
 
     return (
         <ModalWrapper
@@ -128,7 +130,6 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
             <div>
                 <div className="relative min-w-[380px] h-[300px]">
                     <Cropper
-                        // image={'https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000'}
                         image={currentImage}
                         crop={crop}
                         cropShape="round"
@@ -166,13 +167,48 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                         />
                     </div>
                 </div>
-
-                <button
-                    onClick={showCroppedImage}
-                    className="custom-small-btn bg-[var(--off-black)] mx-auto block"
-                >
-                    Crop Image
-                </button>
+                {/* Button Div  */}
+                <div className="flex justify-around mt-4">
+                    <label
+                        className={`block w-[90%] w-fit px-4 mx-auto custom-small-btn bg-[var(--off-black)]`}
+                        htmlFor="cover-image-upload"
+                    >
+                        {isUpLoading ?
+                            <PulseLoader
+                                color={'white'}
+                                loading={isUpLoading}
+                                size={7}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                            :
+                            'Upload new photo'
+                        }
+                        <input
+                            id="cover-image-upload"
+                            type="file"
+                            className="hidden"
+                            accept="image/jpeg, image/png, image/webp"
+                            onChange={(e) => handleFileChange(e)}
+                        />
+                    </label>
+                    <button
+                        onClick={showCroppedImage}
+                        className="custom-small-btn bg-[var(--success)] mx-auto block"
+                    >
+                        {isUpLoading ?
+                            <PulseLoader
+                                color={'white'}
+                                loading={isUpLoading}
+                                size={7}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                            :
+                            'Set Profile Picture'
+                        }
+                    </button>
+                </div>
             </div>
 
         </ModalWrapper>

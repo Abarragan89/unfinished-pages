@@ -76,6 +76,7 @@ export async function middleware(request: NextRequest) {
         object-src 'none';
         base-uri 'self';
         form-action 'self';
+        connect-src 'self' blob:;
         frame-ancestors 'none';
         upgrade-insecure-requests;
     `;

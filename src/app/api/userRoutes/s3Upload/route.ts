@@ -115,7 +115,6 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
     try {
         const { imageUrl } = await request.json();
-        console.log(' in the s3 dleete route ', imageUrl)
         if (!imageUrl) {
             return NextResponse.json({ error: 'S3 object key is required' }, { status: 400 });
         }

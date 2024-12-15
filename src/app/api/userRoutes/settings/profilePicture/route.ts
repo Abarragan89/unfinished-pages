@@ -9,21 +9,14 @@ export async function PUT(request: NextRequest) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 401 });
         }
 
-        const userData = await prisma.user.findUnique({ where: { id: userId } })
-
-        console.log('user data ', userData)
-
-        
+        await prisma.user.findUnique({ where: { id: userId } })
         const {pictureURL} = await request.json();
-        console.log('imjage url ', pictureURL)
         
         // set new photo in prisma
         await prisma.user.update({
             where: { id: userId },
             data: { image: pictureURL }
         })
-
-
 
         return NextResponse.json({ message: 'success' })
     } catch (error) {

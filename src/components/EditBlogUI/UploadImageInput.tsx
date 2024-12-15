@@ -78,7 +78,6 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         }
     };
 
-    console.log('file ', file)
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         if (!file) return;
