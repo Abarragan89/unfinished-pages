@@ -56,7 +56,7 @@ export default function TopicsSubMenu() {
                 </li>
                 <li className={`${liStyles}`}>
                     <IoIosHammer size={18} className="mr-2" />
-                    <Link href='/category/DIY'>DIY</Link>
+                    <Link href='/category/diy'>DIY</Link>
                 </li>
                 <li className={`${liStyles}`}>
                     <TbSquareLetterO size={18} className="mr-2" />
