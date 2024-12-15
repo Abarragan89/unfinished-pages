@@ -63,6 +63,7 @@ export async function middleware(request: NextRequest) {
         base-uri 'self';
         form-action 'self';
         frame-ancestors 'none';
+        connect-src 'self' blob:;
         upgrade-insecure-requests;
     `;
     } else if (process.env.NODE_ENV === 'development') {
