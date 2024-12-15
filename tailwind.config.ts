@@ -38,6 +38,6 @@ const config: Config = {
   },
   plugins: [],
   // darkMode: ['class', 'media'],
-  darkMode: 'class'
+  darkMode: 'selector'
 };
 export default config;

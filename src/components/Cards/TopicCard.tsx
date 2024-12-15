@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { BlogTopic } from "../../../types/blogtopics";
 
-export default function TopicCard({ title, description, imgSrc }: BlogTopic) {
+export default function TopicCard({ title, description, imgSrc, link }: BlogTopic) {
     return (
-        <Link href={`/category/${title.toLowerCase().replace(' ', '-')}`} className="relative flex-col items-center justify-center w-[300px] mx-3 mb-[50px] bg-[var(--off-white)] rounded-sm border border-[var(--gray-300)] custom-card-shadows">
+        <Link href={link} className="relative flex-col items-center justify-center w-[300px] mx-3 mb-[50px] bg-[var(--off-white)] rounded-sm border border-[var(--gray-300)] custom-card-shadows">
             <Image
                 src={imgSrc}
                 width={1920}

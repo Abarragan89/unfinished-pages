@@ -1,18 +1,16 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image"
-import { useSession } from "next-auth/react";
-import { Session, UserData } from "../../types/users";
+import { UserData } from "../../types/users";
 import AvatarMenu from "./Menus/AvatarMenu";
 import SearchInput from "./FormInputs/SearchInput";
 import { FaSortDown } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa";
 import TopicsSubMenu from "./Menus/TopicsSubMenu";
-
+import axios from "axios";
 
 export default function Navigation({ userData }: { userData: UserData | null }) {
 
-    const session: Session = useSession();
     const [showAvatarMenu, setShowAvatarMenu] = useState<boolean>(false);
     const [showTopicsSubMenu, setShowTopicsSubMenu] = useState<boolean>(false);
 
@@ -46,6 +44,14 @@ export default function Navigation({ userData }: { userData: UserData | null }) 
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    async function searchForBlogHandler() {
+        try {
+            const blogs = await axios.get('')
+        } catch (error) {
+            console.log('error trying to find blogs')
+        }
+    }
 
     return (
         <nav className="relative z-50">

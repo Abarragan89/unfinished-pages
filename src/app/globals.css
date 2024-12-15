@@ -7,7 +7,7 @@
   --brown-500: #4e2b10;
   --brown-300: #85491b;
   --brown-100: #ce7c3d;
-  --gray-700: rgb(122, 118, 118);
+  --gray-700: rgb(157, 152, 152);
   --gray-600: rgb(142, 137, 137);
   --gray-500: rgb(178, 173, 173);
   --gray-300: rgb(229, 222, 222);
@@ -25,13 +25,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --brown-100: #4e2b10;
-    --brown-300: #755f4c;
+    --brown-100: #65330d;
+    --brown-300: #9e8977;
     --brown-500: #ce7c3d;
     --brown-600: #513820;
-    --gray-700: rgb(85, 74, 74);
+    --gray-700: rgb(118, 117, 117);
     --gray-600: rgb(104, 102, 102);
-    --gray-500: rgb(98, 94, 94);
+    --gray-500: rgb(123, 120, 120);
     --gray-300: rgb(108, 106, 106);
     --gray-100: rgb(48, 46, 46);
     --paper-color: rgb(47, 43, 31);
@@ -45,28 +45,6 @@
     --success: rgb(225, 154, 60);
     --success-transparent: rgba(10, 74, 10, 0.5);
   }
-}
-
-.dark {
-  --brown-100: #4e2b10;
-  --brown-300: #755f4c;
-  --brown-500: #ce7c3d;
-  --brown-600: #513820;
-  --gray-700: rgb(85, 74, 74);
-  --gray-600: rgb(104, 102, 102);
-  --gray-500: rgb(98, 94, 94);
-  --gray-300: rgb(108, 106, 106);
-  --gray-100: rgb(48, 46, 46);
-  --paper-color: rgb(47, 43, 31);
-  --paper-color: rgb(15, 15, 15);
-  --off-white: rgb(36, 36, 36);
-  --off-black: rgb(242, 232, 222);
-  --black: rgb(25, 25, 25);
-  --white: rgb(250, 250, 250);
-  --danger: rgb(195, 21, 21);
-  --danger-transparent: rgba(123, 17, 17, 0.5);
-  --success: rgb(225, 154, 60);
-  --success-transparent: rgba(10, 74, 10, 0.5);
 }
 
 @layer utilities {

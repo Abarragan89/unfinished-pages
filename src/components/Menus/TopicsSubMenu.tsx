@@ -15,7 +15,7 @@ import { TbSquareLetterO } from "react-icons/tb";
 
 export default function TopicsSubMenu() {
 
-    const liStyles = 'text-[var(--off-black)] flex hover:cursor-pointer hover:text-[var(--brown-100)] mb-4 text-left'
+    const liStyles = 'text-[var(--off-black)] flex hover:cursor-pointer hover:text-[var(--brown-300)] mb-4 text-left'
 
     return (
         <div

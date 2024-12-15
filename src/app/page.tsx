@@ -10,52 +10,79 @@ import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
-import { prisma } from "../../utils/prisma";
 
 export default async function Home() {
 
   const blogTopics: BlogTopic[] = [
     {
-      title: "Philosophy",
-      description: "Exploring philosophys big questions, I find myself both the debater and the skeptic, endlessly intrigued.",
-      imgSrc: "/images/topicCardImgs/philosophy.jpg",
-      alt: "",
-      link: ""
+      title: "Politics | Philosophy",
+      description: "Delve into the realms of politics and philosophy, exploring ideas that shape societies and human thought.",
+      imgSrc: "/images/categories/politics-philosophy.png",
+      alt: "Politics and Philosophy",
+      link: "/category/politics-philosophy"
     },
     {
-      title: "Religion",
-      description: "I wrestle with religious ideas, questioning beliefs and unraveling perspectives that shape human meaning.",
-      imgSrc: "/images/topicCardImgs/religion.jpg",
-      alt: "",
-      link: ""
+      title: "Education | Career",
+      description: "Explore the intersection of education and career, uncovering paths to learning and professional growth.",
+      imgSrc: "/images/categories/education-career.png",
+      alt: "Education and Career",
+      link: "/category/education-career"
     },
     {
-      title: "Family",
-      description: "Family life sparks inner debates on tradition, values, and what it truly means to connect and belong.",
-      imgSrc: "/images/topicCardImgs/family.jpg",
-      alt: "",
-      link: ""
+      title: "Business | Technology",
+      description: "Dive into the world of business and technology, discovering innovations and strategies shaping the future.",
+      imgSrc: "/images/categories/business-technology.png",
+      alt: "Business and Technology",
+      link: "/category/business-technology"
     },
     {
-      title: "Education",
-      description: "I challenge myself on education\’s role, questioning how best we learn, grow, and pass on knowledge.",
-      imgSrc: "/images/topicCardImgs/education.jpg",
-      alt: "",
-      link: ""
+      title: "Health | Fitness",
+      description: "Navigate the journey of health and fitness, learning tips and strategies for a balanced lifestyle.",
+      imgSrc: "/images/categories/health-fitness.png",
+      alt: "Health and Fitness",
+      link: "/category/health-fitness"
     },
     {
-      title: "Technology",
-      description: "I argue the pros and cons of technology, reflecting on how it shapes us and transforms our daily lives.",
-      imgSrc: "/images/topicCardImgs/technology.jpg",
-      alt: "",
-      link: ""
+      title: "Short Stories",
+      description: "Immerse yourself in captivating short stories that inspire, entertain, and provoke thought.",
+      imgSrc: "/images/categories/short-stories.png",
+      alt: "Short Stories",
+      link: "/category/short-stories"
     },
     {
-      title: "Government",
-      description: "I find myself questioning the role of government, debating its impact on freedom, justice, and societal well-being.",
-      imgSrc: "/images/topicCardImgs/government.jpg",
-      alt: "",
-      link: ""
+      title: "Family | Relationships",
+      description: "Explore the dynamics of family and relationships, uncovering the essence of human connection.",
+      imgSrc: "/images/categories/family-relationships.png",
+      alt: "Family and Relationships",
+      link: "/category/family-relationships"
+    },
+    {
+      title: "Travel | Food",
+      description: "Embark on a journey of travel and food, savoring experiences from around the globe.",
+      imgSrc: "/images/categories/travel-food.png",
+      alt: "Travel and Food",
+      link: "/category/travel-food"
+    },
+    {
+      title: "DIY",
+      description: "Get inspired with DIY projects, unlocking creativity and hands-on skills.",
+      imgSrc: "/images/categories/diy.png",
+      alt: "DIY",
+      link: "/category/diy"
+    },
+    {
+      title: "Entertainment | Sports",
+      description: "Stay updated with the latest in entertainment and sports, celebrating moments of joy and competition.",
+      imgSrc: "/images/categories/entertainment-sports.png",
+      alt: "Entertainment and Sports",
+      link: "/category/entertainment-sports"
+    },
+    {
+      title: "Other",
+      description: "Discover topics that don't fit into conventional categories but are equally intriguing.",
+      imgSrc: "/images/categories/other.png",
+      alt: "Other Topics",
+      link: "/category/other"
     }
   ];
 

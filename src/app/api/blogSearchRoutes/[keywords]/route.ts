@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { prisma } from '../../../../../../utils/prisma';
+import { prisma } from '../../../../../utils/prisma';
 
 // Get a Blog by category name 
-export async function GET(request: NextRequest, { params }: { params: { categoryName: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { keywords: string } }) {
     try {
 
         // Then update it. 
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: { params: { category
                 isPublished: true, // Filter by published blogs
                 categories: {
                     some: {
-                        name: params.categoryName, // Match the category by ID
+                        name: params.keywords, // Match the category by ID
                     },
                 },
             },

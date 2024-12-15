@@ -56,7 +56,7 @@ export default function CommentReplySection({
                     width={40}
                     height={40}
                     alt="profile pic of blog author"
-                    className="rounded-[50px] w-[40px]"
+                    className="rounded-[50px] w-[40px] border border-[var(--gray-300)]"
                 />
                 <div className="flex justify-between items-center w-full ml-3">
                     <div>
@@ -69,7 +69,7 @@ export default function CommentReplySection({
                             <FaHeart
                                 onClick={session.status === 'authenticated' ? () => toggleCommentLike('remove', replyCommentData.id) : handleShowLoginModal}
                                 size={20}
-                                className="hover:cursor-pointer text-[var(--brown-100)]" />
+                                className="hover:cursor-pointer text-[var(--success)]" />
                             :
                             <FaRegHeart
                                 onClick={session.status === 'authenticated' ? () => toggleCommentLike('add', replyCommentData.id) : handleShowLoginModal}
@@ -80,7 +80,7 @@ export default function CommentReplySection({
                     </div>
                 </div>
             </div>
-            <p className="text-[1rem] px-[50px] mt-2">{replyCommentData.text}</p>
+            <p className="text-[1rem] px-[50px] mt-2 whitespace-pre">{replyCommentData.text}</p>
         </div>
     )
 }

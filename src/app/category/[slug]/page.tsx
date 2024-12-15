@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     const blogsData = await getBlogsByCategory(params.slug) as BlogData[]
 
 
-    const acceptableSlugs = ['other', 'short-stories', 'DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'technology', 'travel-food', 'business-technology']
+    const acceptableSlugs = ['other', 'short-stories', 'diy', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'travel-food', 'business-technology']
 
     if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
 

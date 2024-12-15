@@ -27,7 +27,7 @@ export default function BlogMetaDetails({
                     width={40}
                     height={40}
                     alt="profile pic of blog author"
-                    className="rounded-[50px] w-[40px]"
+                    className="rounded-[50px] w-[40px] border border-[var(--gray-300)]"
                     priority
                 />
                 <div className="ml-4">

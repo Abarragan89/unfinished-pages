@@ -18,8 +18,29 @@ export default function UserSettingSwitches({ isNotificationsOn }: { isNotificat
         }
     }
 
+
+    const toggleDarkMode = () => {
+        const root = document.documentElement;
+        if (root.classList.contains('dark')) {
+            root.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        } else {
+            root.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    };
+
+    // // Apply the saved theme on page load
+    // const savedTheme = localStorage.getItem('theme');
+    // if (savedTheme) {
+    //     document.documentElement.classList.add(savedTheme);
+    // } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    //     document.documentElement.classList.add('dark');
+    // }
+
     return (
         <section className='bg-[var(--paper-color)] p-[20px] relative mx-auto rounded-md custom-low-lifted-shadow mt-[30px] w-full'>
+            <p onClick={toggleDarkMode}>dark mode</p>
             <div className="flex justify-between items-center">
                 <p>Email Notifications</p>
                 <label>

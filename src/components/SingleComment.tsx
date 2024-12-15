@@ -101,7 +101,7 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
                     width={40}
                     height={40}
                     alt="profile pic of comment author"
-                    className="rounded-[50px] w-[40px]"
+                    className="rounded-[50px] w-[40px] border border-[var(--gray-300)]"
                 />
                 <div className="flex justify-between items-center w-full ml-3">
                     <div>
@@ -113,7 +113,7 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
                             <FaHeart
                                 onClick={session.status === 'authenticated' ? () => toggleCommentLike('remove', commentData.id) : handleShowLoginModal}
                                 size={20}
-                                className="hover:cursor-pointer text-[var(--brown-100)]" />
+                                className="hover:cursor-pointer text-[var(--success)]" />
                             :
                             <FaRegHeart
                                 onClick={session.status === 'authenticated' ? () => toggleCommentLike('add', commentData.id) : handleShowLoginModal}
@@ -124,7 +124,7 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
                     </div>
                 </div>
             </div>
-            <p className="text-[1rem] px-[50px] mt-0">{commentData.text}</p>
+            <p className="text-[1rem] px-[50px] mt-0 whitespace-pre">{commentData.text}</p>
 
             {/* Conditionally render reply form */}
             {showReplyTextarea &&
