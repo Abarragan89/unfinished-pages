@@ -20,7 +20,8 @@ interface Props {
 export default function SideMenu({ onClickHandler }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
-    const [userImages, setUserImages] = useState<UserImage[] | null>(null)
+    const [userImages, setUserImages] = useState<UserImage[] | null>(null);
+    const [searchedUserImages, setSearchedUserImages] = useState<UserImage[] | null>(null)
     const [message, setMessage] = useState<string>("");
     const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([])
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -107,6 +108,12 @@ export default function SideMenu({ onClickHandler }: Props) {
         }
     }
 
+    async function searchUserImages(input: string) {
+        setSearchedUserImages(userImages?.filter(image => 
+            image.alt.toLowerCase().includes(input.toLowerCase())
+        ) as UserImage[]);
+    }
+
     async function deleteUserImage(imageUrl: string, imageId: string) {
         try {
             const { data } = await axios.delete('/api/authorRoutes/blogImages', {
@@ -155,7 +162,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                 &&
                 <menu
                     ref={sideMenuRef}
-                    className="fixed z-[99] top-0 bottom-0 left-0 border border-r-gray-300 bg-[var(--off-white)] w-[350px] animate-slideInFromLeft custom-low-lifted-shadow">
+                    className="fixed z-[99] top-0 bottom-0 left-0 border-r border-r-gray-500 bg-[var(--off-white)] w-[350px] animate-slideInFromLeft custom-low-lifted-shadow">
                     <MdOutlineArrowBack
                         onClick={router.back}
                         size={25}
@@ -207,6 +214,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                     <SearchInput
                                         placeholder="Search By Description"
                                         inputWidth="full"
+                                        onChangeHandler={searchUserImages}
                                     />
                                     {/*  conditional error message */}
                                     {message &&
@@ -240,7 +248,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                         <h4 className="text-center text-[1.15rem] tracking-wider border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">Photo Collection</h4>
                     }
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
-                        {userImages && userImages?.map((image: UserImage) => (
+                        {userImages && searchUserImages.length === 0 ? userImages?.map((image: UserImage) => (
                             <div className="relative w-[80%] mx-auto" key={image.id}>
                                 {
                                     showDeleteMenu === image.id &&
@@ -271,7 +279,41 @@ export default function SideMenu({ onClickHandler }: Props) {
                                 </figure>
 
                             </div>
-                        ))}
+                        ))
+                        :
+                        searchedUserImages?.map((image: UserImage) => (
+                            <div className="relative w-[80%] mx-auto" key={image.id}>
+                                {
+                                    showDeleteMenu === image.id &&
+                                    <DeletePhotoSubMenu
+                                        closeMenuState={setShowDeleteMenu}
+                                        photoId={image.id}
+                                        photoUrl={image.url}
+                                        onClickHandler={deleteUserImage}
+                                    />
+                                }
+                                <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
+
+                                    <BsThreeDots
+                                        size={25}
+                                        className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
+                                        onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
+                                    />
+                                    <NextImage
+                                        onClick={() => {
+                                            onClickHandler(image);
+                                            router.back();
+                                        }}
+                                        src={image.url}
+                                        width={image.width}
+                                        height={image.height}
+                                        alt={image.alt}
+                                    />
+                                </figure>
+
+                            </div>
+                        ))
+                        }
                     </section>
 
                 </menu>
