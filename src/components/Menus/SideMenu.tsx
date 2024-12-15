@@ -21,9 +21,10 @@ export default function SideMenu({ onClickHandler }: Props) {
 
     const [isUpLoading, setIsUploading] = useState<boolean>(false);
     const [userImages, setUserImages] = useState<UserImage[] | null>(null);
-    const [searchedUserImages, setSearchedUserImages] = useState<UserImage[]>([])
+    const [searchedUserImages, setSearchedUserImages] = useState<UserImage[]>([]);
+    const [isSearching, setIsSearching] = useState<boolean>(false)
     const [message, setMessage] = useState<string>("");
-    const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([])
+    const [blogTitlesUsingImage, setBlogTitlesUsingImage] = useState<[]>([]);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageWidth, setImageWidth] = useState<string>('')
     const [showDeleteMenu, setShowDeleteMenu] = useState<string>('')
@@ -109,10 +110,13 @@ export default function SideMenu({ onClickHandler }: Props) {
     }
 
     async function searchUserImages(input: string) {
-        setSearchedUserImages(userImages?.filter(image => 
+        setIsSearching(input ? true : false)
+        setSearchedUserImages(userImages?.filter(image =>
             image.alt.toLowerCase().includes(input.toLowerCase())
         ) as UserImage[]);
     }
+
+    console.log(searchUserImages)
 
     async function deleteUserImage(imageUrl: string, imageId: string) {
         try {
@@ -142,7 +146,6 @@ export default function SideMenu({ onClickHandler }: Props) {
         } catch (error) {
             console.log('error deleting user Image ', error)
         }
-
     }
 
     useEffect(() => {
@@ -151,6 +154,40 @@ export default function SideMenu({ onClickHandler }: Props) {
             getUserImages()
         }
     }, [sideMenu])
+
+    function renderUserImage(image: UserImage) {
+        return (
+            <div className="relative w-[80%] mx-auto" key={image.id}>
+                {
+                    showDeleteMenu === image.id &&
+                    <DeletePhotoSubMenu
+                        closeMenuState={setShowDeleteMenu}
+                        photoId={image.id}
+                        photoUrl={image.url}
+                        onClickHandler={deleteUserImage}
+                    />
+                }
+                <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
+
+                    <BsThreeDots
+                        size={25}
+                        className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
+                        onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
+                    />
+                    <NextImage
+                        onClick={() => {
+                            onClickHandler(image);
+                            router.back();
+                        }}
+                        src={image.url}
+                        width={image.width}
+                        height={image.height}
+                        alt={image.alt}
+                    />
+                </figure>
+            </div>
+        )
+    }
 
     return (
         <>
@@ -249,71 +286,13 @@ export default function SideMenu({ onClickHandler }: Props) {
                         <h4 className="text-center text-[1.15rem] tracking-wider border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">Photo Collection</h4>
                     }
                     <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
-                        {userImages && searchedUserImages.length === 0 ? userImages?.map((image: UserImage) => (
-                            <div className="relative w-[80%] mx-auto" key={image.id}>
-                                {
-                                    showDeleteMenu === image.id &&
-                                    <DeletePhotoSubMenu
-                                        closeMenuState={setShowDeleteMenu}
-                                        photoId={image.id}
-                                        photoUrl={image.url}
-                                        onClickHandler={deleteUserImage}
-                                    />
-                                }
-                                <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
-
-                                    <BsThreeDots
-                                        size={25}
-                                        className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
-                                        onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
-                                    />
-                                    <NextImage
-                                        onClick={() => {
-                                            onClickHandler(image);
-                                            router.back();
-                                        }}
-                                        src={image.url}
-                                        width={image.width}
-                                        height={image.height}
-                                        alt={image.alt}
-                                    />
-                                </figure>
-
-                            </div>
+                        {userImages && !isSearching ? userImages?.map((image: UserImage) => (
+                            renderUserImage(image)
                         ))
-                        :
-                        searchedUserImages?.map((image: UserImage) => (
-                            <div className="relative w-[80%] mx-auto" key={image.id}>
-                                {
-                                    showDeleteMenu === image.id &&
-                                    <DeletePhotoSubMenu
-                                        closeMenuState={setShowDeleteMenu}
-                                        photoId={image.id}
-                                        photoUrl={image.url}
-                                        onClickHandler={deleteUserImage}
-                                    />
-                                }
-                                <figure className="relative border-x-[15px] border-y-[20px] bg-[var(--gray-300)] rounded-lg my-3 hover:cursor-pointer hover:border-[var(--paper-color)] overflow-hidden">
-
-                                    <BsThreeDots
-                                        size={25}
-                                        className="absolute top-[5px] right-[7px] w-[30px] opacity-80 bg-[var(--off-black)] text-[var(--off-white)] hover:cursor-pointer rounded-lg transition-transform hover:scale-125 active:scale-100"
-                                        onClick={() => showDeleteMenu === image.id ? setShowDeleteMenu('') : setShowDeleteMenu(image.id)}
-                                    />
-                                    <NextImage
-                                        onClick={() => {
-                                            onClickHandler(image);
-                                            router.back();
-                                        }}
-                                        src={image.url}
-                                        width={image.width}
-                                        height={image.height}
-                                        alt={image.alt}
-                                    />
-                                </figure>
-
-                            </div>
-                        ))
+                            :
+                            searchedUserImages?.map((image: UserImage) => (
+                                renderUserImage(image)
+                            ))
                         }
                     </section>
 

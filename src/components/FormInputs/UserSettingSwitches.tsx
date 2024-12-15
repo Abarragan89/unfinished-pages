@@ -40,7 +40,10 @@ export default function UserSettingSwitches({ isNotificationsOn }: { isNotificat
 
     return (
         <section className='bg-[var(--paper-color)] p-[20px] relative mx-auto rounded-md custom-low-lifted-shadow mt-[30px] w-full'>
-            <p onClick={toggleDarkMode}>dark mode</p>
+            <div className="flex justify-between items-center mb-5">
+                <p>Dark Mode</p>
+                <p className="text-[var(--gray-500)] italic">using system settings</p>
+            </div>
             <div className="flex justify-between items-center">
                 <p>Email Notifications</p>
                 <label>
