@@ -104,7 +104,7 @@ export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished 
                         <Link
                             scroll={false}
                             href={'?showModal=unpublishBlog'}
-                            className="custom-small-btn ml-5 bg-[var(--success)]"
+                            className="custom-small-btn ml-5 bg-[var(--success)] dark:text-white"
                         >Unpublish
                         </Link>
                         :

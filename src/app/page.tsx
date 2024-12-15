@@ -87,20 +87,22 @@ export default async function Home() {
           </Carousel>
         </CardSection>
       </div>
-      <CardSection heading="Blog Topics">
-        <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
-          {blogTopics.map((topic, index) => (
-            <TopicCard
-              key={index}
-              title={topic.title}
-              description={topic.description}
-              imgSrc={topic.imgSrc}
-              alt={topic.alt}
-              link={topic.link}
-            />
-          ))}
-        </div>
-      </CardSection>
+      <div className="mb-[50px]">
+        <CardSection heading="Blog Topics">
+          <div className="flex flex-wrap justify-around mx-auto mt-[20px] max-w-[1200px]">
+            {blogTopics.map((topic, index) => (
+              <TopicCard
+                key={index}
+                title={topic.title}
+                description={topic.description}
+                imgSrc={topic.imgSrc}
+                alt={topic.alt}
+                link={topic.link}
+              />
+            ))}
+          </div>
+        </CardSection>
+      </div>
     </main>
   );
 }

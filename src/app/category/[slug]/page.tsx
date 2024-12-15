@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
 
     return (
-        <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] rounded-md">
+        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] rounded-md">
             <ScrollToTop />
             <header className="relative">
                 <Image
@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
             {/* This is the related posts in the same category */}
             <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
-                {blogsData.map((blog) => (
+                {blogsData.length > 0 ? blogsData.map((blog) => (
                     <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide mb-[30px]">
                         <BlogCard
                             title={blog.title}
@@ -52,7 +52,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                             totalCommentCount={blog?._count?.comments ?? 0}
                         />
                     </Link>
-                ))}
+                ))
+                    :
+                    <p className="text-center text-[1rem]">This category has no blogs.</p>
+                    
+                }
             </div>
         </main>
     )

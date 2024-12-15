@@ -19,7 +19,7 @@ export default function Navigation({ userData }: { userData: UserData | null }) 
     const topicsMenuRef = useRef<HTMLLIElement | null>(null);
     const avatarMenuRef = useRef<HTMLLIElement | null>(null);
 
-    const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--gray-300)] border-transparent hover:cursor-pointer"
+    const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--white)] border-transparent hover:cursor-pointer"
 
     function closeMenu() {
         setShowAvatarMenu(prev => !prev)

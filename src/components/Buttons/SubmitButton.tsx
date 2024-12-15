@@ -21,13 +21,12 @@ export default function SubmitButton({ isLoading, isSubmittable, children, value
         >
             {isLoading ?
                 <BarLoader
-                    color={'white'}
                     width={30}
                     height={2}
                     loading={isLoading}
                     aria-label="Loading Spinner"
                     data-testid="loader"
-                    className="mb-1"
+                    className="text-[var(--off-white)] mb-1"
                 />
                 :
                 children

@@ -62,12 +62,12 @@ export default function CreateBlog() {
                 >
                     {isCreating ?
                         <BarLoader
-                            color={'white'}
                             width={30}
                             height={2}
                             loading={isCreating}
                             aria-label="Loading Spinner"
                             data-testid="loader"
+                            className="text-[var(--off-white)]"
                         />
                         :
                         'Create'

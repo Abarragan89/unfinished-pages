@@ -24,7 +24,7 @@ export default function BlogCard({
     isPublished = null
 }: Props) {
     return (
-        <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] pb-2 rounded-sm bg-white relative">
+        <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] border border-[var(--gray-300)] pb-2 rounded-sm bg-[var(--off-white)] relative">
             {/* Your slide content here */}
             {/* show banner for authors to show published status */}
             {/* need parentheses because both sides fo the && still get evaluated adn terniary is rendered */}

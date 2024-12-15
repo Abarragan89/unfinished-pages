@@ -131,7 +131,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
         } catch (error) {
             console.log('error deleting user Image ', error)
         }
@@ -145,7 +145,6 @@ export default function SideMenu({ onClickHandler }: Props) {
         }
     }, [sideMenu])
 
-    console.log('user image ', userImages)
     return (
         <>
             <CannotDeleteModal
@@ -192,12 +191,11 @@ export default function SideMenu({ onClickHandler }: Props) {
                                     <button className={`custom-small-btn bg-[var(--off-black)] mx-auto mt-3 ${imageAlt ? 'opacity-100' : 'opacity-50 pointer-events-none'} ${isUpLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                                         {isUpLoading ?
                                             <PulseLoader
-                                                color={'white'}
                                                 loading={isUpLoading}
                                                 size={7}
                                                 aria-label="Loading Spinner"
                                                 data-testid="loader"
-
+                                                className="text-[var(--off-white)]"
                                             />
                                             :
                                             'Upload'

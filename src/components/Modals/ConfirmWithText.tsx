@@ -42,12 +42,11 @@ export default function ConfirmWithText({ onConfirmHandler, confirmText, urlPara
                 >
                     {isLoading ?
                         <PulseLoader
-                            color={'white'}
                             loading={isLoading}
                             size={7}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-
+                            className="text-[var(--off-white)]"
                         />
                         :
                         btnText

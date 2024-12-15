@@ -7,7 +7,6 @@ import { NextAuthProvider } from "@/components/NextAuthProvider";
 import { Suspense } from "react";
 import { headers } from 'next/headers';
 
-
 export const metadata: Metadata = {
   title: "Unfinished Pages",
   description: "Blog",

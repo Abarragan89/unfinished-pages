@@ -58,7 +58,7 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
             await axios.post('/api/userRoutes/notifications/replyToComment', {
                 blogId,
                 replierId: session.data?.user?.id,
-                commentOwnerId: commentData.user.id,
+                commentOwnerId: commentData?.user?.id,
                 replierName: session.data?.user?.name,
                 blogSlug: pathname.split('/')[2],
                 commentText: replyText.trim(),
@@ -146,12 +146,12 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
                     >
                         {isLoading ?
                             <BarLoader
-                                color={'black'}
                                 width={15}
                                 height={2}
                                 loading={isLoading}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="text-[var(--off-black)]"
                             />
                             :
                             <IoSendSharp

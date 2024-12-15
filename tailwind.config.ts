@@ -8,10 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+      // colors: {
+      //   background: "var(--background)",
+      //   foreground: "var(--foreground)",
+      // },
       keyframes: {
         dropDown: {
           '0%': { transform: 'translateY(-1000px)' },
@@ -37,5 +37,7 @@ const config: Config = {
     },
   },
   plugins: [],
+  // darkMode: ['class', 'media'],
+  darkMode: 'class'
 };
 export default config;

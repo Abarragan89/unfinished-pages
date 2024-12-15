@@ -67,7 +67,7 @@ export default function AvatarLoggedIn({ onClose, sessionData }: { onClose: () =
                         {!isAuthor &&
                             <li className={listElStyles}>
                                 <LuNewspaper size={20} />
-                                <Link href='?showModal=becomeAnAuthor' className="ml-3">Author Request</Link>
+                                <Link href='?showModal=becomeAnAuthor' className="ml-3">Become an Author</Link>
                             </li>
                         }
 

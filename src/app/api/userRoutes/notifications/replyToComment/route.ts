@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
                     name: true,
                     email: true,
                     id: true,
+                    isNotificationsOn: true,
                 },
             }),
             // Find Author (only send notification if they weren't the ones that sent it)
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
                     name: true,
                     email: true,
                     id: true,
+                    isNotificationsOn: true,
                 },
             }),
             // Find CommentOwner
@@ -55,9 +57,11 @@ export async function POST(request: NextRequest) {
                     name: true,
                     email: true,
                     id: true,
+                    isNotificationsOn: true,
                 },
             }),
         ]);
+
 
         if (author.length > 0) {
             // @ts-expect-error: Adding custom property to author object
@@ -87,6 +91,7 @@ export async function POST(request: NextRequest) {
                             userId: user.id as string,
                             blogId,
                             url: blogSlug,
+                            commentText,
                             message: `New Comments! ${blogTitle}`,
                         },
                     });
@@ -96,11 +101,14 @@ export async function POST(request: NextRequest) {
             }
         });
 
+        // filter out users that have notifications set to off
+        const usersWithNotificationsOn: UserData[] = usersToNotify.filter(user => user.isNotificationsOn === true)
+
         // Send emails outside the transaction
-        if (usersToNotify.length > 0) {
+        if (usersWithNotificationsOn.length > 0) {
             const blogLink = `${process.env.DOMAIN}/blog/${blogSlug}`;
             sendReplyCommentEmail(
-                usersToNotify,
+                usersWithNotificationsOn,
                 blogLink,
                 commentText,
                 replierName,

@@ -79,12 +79,12 @@ export default function CommentSection({ blogId, blogComments, blogTitle }: { bl
                     >
                         {isLoading ?
                             <BarLoader
-                                color={'black'}
                                 width={15}
                                 height={2}
                                 loading={isLoading}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="text-[var(--off-black)]"
                             />
                             :
                             <IoSendSharp

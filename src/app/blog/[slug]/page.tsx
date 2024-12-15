@@ -120,7 +120,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
     return (
-        <main className="text-[var(--brown-600)] text-[19px] min-h-[100vh] mx-[5%] my-[3%] rounded-md">
+        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] mx-[5%] my-[3%] rounded-md">
             <ScrollToTop />
             <BlogMetaDetails
                 title={blogData.title}

@@ -15,11 +15,11 @@ import { TbSquareLetterO } from "react-icons/tb";
 
 export default function TopicsSubMenu() {
 
-    const liStyles = 'text-black flex hover:cursor-pointer hover:text-[var(--brown-100)] mb-4 text-left'
+    const liStyles = 'text-[var(--off-black)] flex hover:cursor-pointer hover:text-[var(--brown-100)] mb-4 text-left'
 
     return (
         <div
-            className="absolute animate-growIn top-[42px] left-[-5px] p-[20px_20px_5px_20px] w-[220px] rounded-b-md border-l custom-avatar-menu-shadow bg-[var(--off-white)]"
+            className="absolute animate-growIn top-[41px] left-[-5px] p-[20px_20px_5px_20px] w-[220px] rounded-b-md border border-[var(--gray-500)] border-t-0 custom-avatar-menu-shadow bg-[var(--off-white)]"
         >
             <ul>
                 <li className={`${liStyles}`}>

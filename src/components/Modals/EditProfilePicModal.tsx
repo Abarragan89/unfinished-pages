@@ -175,11 +175,11 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     >
                         {isUpLoading ?
                             <PulseLoader
-                                color={'white'}
                                 loading={isUpLoading}
                                 size={7}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="text-[var(--off-white)]"
                             />
                             :
                             'Upload new photo'
@@ -198,11 +198,11 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     >
                         {isUpLoading ?
                             <PulseLoader
-                                color={'white'}
                                 loading={isUpLoading}
                                 size={7}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="text-[var(--off-white)]"
                             />
                             :
                             'Set Profile Picture'

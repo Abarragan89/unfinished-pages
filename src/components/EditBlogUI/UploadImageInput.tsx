@@ -175,11 +175,11 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 >
                     {isUpLoading ?
                         <PulseLoader
-                            color={'white'}
                             loading={isUpLoading}
                             size={7}
                             aria-label="Loading Spinner"
                             data-testid="loader"
+                            className="text-[var(--off-white)]"
                         />
                         :
                         imagePreview ?
@@ -204,7 +204,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 <>
                     <div className="flex flex-col max-w-[270px] w-[90%] mx-auto mt-2">
 
-                        <InputLabelEl 
+                        <InputLabelEl
                             userText={imageAlt}
                             handleStateChange={setImageAlt}
                             labelText="Photo Description"
@@ -217,11 +217,11 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                     >
                         {isUpLoading ?
                             <PulseLoader
-                                color={'white'}
                                 loading={isUpLoading}
                                 size={7}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="text-[var(--off-white)]"
                             />
                             :
                             'Confirm Upload'
