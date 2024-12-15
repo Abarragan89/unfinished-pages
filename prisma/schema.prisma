@@ -22,7 +22,7 @@ model User {
   isNotificationsOn Boolean     @default(true)
   lastNotificationEmailSent     DateTime   @default(now())
   isAuthor      Boolean         @default(false)
-  isAdmin       Boolean         @default(true)
+  isAdmin       Boolean         @default(false)
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
