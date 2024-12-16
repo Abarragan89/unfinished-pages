@@ -283,7 +283,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                         :
                         <h4 className="text-center text-[1.15rem] tracking-wider border-t w-[80%] mx-auto pt-2 mt-4 text-[var(--brown-500)]">Photo Collection</h4>
                     }
-                    <section className="overflow-y-scroll pb-[200px] flex flex-wrap py-5mx-auto">
+                    <section className="overflow-y-scroll pb-[200px] h-[90vh] flex flex-wrap py-5mx-auto">
                         {userImages && !isSearching ? userImages?.map((image: UserImage) => (
                             renderUserImage(image)
                         ))

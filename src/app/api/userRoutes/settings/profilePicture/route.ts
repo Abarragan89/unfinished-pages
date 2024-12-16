@@ -12,14 +12,15 @@ export async function PUT(request: NextRequest) {
         await prisma.user.findUnique({ where: { id: userId } })
         const { pictureURL } = await request.json();
 
-        // delete image in user profile
+        // delete image in user profile, don't need it, just the line
+        // put this is automatically save in the s3 upload so i'm just
+        // cancelling out that logic
         await prisma.image.deleteMany({
             where: {
                 userId: userId,
                 alt: 'profile-pic'
             }
         })
-
 
         // set new photo in prisma
         await prisma.user.update({

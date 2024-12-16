@@ -78,7 +78,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
             });
 
             setCurrentImage(pictureURL);
-            router.back();
+            router.refresh();
         } catch (e) {
             console.error('Error processing cropped image:', e);
         } finally {
