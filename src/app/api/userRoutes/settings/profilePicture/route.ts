@@ -10,8 +10,17 @@ export async function PUT(request: NextRequest) {
         }
 
         await prisma.user.findUnique({ where: { id: userId } })
-        const {pictureURL} = await request.json();
-        
+        const { pictureURL } = await request.json();
+
+        // delete image in user profile
+        await prisma.image.deleteMany({
+            where: {
+                userId: userId,
+                alt: 'profile-pic'
+            }
+        })
+
+
         // set new photo in prisma
         await prisma.user.update({
             where: { id: userId },

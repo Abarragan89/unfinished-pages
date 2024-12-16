@@ -62,7 +62,7 @@ async function deleteFileFromS3(key: string) {
     await s3Client.send(command);
 }
 
-// The POST is fired as soon as a user creates a new blog
+// Add user image to S3 and database
 export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
