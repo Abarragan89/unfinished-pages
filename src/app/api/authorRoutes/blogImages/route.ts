@@ -8,7 +8,10 @@ export async function GET(request: NextRequest) {
         if (!userId) return NextResponse.json({ error: 'user not logged in' }, { status: 403 });
 
         const userImages = await prisma.image.findMany({
-            where: { userId }
+            where: {
+                userId,
+                alt: { not: 'profile-pic' }
+            }
         })
 
         return NextResponse.json({ userImages }, { status: 200 })
