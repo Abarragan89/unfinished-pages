@@ -29,11 +29,10 @@ export default async function page({ params }: { params: { blogId: string } }) {
     }
 
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
-
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
     return (
-        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] m-[5%] pt-[30px] rounded-md">
+        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] mx-[5%] mt-[60px] rounded-md">
             <ScrollToTop />
             <BlogMetaDetails
                 title={blogData.title}

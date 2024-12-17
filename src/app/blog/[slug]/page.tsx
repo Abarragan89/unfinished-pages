@@ -2,6 +2,7 @@ import Image from "next/image"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";
 import Link from "next/link";
 import { BlogData } from "../../../../types/blog";
+import { BlogTopic } from "../../../../types/blogtopics";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import getBlogData from "@/app/services/getBlogData";
@@ -16,6 +17,7 @@ import BlogContentSection from "@/components/BlogUI/BlogContentSection"
 import { Metadata } from 'next';
 import { Comment } from "../../../../types/comment";
 import { cleanTitleForURL } from "../../../../utils/stringManipulation";
+import getRelatedBlogs from "@/app/services/getRelatedBlogs";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const { slug } = params;
@@ -115,12 +117,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
         throw new Error('Could not find blog data')
     }
 
-
+    // get related blog data
+    const relatedBlogs = await getRelatedBlogs(blogData.categories, blogId) as unknown as BlogData[]
     const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(formattedBlogData as BlogContent[]);
 
     return (
-        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] mx-[5%] my-[3%] rounded-md">
+        <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] mx-[5%] my-[40px] rounded-md">
             <ScrollToTop />
             <BlogMetaDetails
                 title={blogData.title}
@@ -162,7 +165,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
 
             {/* Comment Section */}
-            <hr className="mt-[50px]" />
+            <hr className="mt-[50px] max-w-[700px] mx-auto" />
             <CommentSection
                 blogId={blogData.id}
                 blogTitle={blogData.title}
@@ -170,13 +173,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
 
             {/* This is the related posts in the same category */}
-            <hr className="mt-[50px]" />
+            <hr className="mt-[50px] max-w-[700px] mx-auto" />
             <section className="mt-[30px]">
                 <SubheadingTitle title="Related Blogs" />
-                <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[1200px]">
-                    {blogDataRelated.map((blog: BlogData) => {
+                <div className="flex flex-wrap justify-around mx-auto mt-[30px] max-w-[700px]">
+                    {relatedBlogs && relatedBlogs.map((blog: BlogData) => {
                         return (
-                            <Link key={blog.id} href={`/blog/${blog.title}`} className="embla__slide">
+                            <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="my-5">
                                 <BlogCard
                                     title={blog.title}
                                     description={blog.description}

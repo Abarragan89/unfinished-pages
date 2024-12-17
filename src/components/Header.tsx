@@ -1,7 +1,6 @@
 import Navigation from "./Navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { headers } from 'next/headers'
 import getUserNavigationData from "@/app/services/getUserNavigationData"
 import { UserData } from "../../types/users"
 import { getServerSession } from "next-auth";

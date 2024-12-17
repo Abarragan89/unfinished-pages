@@ -1,5 +1,5 @@
 "use client"
-import SearchInput from "./FormInputs/SearchInput"
+// import SearchInput from "./FormInputs/SearchInput"
 
 export default function SearchInCategory({ category }: { category: string }) {
     return (
@@ -7,6 +7,6 @@ export default function SearchInCategory({ category }: { category: string }) {
         //     placeholder={`Search in ${category}`}
         //     inputWidth="full"
         // />
-        <p></p>
+        <p>under construction</p>
     )
 }

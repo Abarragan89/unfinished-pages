@@ -52,7 +52,7 @@ export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShare
         return () => {
             document.removeEventListener("mouseup", handleClickOutside);
         };
-    }, []);
+    }, [toggleShareOptionsView]);
 
     return (
         <div className="bg-[var(--off-white)] px-4 pb-4 pt-3 custom-low-lifted-shadow border border-[var(--paper-color)] rounded-sm text-[var(--gray-700)]" ref={shareMenu}>
