@@ -20,10 +20,6 @@ export async function PUT(request: NextRequest) {
             }
         })
 
-        const user = await prisma.user.findUnique({
-            where: { id: userId}
-        })
-
         return NextResponse.json({ message: 'success' })
     } catch (error) {
         console.log('error ', error)

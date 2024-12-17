@@ -6,7 +6,7 @@ import { MdEdit } from "react-icons/md"
 import Link from 'next/link';
 import EditProfilePicModal from '@/components/Modals/EditProfilePicModal';
 import UserSettingSwitches from '@/components/FormInputs/UserSettingSwitches';
-
+import DeleteUserAccount from '@/components/Buttons/DeleteUserAccount';
 
 export default async function page() {
     const headersList = headers()
@@ -22,6 +22,9 @@ export default async function page() {
         <main className="min-h-[100vh] mt-[25px]">
             <EditProfilePicModal
                 userImage={userSettings!.image as string}
+                userId={userId}
+            />
+            <DeleteUserAccount 
                 userId={userId}
             />
             <SubheadingTitle title="Settings" />
@@ -51,10 +54,16 @@ export default async function page() {
                         <p className='bg-[var(--off-white)] px-[10px] py-[5px] rounded-md border-2 border-[var(--gray-300)] mt-3 text-[.95rem]'>{userSettings!.email}</p>
                     </div>
                 </section>
-
                 <UserSettingSwitches 
                     isNotificationsOn={userSettings?.isNotificationsOn as boolean}
                 />
+
+                <Link 
+                    href="?showModal=deleteAccount"
+                    className='custom-small-btn mt-10 bg-[var(--danger)]'
+                >
+                Delete Account
+                </Link>
             </div>
         </main>
     )
