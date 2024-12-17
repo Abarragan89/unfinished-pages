@@ -2,7 +2,6 @@ import { prisma } from "../../../utils/prisma";
 
 export default async function getPreviewBlogContent(userId: string, blogId: string) {
     try {
-
         if (!userId) {
             throw new Error('Unauthorized access')
         }

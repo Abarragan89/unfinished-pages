@@ -63,6 +63,7 @@ export async function middleware(request: NextRequest) {
         base-uri 'self';
         form-action 'self';
         frame-ancestors 'none';
+        frame-src https://www.youtube.com/;
         connect-src 'self' blob:;
         upgrade-insecure-requests;
     `;
@@ -76,6 +77,7 @@ export async function middleware(request: NextRequest) {
         object-src 'none';
         base-uri 'self';
         form-action 'self';
+        frame-src https://www.youtube.com/;
         connect-src 'self' blob:;
         frame-ancestors 'none';
         upgrade-insecure-requests;

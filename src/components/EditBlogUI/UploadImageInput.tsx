@@ -1,12 +1,10 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { IoIosCheckboxOutline } from "react-icons/io";
 import PulseLoader from "react-spinners/PulseLoader";
-import Link from "next/link";
 import NextImage from 'next/image';
 import axios from "axios";
 import InputLabelEl from "../FormInputs/InputLabelEl";
-
+import PhotoRequirements from "../FormInputs/PhotoRequirements";
 
 export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: string, coverPhotoUrl: string }) {
     const [message, setMessage] = useState<string>("");
@@ -125,49 +123,23 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         <section>
             {
                 imagePreview ?
-                    <>
+                    <div className="flex justify-around">  
+                    {!file &&
+                    
+                        <PhotoRequirements />
+                    }
                         <NextImage
                             width={200}
                             height={200}
                             src={imagePreview === null ? '/images/blogs/fillerImg.png' : imagePreview}
                             alt="Preview"
-                            className="mx-auto w-auto h-auto"
+                            className="w-auto h-auto"
                         />
-                    </>
-                    :
-                    <div className="flex flex-col justify-center items-center">
-                        <p className="font-bold">Cover Photo Requirements</p>
-                        <ul className="text-[.9rem]">
-                            <li className="my-1 flex items-center">
-                                <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
-                                Format: jpg, png, jpeg, or webp
-                            </li>
-                            <li className="my-1 flex items-center">
-                                <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
-                                Aspect Ratio: 16:9
-                            </li>
-                            <li className="my-1 flex items-center">
-                                <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
-                                Minimum resolution: 700 x 394px
-                            </li>
-                        </ul>
-
-                        <p className="font-bold mt-2">Tips</p>
-                        <ul className="text-[.9rem]">
-                            <li className="my-1">Find royalty-free images at
-                                <Link href="https://pixabay.com/" target="_blank" rel="noopener noreferrer" className="underline inline-block mx-1 text-blue-700">
-                                    Pixabay
-                                </Link>
-                            </li>
-
-                            <li className="my-1">Resize and format images with
-                                <Link href="https://canva.com/" target="_blank" rel="noopener noreferrer" className="underline inline-block mx-1 text-blue-700">
-                                    Canva
-                                </Link>
-                            </li>
-                        </ul>
                     </div>
+                    :
+                    <PhotoRequirements />
             }
+            {/* Button to Upload */}
             {!file &&
                 <label
                     className={`block w-[90%] ${imagePreview ? 'w-fit px-4' : 'max-w-[260px]'} mt-5 mx-auto custom-small-btn bg-[var(--off-black)]`}
