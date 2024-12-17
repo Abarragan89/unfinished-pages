@@ -15,9 +15,9 @@ export default function PhotoRequirements() {
                     <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
                     <span className='mr-1'>Sizes:</span>
                     <span>1280 x 720</span> 
-                    <span className='mx-1'>|</span> 
+                    <span className='mx-1 text-[var(--gray-500)]'>|</span> 
                     <span>1920 x 1080</span> 
-                    <span className='mx-1'>|</span> 
+                    <span className='mx-1 text-[var(--gray-500)]'>|</span> 
                     <span>2560 x 1440</span>
                 </li>
             </ul>

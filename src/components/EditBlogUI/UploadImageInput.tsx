@@ -123,7 +123,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         <section>
             {
                 imagePreview ?
-                    <div className="flex justify-around">  
+                    <div className="flex justify-around flex-wrap">  
                     {!file &&
                     
                         <PhotoRequirements />

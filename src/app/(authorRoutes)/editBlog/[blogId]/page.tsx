@@ -10,6 +10,8 @@ import Banner from "@/components/EditBlogUI/Banner"
 import { cleanTitleForURL } from "../../../../../utils/stringManipulation"
 import UploadImageInput from "@/components/EditBlogUI/UploadImageInput"
 import InputBlockWrapper from "@/components/EditBlogUI/InputBlockWrapper"
+import EditBlogClientWrapper from "@/components/EditBlogUI/EditBlogClientWrapper"
+import { BlogData } from "../../../../../types/blog"
 
 export default async function editBlog({ params }: { params: { blogId: string } }) {
 
@@ -23,7 +25,7 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     }
 
     // get Blog Data
-    const blogData = await getEditBlogContents(userId, blogId)
+    const blogData = await getEditBlogContents(userId, blogId) as unknown as BlogData
 
     // Error finding blog data
     if (!blogData) {
@@ -33,54 +35,10 @@ export default async function editBlog({ params }: { params: { blogId: string } 
     return (
         <main className="pt-[50px] relative">
             <ScrollToTop />
-            <div className="mb-[30px]">
-                {blogData.isPublished ?
-                    <Banner
-                        text="Published"
-                        color="green"
-                        link={`/blog/${cleanTitleForURL(blogData.title)}-${blogData.id}`}
-                    />
-                    :
-                    <Banner
-                        text="Draft"
-                        color="red"
-                    />
-                }
-            </div>
-            <SubheadingTitle title={'Create Blog'} />
-            <div className="flex absolute top-[10px] right-[2.5%] pe-2">
-                <Link
-                    href={`/previewBlog/${blogData.id}`}
-                    className="custom-small-btn bg-[var(--off-black)]"
-                >
-                    Preview
-                </Link>
-            </div>
-            <EditMetaData
-                title={blogData.title}
-                description={blogData.description || ""}
-                blogId={blogId as string}
-                categories={blogData.categories}
-                tags={blogData.tags as string}
-            />
-            <InputBlockWrapper
-                subtitle="Cover Photo"
-                showSaveButton={false}
-            >
-                <UploadImageInput
-                    blogId={blogId as string}
-                    coverPhotoUrl={blogData.coverPhotoUrl || ""}
-                />
-            </InputBlockWrapper>
-            <SlateRichText
-                blogId={blogId as string}
-                blogContent={blogData.content as []}
-            />
-            {/*  Delete and Publish buttons */}
-            <PublishDeleteBlogBtns
-                userId={userId}
+            <EditBlogClientWrapper 
+                blogData={blogData}
                 blogId={blogId}
-                isBlogPublished={blogData.isPublished}
+                userId={userId}
             />
         </main>
     )

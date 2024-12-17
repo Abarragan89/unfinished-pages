@@ -11,7 +11,9 @@ export interface BlogData {
     likes?: BlogLike[];
     likeCount?: Int;
     isPublished?: boolean;
+    tags?: string;
     publishedDate?: Date;
+    categories?: []
     content?: BlogContent;
     readDuration?: number;
     comments?: Comment[]

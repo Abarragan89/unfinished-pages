@@ -8,16 +8,17 @@ import { useState } from "react";
 interface Props {
     userId: string;
     blogId: string;
-    isBlogPublished: boolean;
+    setIsPublished: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowConfetti: React.Dispatch<React.SetStateAction<boolean>>;
+    isPublished: boolean
 }
 
-export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished }: Props) {
+export default function PublishDeleteBlogBtns({ userId, blogId, setIsPublished, isPublished, setShowConfetti }: Props) {
 
     const router = useRouter();
-    
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>('');
-    const [publishedStatus, setPublishedStatus] = useState<boolean>(isBlogPublished);
 
     async function deleteBlog() {
         try {
@@ -54,8 +55,12 @@ export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished 
             if (data.error) {
                 setErrorMsg(data.error)
             } else {
-                setPublishedStatus(isPublished)
+                setIsPublished(isPublished)
                 router.back();
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setShowConfetti(isPublished)
+                }, 30);
             }
         } catch (error) {
             console.log('error deleting blog in client', error)
@@ -63,6 +68,7 @@ export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished 
             setIsLoading(false)
         }
     }
+
 
     return (
         <>
@@ -100,7 +106,7 @@ export default function PublishDeleteBlogBtns({ userId, blogId, isBlogPublished 
             />
             <div className="flex justify-center mb-[60px]">
                 {
-                    publishedStatus ?
+                    isPublished ?
                         <Link
                             scroll={false}
                             href={'?showModal=unpublishBlog'}
