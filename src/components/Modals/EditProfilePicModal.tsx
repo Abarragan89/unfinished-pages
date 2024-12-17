@@ -86,7 +86,6 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
             console.error('Error processing cropped image:', e);
         } finally {
             setIsUploading(false)
-
         }
     }
 
