@@ -66,9 +66,9 @@ export default async function Home() {
     {
       title: "DIY",
       description: "Get inspired with DIY projects, unlocking creativity and hands-on skills.",
-      imgSrc: "/images/categories/diy.png",
+      imgSrc: "/images/categories/DIY.png",
       alt: "DIY",
-      link: "/category/diy"
+      link: "/category/DIY"
     },
     {
       title: "Entertainment | Sports",

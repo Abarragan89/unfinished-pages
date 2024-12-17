@@ -10,7 +10,7 @@ async function seedData() {
         { name: 'short-stories', displayName: 'Short Stories' },
         { name: 'family-relationships', displayName: 'Family | Relationships' },
         { name: 'travel-food', displayName: 'Travel | Food' },
-        { name: 'diy', displayName: 'DIY' },
+        { name: 'DIY', displayName: 'DIY' },
         { name: 'entertainment-sports', displayName: 'Entertainment | Sports' },
         { name: 'other', displayName: 'Other' },
     ];

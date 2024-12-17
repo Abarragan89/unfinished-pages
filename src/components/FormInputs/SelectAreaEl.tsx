@@ -18,7 +18,7 @@ export default function SelectAreaEl({ blogCategories, setBlogCategories, toggle
         { id: 'family-relationships', label: 'Family | Relationships' },
         { id: 'travel-food', label: 'Travel | Food' },
         { id: 'entertainment-sports', label: 'Entertainment | Sports' },
-        { id: 'diy', label: 'DIY' },
+        { id: 'DIY', label: 'DIY' },
         { id: 'other', label: 'Other' },
     ];
 
