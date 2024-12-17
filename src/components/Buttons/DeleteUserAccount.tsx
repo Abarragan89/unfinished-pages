@@ -3,7 +3,8 @@ import axios from 'axios';
 import ConfirmWithText from '@/components/Modals/ConfirmWithText';
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-export default function DeleteUserAccount({ userId }: { userId: string }) {
+
+export default function DeleteUserAccount() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 

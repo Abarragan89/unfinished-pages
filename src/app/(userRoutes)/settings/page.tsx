@@ -24,9 +24,7 @@ export default async function page() {
                 userImage={userSettings!.image as string}
                 userId={userId}
             />
-            <DeleteUserAccount 
-                userId={userId}
-            />
+            <DeleteUserAccount />
             <SubheadingTitle title="Settings" />
 
             <div className='flex flex-col items-center justify-center w-[90%] max-w-[500px] mx-auto'>
