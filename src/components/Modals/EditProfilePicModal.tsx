@@ -78,7 +78,10 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
             });
 
             setCurrentImage(pictureURL);
-            router.refresh();
+            router.back();
+            setTimeout(() => {
+                router.refresh();
+            }, 500);
         } catch (e) {
             console.error('Error processing cropped image:', e);
         } finally {
@@ -148,6 +151,10 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                             min={30}
                             handleStyle={{
                                 borderColor: 'black',
+                                position: 'absolute',
+                                top: 0,
+                                width: 20,
+                                height: 20,
                                 backgroundColor: 'black',
                                 boxShadow: '0 0 5px 2px rgba(179, 170, 229, 0.5)', // Glow effect
                             }}
