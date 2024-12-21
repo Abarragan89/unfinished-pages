@@ -125,7 +125,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="text-[1.95rem] py-2 tracking-wide"
+                            className="text-[1.95rem] py-3 tracking-wide"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
