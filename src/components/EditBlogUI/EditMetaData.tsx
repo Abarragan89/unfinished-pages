@@ -20,10 +20,14 @@ export default function EditMetaData({ title, description, blogId, categories, t
     const [blogTags, setBlogTags] = useState<string>(tags || '');
     const [isDetailsSavable, setIsDetailsSavable] = useState<boolean>(false);
     const [isDetailsSaving, setIsDetailsSaving] = useState<boolean>(false);
-    const [blogCategories, setBlogCategories] = useState<{ [key: string]: string }[]>(categories)
+    const [blogCategories, setBlogCategories] = useState<{ [key: string]: string }[]>(categories);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
+
 
     async function saveDetailsHandler() {
         try {
+            setErrorMessage('')
             setIsDetailsSaving(true);
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogDetails`, {
                 blogTitle: blogTitle.trim(),
@@ -31,10 +35,12 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 blogCategories: blogCategories,
                 blogTags: blogTags.trim(),
             });
-            setIsDetailsSaving(false);
-            setIsDetailsSavable(false);
         } catch (error) {
             console.log('Error updating blog details:', error);
+            setErrorMessage('Blog not updated. Please try again.')
+        } finally {
+            setIsDetailsSaving(false);
+            setIsDetailsSavable(false);
         }
     }
 
@@ -50,6 +56,7 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 isButtonAble={isDetailsSavable}
                 subtitle="Blog Details"
                 UIStateTrigger={isDetailsSaving}
+                errorMsg={errorMessage}
             >
                 {/* Textarea Input */}
                 <div className="flex flex-col">

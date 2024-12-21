@@ -78,6 +78,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     const [chosenElement, setChosenElement] = useState<string>('');
     const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
     const [isContentSaving, setIsContentSaving] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     // Create the editor
     const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
@@ -440,14 +441,15 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
 
         try {
             setIsContentSaving(true);
+            setErrorMessage('')
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogContent`, {
                 content,
                 readDuration,
             });
-
             setIsButtonAbled(false);
         } catch (error) {
             console.error("Error saving content:", error);
+            setErrorMessage('Blog not updated. Please try again.')
         } finally {
             setIsContentSaving(false); // Ensure this always runs
         }
@@ -467,13 +469,14 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 saveHandler={saveContent}
                 isButtonAble={isButtonAbled}
                 UIStateTrigger={isContentSaving}
+                errorMsg={errorMessage}
             >
                 <section className='w-full mx-auto'>
                     <Slate
                         editor={editor} initialValue={content}
                         onChange={handleChange}
                     >
-                        <menu className='flex  justify-between bg-[var(--gray-100)] rounded-t pb-[10px] pt-[5px]'>
+                        <menu className='flex  justify-between bg-[var(--gray-100)] rounded-t pb-[10px] pt-[15px]'>
                             <div className='flex flex-wrap max-w-[400px] items-center'>
                                 <MarkButton iconType="bold" />
                                 <MarkButton iconType="italic" />
