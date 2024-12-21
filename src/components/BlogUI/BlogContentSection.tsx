@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
     return (
-        <section className="max-w-[700px] mx-auto leading-9 px-3">
+        <section className="max-w-[700px] mx-auto leading-[2rem] px-3">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
                 const validChildren = block.children.filter(
