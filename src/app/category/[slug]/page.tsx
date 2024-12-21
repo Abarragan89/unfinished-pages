@@ -10,10 +10,11 @@ import { cleanTitleForURL } from "../../../../utils/stringManipulation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-    const blogsData = await getBlogsByCategory(params.slug) as BlogData[]
-    const acceptableSlugs = ['other', 'short-stories', 'DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'travel-food', 'business-technology']
+    const acceptableSlugs = ['other', 'short-stories', 'DIY', 'education-career', 'entertainment-sports', 'family-relationships', 'health-fitness', 'politics-philosophy', 'travel-food', 'business-technology', '3-minute-reads']
     if (!acceptableSlugs.includes(params.slug)) throw new Error('No page available')
-        
+
+    const blogsData = await getBlogsByCategory(params.slug) as BlogData[]
+
     return (
         <main className="text-[var(--off-black)] text-[19px] min-h-[100vh] rounded-md">
             <ScrollToTop />
@@ -27,7 +28,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     priority
                 />
                 <div className={`absolute top-[33%] w-full`}>
-                    <MainHeading title={params.slug.toUpperCase().replace(/-/g, ' & ')} />
+                    {/* if the first category is a number, it is 3 minutes read and 
+                        should not have ampersand in between words.
+                    */}
+                    <MainHeading title={
+                        Number.isNaN(parseInt(params.slug[0])) ?
+                            params.slug.toUpperCase().replace(/-/g, ' & ')
+                            :
+                            params.slug.toUpperCase().replace(/-/g, ' ')
+                    }
+                    />
                 </div>
             </header>
             {/* Search Bar */}

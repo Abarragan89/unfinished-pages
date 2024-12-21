@@ -50,7 +50,7 @@ export default function CreateBlog() {
                         maxLength={65}
                         required
                     />
-                    <div className="flex justify-between mx-1 text-[.95rem]">
+                    <div className="flex justify-between mx-1 text-[.95rem] mt-1">
                         <p className="text-[.9rem] text-[var(--gray-600)] italic">Title can be edited later</p>
                         <p className="text-[var(--brown-500)]">{blogTitle.length}/65</p>
                     </div>

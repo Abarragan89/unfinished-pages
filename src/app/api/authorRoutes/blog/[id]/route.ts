@@ -15,7 +15,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         // Get Blog
         const blogToUpdate = await prisma.blog.findUnique({
             where: { id: blogId },
+            select: {
+                description: true,
+                coverPhotoUrl: true,
+                readDuration: true,
+            }
         })
+
 
         // Check for required fields 
         if (!blogToUpdate?.description) {
@@ -24,6 +30,23 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         if (!blogToUpdate?.coverPhotoUrl) {
             return NextResponse.json({ error: 'Cover Photo Required' }, { status: 400 })
         }
+
+        // Categorize as a 3 min blog if it is less than a 3 min read.
+        if (blogToUpdate.readDuration <= 3) {
+            // Then update it. 
+            await prisma.blog.update({
+                where: { id: blogId },
+                data: {
+                    categories: {
+                        connect: {
+                            name: '3-minute-reads',
+                            displayName: '3 Minute Reads'
+                        },
+                    },
+                }
+            })
+        }
+
         // Then update it. 
         await prisma.blog.update({
             where: { id: blogId },

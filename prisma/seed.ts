@@ -13,6 +13,7 @@ async function seedData() {
         { name: 'DIY', displayName: 'DIY' },
         { name: 'entertainment-sports', displayName: 'Entertainment | Sports' },
         { name: 'other', displayName: 'Other' },
+        { name: '3-minute-reads', displayName: '3 Minute Reads'}
     ];
 
     for (const category of categories) {
