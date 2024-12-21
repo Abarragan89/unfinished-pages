@@ -101,7 +101,7 @@ model Notification {
 
 model Blog {
   id String @id @default(cuid())
-  title String  @db.VarChar(65)
+  title String  @db.VarChar(70)
   description String? @db.VarChar(150)
   likes    BlogLike[]
   likeCount  Int   @default(0)

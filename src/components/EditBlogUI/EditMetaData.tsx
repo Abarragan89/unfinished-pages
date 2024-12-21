@@ -38,7 +38,7 @@ export default function EditMetaData({ title, description, blogId, categories, t
         }
     }
 
-    function handleInputStateChange(value:string) {
+    function handleInputStateChange(value: string) {
         setBlogTags(value)
         setIsDetailsSavable(true)
     }
@@ -55,14 +55,14 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 <div className="flex flex-col">
                     <div className="flex justify-between mx-1 tracking-wide">
                         <label htmlFor="blog-title" className="text-[.95rem]">Title</label>
-                        <p className="text-[.9rem] text-center">{blogTitle.length}/65</p>
+                        <p className="text-[.9rem] text-center">{blogTitle.length}/70</p>
                     </div>
                     <textarea
                         onChange={(e) => { setBlogTitle(e.target.value); setIsDetailsSavable(true) }}
                         className={"input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[1.15rem] font-bold bg-white"}
                         id="blog-title"
                         value={blogTitle}
-                        maxLength={65}
+                        maxLength={70}
                         required
                         rows={1}
                         cols={30}
