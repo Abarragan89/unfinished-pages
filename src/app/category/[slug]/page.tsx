@@ -31,6 +31,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {/* if the first category is a number, it is 3 minutes read and 
                         should not have ampersand in between words.
                     */}
+                    
                     <MainHeading title={
                         Number.isNaN(parseInt(params.slug[0])) ?
                             params.slug.toUpperCase().replace(/-/g, ' & ')
