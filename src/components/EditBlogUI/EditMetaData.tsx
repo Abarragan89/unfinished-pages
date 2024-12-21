@@ -59,7 +59,7 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 errorMsg={errorMessage}
             >
                 {/* Textarea Input */}
-                <div className="flex flex-col">
+                <div className="flex flex-col mt-5">
                     <div className="flex justify-between mx-1 tracking-wide">
                         <label htmlFor="blog-title" className="text-[.95rem]">Title</label>
                         <p className="text-[.9rem] text-center">{blogTitle.length}/70</p>
