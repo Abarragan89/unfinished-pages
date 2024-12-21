@@ -21,7 +21,7 @@ export default function BlogMetaDetails({
         <>
             <h1 className="max-w-[700px] mx-auto leading-[2.2rem] text-[2rem] md:leading-[3.5rem] mb-[18px] font-[700]">{title}</h1>
             {/* author readtime date and author profile pic  */}
-            <section className="flex max-w-[700px] mx-auto mb-[40px]">
+            <section className="flex max-w-[700px] mx-auto mb-[25px]">
                 <Image
                     src={authorImgURL}
                     width={40}
