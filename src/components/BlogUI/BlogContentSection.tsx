@@ -15,7 +15,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <p
                             key={index.toString()}
-                            className="py-2"
+                            className="py-3"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -50,7 +50,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                 } else if (block.type.includes('list')) {
                     return (
                         block.type === 'numbered-list' ? (
-                            <ol key={index.toString()} className="list-decimal ml-[50px] py-2">
+                            <ol key={index.toString()} className="list-decimal ml-[50px] py-3">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
@@ -85,7 +85,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                 ))}
                             </ol>
                         ) : (
-                            <ul key={index.toString()} className="list-disc ml-[50px] py-2">
+                            <ul key={index.toString()} className="list-disc ml-[50px] py-3">
                                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
                                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
@@ -161,7 +161,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h3
                             key={index.toString()}
-                            className="text-[1.65rem] py-1 tracking-wide"
+                            className="text-[1.65rem] py-3 tracking-wide"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
