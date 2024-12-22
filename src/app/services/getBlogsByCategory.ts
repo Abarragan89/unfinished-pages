@@ -20,6 +20,7 @@ export default async function getBlogsByCategory(categoryName: string) {
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
+                readDuration: true,
                 _count: {
                     select: {
                         comments: true

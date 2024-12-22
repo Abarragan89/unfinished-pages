@@ -25,6 +25,7 @@ export default async function getRelatedBlogs(categories: { name: string; displa
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
+                readDuration: true,
                 _count: {
                     select: {
                         comments: true

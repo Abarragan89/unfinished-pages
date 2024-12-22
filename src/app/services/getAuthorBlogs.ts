@@ -15,6 +15,7 @@ export default async function getAuthorBlogs(userId: string) {
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
+                readDuration: true,
                 _count: {
                     select: {
                         comments: true

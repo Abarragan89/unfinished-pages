@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
+import { formatDate } from "../../utils/formatDate";
 
 export default async function Home() {
 
@@ -97,15 +98,16 @@ export default async function Home() {
       <div className="my-[60px]" id="featured-blogs">
         <CardSection heading="Featured Blogs">
           <Carousel>
-            {blogData.map((blog) => {
+            {blogData && blogData.map((blog: BlogData) => {
               return (
                 <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide">
                   <BlogCard
                     title={blog.title}
                     description={blog.description}
-                    date={blog.date}
+                    date={blog.publishedDate ? formatDate(blog.publishedDate) : ''}
                     likeCount={blog.likeCount}
                     coverPhotoUrl={blog.coverPhotoUrl}
+                    readDuration={blog.readDuration}
                     totalCommentCount={blog?._count?.comments ?? 0}
                   />
                 </Link>

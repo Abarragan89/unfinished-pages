@@ -2,7 +2,6 @@ import Image from "next/image"
 import SubheadingTitle from "@/components/Headings/SubheadingTitle";
 import Link from "next/link";
 import { BlogData } from "../../../../types/blog";
-import { BlogTopic } from "../../../../types/blogtopics";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import getBlogData from "@/app/services/getBlogData";
@@ -18,6 +17,7 @@ import { Metadata } from 'next';
 import { Comment } from "../../../../types/comment";
 import { cleanTitleForURL } from "../../../../utils/stringManipulation";
 import getRelatedBlogs from "@/app/services/getRelatedBlogs";
+import { formatDate } from "../../../../utils/formatDate";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const { slug } = params;
@@ -183,10 +183,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                                 <BlogCard
                                     title={blog.title}
                                     description={blog.description}
-                                    date={blog.date}
+                                    date={blog.publishedDate ? formatDate(blog.publishedDate) : ''}
                                     likeCount={blog.likeCount}
                                     coverPhotoUrl={blog.coverPhotoUrl}
                                     totalCommentCount={4}
+                                    readDuration={blog.readDuration}
                                 />
                             </Link>
                         )

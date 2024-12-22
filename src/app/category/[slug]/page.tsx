@@ -6,6 +6,7 @@ import BlogCard from "@/components/Cards/BlogCard";
 import ScrollToTop from "@/components/ScrollToTop";
 import getBlogsByCategory from "@/app/services/getBlogsByCategory";
 import { cleanTitleForURL } from "../../../../utils/stringManipulation";
+import { formatDate } from "../../../../utils/formatDate";
 // import SearchInCategory from "@/components/SearchInCategory";
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -31,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     {/* if the first category is a number, it is 3 minutes read and 
                         should not have ampersand in between words.
                     */}
-                    
+
                     <MainHeading title={
                         Number.isNaN(parseInt(params.slug[0])) ?
                             params.slug.toUpperCase().replace(/-/g, ' & ')
@@ -54,10 +55,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         <BlogCard
                             title={blog.title}
                             description={blog.description}
-                            date={blog.date}
+                            date={blog.publishedDate ? formatDate(blog.publishedDate) : ''}
                             likeCount={blog.likeCount}
                             coverPhotoUrl={blog.coverPhotoUrl}
                             totalCommentCount={blog?._count?.comments ?? 0}
+                            readDuration={blog.readDuration}
                         />
                     </Link>
                 ))

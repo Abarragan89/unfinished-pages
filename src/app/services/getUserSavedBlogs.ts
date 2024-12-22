@@ -19,6 +19,7 @@ export default async function getUserSavedBlogs(userId: string) {
                         publishedDate: true,
                         coverPhotoUrl: true,
                         likeCount: true,
+                        readDuration: true,
                         _count: {
                             select: {
                                 comments: true

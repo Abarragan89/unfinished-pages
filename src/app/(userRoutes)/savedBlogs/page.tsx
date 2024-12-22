@@ -7,6 +7,7 @@ import { BlogData } from "../../../../types/blog";
 import ScrollToTop from "@/components/ScrollToTop";
 import getUserSavedBlogs from "../../services/getUserSavedBlogs";
 import { cleanTitleForURL } from "../../../../utils/stringManipulation";
+import { formatDate } from "../../../../utils/formatDate";
 
 export default async function page() {
     const headersList = headers()
@@ -34,11 +35,12 @@ export default async function page() {
                             <BlogCard
                                 title={blog.title}
                                 description={blog.description}
-                                date={blog.date}
+                                date={blog.publishedDate ? formatDate(blog.publishedDate) : ''}
                                 likeCount={blog.likeCount}
                                 coverPhotoUrl={blog.coverPhotoUrl}
                                 totalCommentCount={blog?._count?.comments ?? 0}
                                 isPublished={blog.isPublished}
+                                readDuration={blog.readDuration}
                             />
                         </Link>
                     )
