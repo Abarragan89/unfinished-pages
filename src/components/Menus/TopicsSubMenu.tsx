@@ -54,12 +54,12 @@ export default function TopicsSubMenu() {
                     <Link href='/category/short-stories'>Short Stories</Link>
                 </li>
                 <li className={`${liStyles}`}>
-                    <IoIosHammer size={18} className="mr-2" />
-                    <Link href='/category/DIY'>DIY</Link>
-                </li>
-                <li className={`${liStyles}`}>
                     <BsFillLightningChargeFill size={18} className="mr-2" />
                     <Link href='/category/3-minute-reads'>3 Minute Reads</Link>
+                </li>
+                <li className={`${liStyles}`}>
+                    <IoIosHammer size={18} className="mr-2" />
+                    <Link href='/category/DIY'>DIY</Link>
                 </li>
                 <li className={`${liStyles}`}>
                     <TbSquareLetterO size={18} className="mr-2" />

@@ -8,7 +8,7 @@ export default function loading() {
                 <ScaleLoader
                     width={10}
                     height={20}
-                    color="black"
+                    color="rgb(118, 117, 117)"
                 />
                 <h1 className="text-center text-[1.1rem]">Loading...</h1>
             </div>
