@@ -505,7 +505,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                             renderElement={renderElement}
                             renderLeaf={renderLeaf}
                             spellCheck
-                            className='h-[50vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md input-browser-reset focus:outline-[var(--brown-500)] custom-thin-scrollbar overflow-y-auto overflow-x-hidden break-normal bg-white'
+                            className='h-[65vh] border-2 border-[var(--gray-300)] p-[15px] rounded-md input-browser-reset focus:outline-[var(--brown-500)] custom-thin-scrollbar overflow-y-auto overflow-x-hidden break-normal bg-white'
                             onKeyDown={(event) => {
                                 if (event.metaKey || event.ctrlKey) {
                                     switch (event.key.toLowerCase()) {

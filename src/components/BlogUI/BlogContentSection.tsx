@@ -211,7 +211,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     width={block.image.width}
                                     height={block.image.height}
                                     alt={block.image.alt}
-                                    className="w-full"
+                                    className="w-full py-3"
                                 />
                             </div>
                         )
@@ -224,7 +224,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     src={block.videoUrl}
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
-                                    className="absolute top-0 left-0 w-full h-full"
+                                    className="absolute top-0 left-0 w-full h-full py-3"
                                 ></iframe>
                             </div>
 
