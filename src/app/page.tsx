@@ -17,10 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: 'Unfinished Pages',
-    description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+    description: 'Blogs that explore ideas that leaves you with questions, not answers. Join the Conversation',
     openGraph: {
       title: 'Unfinished Pages',
-      description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+      description: 'Blogs that explore ideas that leaves you with questions, not answers. Join the Conversation',
       url: `https://www.unfinishedpages.com`,
       images: '/images/websiteLogo.png',
       siteName: 'Unfinished Pages',
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'Unfinished Pages',
-      description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+      description: 'Blogs that explore ideas that leaves you with questions, not answers. Join the Conversation',
       images: '/images/websiteLogo.png',
     },
     alternates: {
