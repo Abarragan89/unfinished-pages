@@ -63,49 +63,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-    const blogDataRelated: BlogData[] = [
-        {
-            id: '1',
-            title: 'Boost Your Creativity with These Proven Techniques',
-            description: 'Discover insightful tips, expert advice, and the latest trends to elevate your lifestyle, boost productivity, and inspire personal growth!',
-            date: 'September 12, 2023',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
-            comments: []
-        },
-        {
-            id: '2',
-            title: 'Mastering the Art of Productivity: Tips for Daily Success',
-            description: 'Your go-to source for in-depth articles on tech, wellness, and creativity. Explore fresh perspectives and tips for thriving in todays world.!',
-            date: 'August 29, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
-            comments: []
-        },
-        {
-            id: '3',
-            title: 'Healthy Living Hacks: Simple Changes for a Better Life',
-            description: 'Uncover practical solutions and fresh ideas for work, wellness, and creativity. Join us on a journey to live more inspired, balanced lives.',
-            date: 'July 12, 2023',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
-            comments: []
-        },
-        {
-            id: '4',
-            title: 'Exploring the Future of AI: Trends and Innovations Ahead',
-            description: 'Explore actionable insights and stories across tech, health, and creativity, designed to help you grow, learn, and live with purpose.',
-            date: 'Decemeber 25, 2024',
-            likes: [],
-            likeCount: 0,
-            coverPhotoUrl: '/images/topicCardImgs/family.jpg',
-            comments: []
-        }
-    ]
-
     const { slug } = params;
     const blogId = slug.split('-').pop() as string;
 

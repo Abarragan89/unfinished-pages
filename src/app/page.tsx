@@ -11,9 +11,37 @@ import Link from "next/link";
 import getPublishedBlogs from "./services/getPublishedBlogs";
 import { cleanTitleForURL } from "../../utils/stringManipulation";
 import { formatDate } from "../../utils/formatDate";
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+
+  return {
+    title: 'Unfinished Pages',
+    description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+    openGraph: {
+      title: 'Unfinished Pages',
+      description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+      url: `https://www.unfinishedpages.com`,
+      images: '/images/websiteLogo.png',
+      siteName: 'Unfinished Pages',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Unfinished Pages',
+      description: 'Blogs that explore ideas that leaves you with questions instead of answers',
+      images: '/images/websiteLogo.png',
+    },
+    alternates: {
+      canonical: `https://www.unfinishedpages.com`
+    },
+    robots: {
+      index: true,
+      follow: true,
+    }
+  };
+}
 
 export default async function Home() {
-
   const blogTopics: BlogTopic[] = [
     {
       title: "Politics | Philosophy",
