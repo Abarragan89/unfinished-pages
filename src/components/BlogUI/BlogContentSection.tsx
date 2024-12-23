@@ -125,7 +125,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="text-[1.95rem] py-3 tracking-wide"
+                            className="text-[1.95rem] pt-3 pb-2 tracking-wide"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -161,7 +161,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h3
                             key={index.toString()}
-                            className="text-[1.65rem] py-3 tracking-wide"
+                            className="text-[1.65rem] pt-3 pb-2 tracking-wide"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -211,7 +211,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                     width={block.image.width}
                                     height={block.image.height}
                                     alt={block.image.alt}
-                                    className="w-full py-3"
+                                    className="w-full py-2"
                                 />
                             </div>
                         )
