@@ -1,6 +1,7 @@
 {
     "name": "Unfinished Pages",
     "short_name": "Unfinished Pages",
+    "description": "Blogging platform discuss ideas and ask questions",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

@@ -529,6 +529,18 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                                     event.preventDefault();
                                     Transforms.insertText(editor, '    ');
                                 }
+                                // Handle saving text editor with cmd + s or ctrl + s
+                                if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+                                    event.preventDefault(); // Prevent the browser's default save action
+                                    saveContent(); // Call your save function
+                                }
+                            }}
+                            // Allow backspace on phone to work
+                            onDOMBeforeInput={(event) => {
+                                if (event.inputType === 'deleteContentBackward') {
+                                    event.preventDefault();
+                                    editor.deleteBackward('character')
+                                }
                             }}
                         />
                     </Slate>
