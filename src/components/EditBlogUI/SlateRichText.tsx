@@ -539,7 +539,15 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                             onDOMBeforeInput={(event) => {
                                 if (event.inputType === 'deleteContentBackward') {
                                     event.preventDefault();
-                                    editor.deleteBackward('character')
+                                    // Check if there is a selection
+                                    const { selection } = editor;
+                                    if (selection && Range.isCollapsed(selection)) {
+                                        // No selection, delete backward by one character
+                                        editor.deleteBackward('character');
+                                    } else {
+                                        // There's a selection, delete it
+                                        Transforms.delete(editor);
+                                    }
                                 }
                             }}
                         />
