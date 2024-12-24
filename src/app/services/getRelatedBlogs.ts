@@ -4,6 +4,7 @@ export default async function getRelatedBlogs(categories: { name: string; displa
     try {
         const relatedBlogs = await prisma.blog.findMany({
             where: {
+                isPublished: true,
                 categories: {
                     some: {
                         name: {

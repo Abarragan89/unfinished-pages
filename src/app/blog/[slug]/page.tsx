@@ -113,7 +113,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 width={700}
                 height={394}
                 alt={blogData.coverPhotoAlt as string}
-                className="block mx-auto mb-[25px] md:mb-[40px]"
+                className="block mx-auto mb-[25px]"
             />
 
             {/* This is the blog text */}
