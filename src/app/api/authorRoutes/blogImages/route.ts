@@ -11,6 +11,9 @@ export async function GET(request: NextRequest) {
             where: {
                 userId,
                 alt: { not: 'profile-pic' }
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         })
 
