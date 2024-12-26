@@ -62,7 +62,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-
     const { slug } = params;
     const blogId = slug.split('-').pop() as string;
 
