@@ -6,7 +6,7 @@ export default function HeadingOne({ children, attributes }: SlateProps) {
     return (
         <h1
             {...attributes}
-            className="text-[1.8rem] font-[500]"
+            className="text-[1.3rem] sm:text-[1.5rem]"
         >
             {children}
         </h1>
