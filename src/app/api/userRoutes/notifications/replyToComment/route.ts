@@ -20,12 +20,18 @@ export async function POST(request: NextRequest) {
             blogTitle
         } = await request.json();
 
+        console.log('commentOwnerId', commentOwnerId)
+        console.log('replierId ', replierId)
+
+        const nonUndefinedIds = [commentOwnerId, replierId].filter(id => id !== undefined);
+
+
         const [commentors, author, parentCommentOwner] = await Promise.all([
             // Find Commentors minus the author, replier, and owner of parent comment(they get a different email)
             prisma.user.findMany({
                 where: {
                     comments: { some: { blogId } },
-                    id: { not: { in: [commentOwnerId, replierId] } },
+                    id: { not: { in: nonUndefinedIds } },
                     NOT: {
                         blogs: { some: { id: blogId } }, // Exclude the author of the blog
                     },
