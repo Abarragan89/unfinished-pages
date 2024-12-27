@@ -10,6 +10,7 @@ export async function sendAddedCommentEmail(
     commentText: string,
     blogTitle: string
 ): Promise<void> {
+    
     // 1. Create the email template and send messages
     const emailPromises = userArr.map((user) => {
         const messageId = `<${user.id}-${new Date().toISOString()}@unfinishedpages.com>`
