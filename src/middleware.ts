@@ -64,7 +64,7 @@ export async function middleware(request: NextRequest) {
         form-action 'self';
         frame-ancestors 'none';
         frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
-        connect-src 'self' blob: https://ep1.adtrafficquality.google/;
+        connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/;
         upgrade-insecure-requests;
     `;
     } else if (process.env.NODE_ENV === 'development') {
@@ -78,7 +78,7 @@ export async function middleware(request: NextRequest) {
         base-uri 'self';
         form-action 'self';
         frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
-        connect-src 'self' blob: https://ep1.adtrafficquality.google/;
+        connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/;
         frame-ancestors 'none';
         upgrade-insecure-requests;
     `;
