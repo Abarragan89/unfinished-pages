@@ -7,6 +7,10 @@ export default async function getPublishedBlogs() {
             where: {
                 isPublished: true
             },
+            orderBy: {
+                likeCount: 'desc'
+            },
+            take: 10,
             select: {
                 id: true,
                 title: true,

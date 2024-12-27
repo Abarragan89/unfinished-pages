@@ -45,14 +45,14 @@ export default async function Home() {
   const blogTopics: BlogTopic[] = [
     {
       title: "Politics | Philosophy",
-      description: "Delve into the realms of politics and philosophy, exploring ideas that shape societies and human thought.",
+      description: "Delve into the realms of politics and philosophy, exploring ideas that shape societies, religion, and human thought.",
       imgSrc: "/images/categories/politics-philosophy.png",
       alt: "Politics and Philosophy",
       link: "/category/politics-philosophy"
     },
     {
       title: "Education | Career",
-      description: "Explore the intersection of education and career, uncovering paths to learning and professional growth.",
+      description: "Uncovering paths to learning, professional growth, work-life balance, and the day-to-day of everyday people.",
       imgSrc: "/images/categories/education-career.png",
       alt: "Education and Career",
       link: "/category/education-career"
