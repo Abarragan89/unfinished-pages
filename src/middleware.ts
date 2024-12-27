@@ -63,7 +63,7 @@ export async function middleware(request: NextRequest) {
         base-uri 'self';
         form-action 'self';
         frame-ancestors 'none';
-        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/;
+        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
         connect-src 'self' blob: https://ep1.adtrafficquality.google/;
         upgrade-insecure-requests;
     `;
@@ -77,7 +77,7 @@ export async function middleware(request: NextRequest) {
         object-src 'none';
         base-uri 'self';
         form-action 'self';
-        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/;
+        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
         connect-src 'self' blob: https://ep1.adtrafficquality.google/;
         frame-ancestors 'none';
         upgrade-insecure-requests;
