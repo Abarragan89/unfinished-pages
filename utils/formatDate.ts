@@ -8,11 +8,22 @@
 // }
 
 export function formatDate(date: Date | undefined): string {
+    // if (!date) return ''; // Return an empty string if date is undefined
+
+    // return date.toLocaleDateString('en-US', {
+    //     year: 'numeric',
+    //     month: 'long',
+    //     day: 'numeric',
+    // });
     if (!date) return ''; // Return an empty string if date is undefined
 
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
+    const year = date.getFullYear();
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const month = monthNames[date.getMonth()]; // Get month name from the array
+    const day = date.getDate();
+
+    return `${month} ${day}, ${year}`;
 }
