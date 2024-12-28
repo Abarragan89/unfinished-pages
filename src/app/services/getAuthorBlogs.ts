@@ -7,6 +7,9 @@ export default async function getAuthorBlogs(userId: string) {
             where: {
                 userId
             },
+            orderBy: {
+                publishedDate: 'desc'
+            },
             select: {
                 id: true,
                 title: true,
