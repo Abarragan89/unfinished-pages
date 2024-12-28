@@ -55,7 +55,7 @@ export async function middleware(request: NextRequest) {
     if (process.env.NODE_ENV === 'production') {
         cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}';
+        script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline';
         img-src 'self' blob: data: https://unfinished-pages.s3.us-east-2.amazonaws.com https://*.googleusercontent.com https://*.yahoo.com https://*.outlook.com https://authjs.dev/ https://ep1.adtrafficquality.google/pagead/;
         font-src 'self';
@@ -63,6 +63,7 @@ export async function middleware(request: NextRequest) {
         base-uri 'self';
         form-action 'self';
         frame-ancestors 'none';
+        worker-src 'self' blob:;
         frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
         connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/;
         upgrade-insecure-requests;
@@ -70,11 +71,12 @@ export async function middleware(request: NextRequest) {
     } else if (process.env.NODE_ENV === 'development') {
         cspHeader = `
         default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000 https://pagead2.googlesyndication.com/;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:3000 https://pagead2.googlesyndication.com/ https://cdn.jsdelivr.net;
         style-src 'self' 'unsafe-inline';
         img-src 'self' blob: data: http://localhost:3000 https://unfinished-pages.s3.us-east-2.amazonaws.com https://*.googleusercontent.com https://*.yahoo.com https://*.outlook.com https://authjs.dev/ https://ep1.adtrafficquality.google/pagead/;
         font-src 'self';
         object-src 'none';
+        worker-src 'self' blob:;
         base-uri 'self';
         form-action 'self';
         frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;

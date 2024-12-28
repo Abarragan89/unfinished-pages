@@ -12,6 +12,7 @@ import { BsThreeDots } from "react-icons/bs";
 import CannotDeleteModal from "../Modals/CannotDeleteModal";
 import DeletePhotoSubMenu from "./DeletePhotoSubMenu";
 import InputLabelEl from "../FormInputs/InputLabelEl";
+import imageCompression from 'browser-image-compression';
 
 interface Props {
     onClickHandler: (image: UserImage) => void;
@@ -70,8 +71,8 @@ export default function SideMenu({ onClickHandler }: Props) {
         }
     }
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] as File;
         setMessage("");
         if (file) {
             // 1.  Check file type
@@ -82,6 +83,17 @@ export default function SideMenu({ onClickHandler }: Props) {
                 return;
             }
         }
+
+        setIsUploading(true)
+        const options = {
+            maxSizeMB: 1.5,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        }
+        // compress the file
+        const compressedFile = await imageCompression(file, options);
+        setIsUploading(false);
+
         // 2. Check image dimensions
         const img = new Image();
         img.src = URL.createObjectURL(file as File);
@@ -95,7 +107,7 @@ export default function SideMenu({ onClickHandler }: Props) {
             setImageHeight(img.height.toString())
             setImageWidth(img.width.toString())
             // 5. If all checks pass, set the state variable to send to post request
-            setFile(file as File);
+            setFile(compressedFile);
         };
     }
 
@@ -263,7 +275,17 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         className={`block w-[80%] mx-auto border border-[var(--brown-500)] text-center py-1 bg-[var(--brown-500)] text-white rounded-md hover:cursor-pointer`}
                                         htmlFor="image-upload"
                                     >
-                                        Upload Photo
+                                        {isUpLoading ?
+                                            <PulseLoader
+                                                loading={isUpLoading}
+                                                size={7}
+                                                aria-label="Loading Spinner"
+                                                data-testid="loader"
+                                                className="text-[var(--off-white)]"
+                                            />
+                                            :
+                                            'Upload'
+                                        }
                                         <input
                                             id="image-upload"
                                             type="file"

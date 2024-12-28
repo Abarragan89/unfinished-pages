@@ -5,6 +5,7 @@ import NextImage from 'next/image';
 import axios from "axios";
 import InputLabelEl from "../FormInputs/InputLabelEl";
 import PhotoRequirements from "../FormInputs/PhotoRequirements";
+import imageCompression from 'browser-image-compression';
 
 export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: string, coverPhotoUrl: string }) {
     const [message, setMessage] = useState<string>("");
@@ -17,7 +18,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
     const [fileIsAccepted, setFileIsAccepted] = useState<boolean>(false)
 
 
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         setMessage("");
         if (file) {
@@ -28,6 +29,17 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 event.target.value = ""; // Reset the input
                 return;
             }
+
+            setIsUploading(true)
+            const options = {
+                maxSizeMB: 1.5,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true,
+            }
+            // compress the file
+            const compressedFile = await imageCompression(file, options);
+            setIsUploading(false);
+
             // 2. Check image dimensions
             const img = new Image();
             img.src = URL.createObjectURL(file);
@@ -66,7 +78,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 reader.readAsDataURL(file); // Read file as Data URL
 
                 // 4. If all checks pass, set the state variable to send to post request
-                setFile(file);
+                setFile(compressedFile);
             };
             img.onerror = () => {
                 setFileIsAccepted(false);
@@ -75,6 +87,8 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
             };
         }
     };
+
+    console.log('uploading ', isUpLoading)
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
@@ -123,11 +137,11 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         <section>
             {
                 imagePreview ?
-                    <div className="flex justify-around flex-wrap">  
-                    {!file &&
-                    
-                        <PhotoRequirements />
-                    }
+                    <div className="flex justify-around flex-wrap">
+                        {!file &&
+
+                            <PhotoRequirements />
+                        }
                         <NextImage
                             width={200}
                             height={200}
