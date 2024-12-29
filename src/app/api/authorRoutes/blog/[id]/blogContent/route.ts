@@ -12,9 +12,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         const { content, readDuration } = await request.json();
 
         // Extract image IDs or URLs from the content JSON
-        const extractImageIdsFromContent = (content: any): string[] => {
+        // @ts-expect-error: no content type yet
+        const extractImageIdsFromContent = (content): string[] => {
             const imageIds: string[] = [];
-            const traverseContent = (items: any[]) => {
+            // @ts-expect-error: no content type yet
+            const traverseContent = (items) => {
                 for (const item of items) {
                     if (item.type === 'image' && item.image?.id) {
                         imageIds.push(item.image.id);
