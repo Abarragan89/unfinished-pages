@@ -47,29 +47,105 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                             })}
                         </p>
                     );
-                } else if (block.type.includes('list')) {
-                    return (
-                        block.type === 'numbered-list' ? (
-                            <ol key={index.toString()} className="list-decimal ml-[50px] py-4">
-                                {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
-                                    blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
-                                        if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
+                }
+                // else if (block.type.includes('list')) {
+                //     return (
+                //         block.type === 'numbered-list' ? (
+                //             <ol key={index.toString()} className="list-decimal ml-[50px] py-4">
+                //                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
+                //                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
+                //                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
+                //                         if (listBlockDetails.type === 'link') {
+                //                             return (
+                //                                 <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
+                //                                     <Link
+                //                                         href={listBlockDetails.url as string}
+                //                                         target="_blank"
+                //                                         rel="noopener noreferrer"
+                //                                         className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
+                //                                     >
+                //                                         {listBlockDetails.children?.map((linkText) => linkText.text)}
+                //                                     </Link>
+                //                                 </li>
+                //                             )
+                //                         } else {
+                //                             return (
+                //                                 <li
+                //                                     key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                //                                     className={`
+                //                                         ${listBlockDetails.bold ? 'font-bold' : ''}
+                //                                         ${listBlockDetails.italic ? 'italic' : ''}
+                //                                         ${listBlockDetails.underline ? 'underline' : ''}
+                //                                     `}
+                //                                 >
+                //                                     {listBlockDetails.text}
+                //                                 </li>
+                //                             )
+                //                         }
+                //                     })
+                //                 ))}
+                //             </ol>
+                //         ) : (
+                //             <ul key={index.toString()} className="list-disc ml-[50px] py-4">
+                //                 {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
+                //                     blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
+                //                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
+                //                         if (listBlockDetails.type === 'link') {
+                //                             return (
+                //                                 <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
+                //                                     <Link
+                //                                         href={listBlockDetails.url as string}
+                //                                         target="_blank"
+                //                                         rel="noopener noreferrer"
+                //                                         className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
+                //                                     >
+                //                                         {listBlockDetails.children?.map((linkText) => linkText.text)}
+                //                                     </Link>
+                //                                 </li>
+                //                             )
+                //                         } else {
+                //                             return (
+                //                                 <li
+                //                                     key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                //                                     className={`
+                //                                         ${listBlockDetails.bold ? 'font-bold' : ''}
+                //                                         ${listBlockDetails.italic ? 'italic' : ''}
+                //                                         ${listBlockDetails.underline ? 'underline' : ''}
+                //                                     `}
+                //                                 >
+                //                                     {listBlockDetails.text}
+                //                                 </li>
+                //                             )
+                //                         }
+                //                     })
+                //                 ))}
+                //             </ul>
+                //         )
+                //     );
+                // } 
+                else if (block.type.includes('list')) {
+                    return block.type === 'numbered-list' ? (
+                        <ol key={index.toString()} className="list-decimal ml-[50px] py-4">
+                            {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
+                                <li key={index.toString() + subIndex.toString()}>
+                                    {blogBlock?.children?.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
+                                        if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return null;
+
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
-                                                    <Link
-                                                        href={listBlockDetails.url as string}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
-                                                    >
-                                                        {listBlockDetails.children?.map((linkText) => linkText.text)}
-                                                    </Link>
-                                                </li>
-                                            )
+                                                <Link
+                                                    key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                                                    href={listBlockDetails.url as string}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
+                                                >
+                                                    {listBlockDetails.children?.map((linkText) => linkText.text)}
+                                                </Link>
+                                            );
                                         } else {
                                             return (
-                                                <li
+                                                <span
                                                     key={index.toString() + subIndex.toString() + subSubIndex.toString()}
                                                     className={`
                                                         ${listBlockDetails.bold ? 'font-bold' : ''}
@@ -78,33 +154,35 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                                     `}
                                                 >
                                                     {listBlockDetails.text}
-                                                </li>
-                                            )
+                                                </span>
+                                            );
                                         }
-                                    })
-                                ))}
-                            </ol>
-                        ) : (
-                            <ul key={index.toString()} className="list-disc ml-[50px] py-4">
-                                {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
-                                    blogBlock?.children && blogBlock.children.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
-                                        if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return;
+                                    })}
+                                </li>
+                            ))}
+                        </ol>
+                    ) : (
+                        <ul key={index.toString()} className="list-disc ml-[50px] py-4">
+                            {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
+                                <li key={index.toString() + subIndex.toString()}>
+                                    {blogBlock?.children?.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
+                                        if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return null;
+
                                         if (listBlockDetails.type === 'link') {
                                             return (
-                                                <li key={index.toString() + subIndex.toString() + subSubIndex.toString()}>
-                                                    <Link
-                                                        href={listBlockDetails.url as string}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
-                                                    >
-                                                        {listBlockDetails.children?.map((linkText) => linkText.text)}
-                                                    </Link>
-                                                </li>
-                                            )
+                                                <Link
+                                                    key={index.toString() + subIndex.toString() + subSubIndex.toString()}
+                                                    href={listBlockDetails.url as string}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="underline text-[var(--brown-300)] hover:cursor-pointer hover:text-[var(--brown-100)]"
+                                                >
+                                                    {listBlockDetails.children?.map((linkText) => linkText.text)}
+                                                </Link>
+                                            );
                                         } else {
                                             return (
-                                                <li
+                                                <span
                                                     key={index.toString() + subIndex.toString() + subSubIndex.toString()}
                                                     className={`
                                                         ${listBlockDetails.bold ? 'font-bold' : ''}
@@ -113,15 +191,17 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                                                     `}
                                                 >
                                                     {listBlockDetails.text}
-                                                </li>
-                                            )
+                                                </span>
+                                            );
                                         }
-                                    })
-                                ))}
-                            </ul>
-                        )
+                                    })}
+                                </li>
+                            ))}
+                        </ul>
                     );
-                } else if (block.type === 'heading-one') {
+                }
+
+                else if (block.type === 'heading-one') {
                     return (
                         <h2
                             key={index.toString()}

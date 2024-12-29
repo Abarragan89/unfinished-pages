@@ -37,6 +37,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model Account {
   userId            String
   type              String
@@ -109,7 +110,8 @@ model Blog {
   coverPhotoUrl String?
   coverPhotoAlt String? @db.VarChar(100)
   isPublished Boolean @default(false)
-  content ContentBlock[]
+  // content ContentBlock[]
+  content Json?
   categories BlogCategory[]
   notifications Notification[]
   tags String? @db.VarChar(200)
@@ -118,6 +120,7 @@ model Blog {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   publishedDate DateTime  @default(now()) 
   updatedAt DateTime @updatedAt
+  images Image[] @relation("BlogImages")
 }
 
 model BlogCategory {
@@ -125,52 +128,6 @@ model BlogCategory {
   name String @unique
   displayName String @unique
   blog Blog[]
-}
-
-model ContentBlock {
-  id String @id @default(cuid())
-  orderNumber Int
-  type String
-  videoUrl String? // this is only for videos
-  children ContentBlockDetails[]
-  imageId   String?
-  blogId String
-  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
-  image  Image? @relation(fields: [imageId], references: [id])  
-}
-
-model ContentBlockDetails {
-  id String @id @default(cuid())
-  text String?
-  bold Boolean?
-  underline Boolean?
-  italic Boolean?
-  // List items are nested in another children array
-  type String?
-  url String?
-  children BlockDetailsListItems[]
-  contentBlockId String
-  contentBlock ContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
-}
-
-model BlockDetailsListItems {
-  id String @id @default(cuid())
-  text String
-  bold Boolean?
-  underline Boolean?
-  italic Boolean?
-  type String? // this is for anchor tags that are in list items
-  url String? // this is for anchor tags that are in list items
-  children AnchorLinksInListItems[]
-  blockDetailsId String
-  blockDetails ContentBlockDetails @relation(fields: [blockDetailsId], references: [id], onDelete: Cascade)
-}
-
-model AnchorLinksInListItems {
-  id String @id @default(cuid())
-  text String
-  parentListItemId String
-  parentListItem BlockDetailsListItems @relation(fields: [parentListItemId], references: [id], onDelete: Cascade)
 }
 
 model Image {
@@ -181,7 +138,7 @@ model Image {
   height Int
   isBlogCover Boolean
   userId String
-  contentBlocks ContentBlock[]
+  blogs Blog[] @relation("BlogImages")
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now()) 
 }
@@ -232,4 +189,52 @@ model AuthorRequest {
     userId  String   @unique
     user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     createdAt DateTime  @default(now()) 
-}   
+}  
+
+
+
+// model ContentBlock {
+//   id String @id @default(cuid())
+//   orderNumber Int
+//   type String
+//   videoUrl String? // this is only for videos
+//   children ContentBlockDetails[]
+//   imageId   String?
+//   blogId String
+//   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade )
+//   image  Image? @relation(fields: [imageId], references: [id])  
+// }
+
+// model ContentBlockDetails {
+//   id String @id @default(cuid())
+//   text String?
+//   bold Boolean?
+//   underline Boolean?
+//   italic Boolean?
+//   // List items are nested in another children array
+//   type String?
+//   url String?
+//   children BlockDetailsListItems[]
+//   contentBlockId String
+//   contentBlock ContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+// }
+
+// model BlockDetailsListItems {
+//   id String @id @default(cuid())
+//   text String
+//   bold Boolean?
+//   underline Boolean?
+//   italic Boolean?
+//   type String? // this is for anchor tags that are in list items
+//   url String? // this is for anchor tags that are in list items
+//   children AnchorLinksInListItems[]
+//   blockDetailsId String
+//   blockDetails ContentBlockDetails @relation(fields: [blockDetailsId], references: [id], onDelete: Cascade)
+// }
+
+// model AnchorLinksInListItems {
+//   id String @id @default(cuid())
+//   text String
+//   parentListItemId String
+//   parentListItem BlockDetailsListItems @relation(fields: [parentListItemId], references: [id], onDelete: Cascade)
+// }

@@ -232,9 +232,7 @@ export default function SideMenu({ onClickHandler }: Props) {
                                         height={200}
                                         src={imagePreview}
                                         alt="Preview"
-                                        fill
                                         className="rounded-sm"
-                                        placeholder="blur"
                                         loading="lazy"
                                     />
                                     <div className="flex flex-col text-[.85rem] text-[var(--brown-500)] mt-3">
