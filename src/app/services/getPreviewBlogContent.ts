@@ -28,7 +28,7 @@ export default async function getPreviewBlogContent(userId: string, blogId: stri
                 likes: true,
                 isPublished: true,
                 _count: {
-                    select: {comments: true}
+                    select: { comments: true }
                 },
                 readDuration: true,
                 user: {
@@ -37,48 +37,7 @@ export default async function getPreviewBlogContent(userId: string, blogId: stri
                         image: true
                     }
                 },
-                content: {
-                    orderBy: { orderNumber: 'asc' },
-                    select: {
-                        type: true,
-                        videoUrl: true,
-                        image: {
-                            select: {
-                                id: true,
-                                alt: true,
-                                width: true,
-                                height: true,
-                                url: true,
-                                isBlogCover: true
-                            }
-                        },
-                        children: {
-                            select: {
-                                text: true,
-                                bold: true,
-                                italic: true,
-                                underline: true,
-                                type: true,
-                                url: true,
-                                children: {
-                                    select: {
-                                        text: true,
-                                        bold: true,
-                                        underline: true,
-                                        italic: true,
-                                        type: true,
-                                        url: true,
-                                        children: {
-                                            select: {
-                                                text: true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                },
+                content: true,
             },
         })
         return blogData;

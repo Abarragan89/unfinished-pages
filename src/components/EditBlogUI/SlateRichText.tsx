@@ -95,7 +95,9 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         }
     ];
     // Set the content to initial node or data from query
-    const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContentToDescendantType(blogContent) : initialValue);
+    // const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContentToDescendantType(blogContent) : initialValue);
+    const [content, setContent] = useState<Descendant[]>(blogContent ? formatContentToDescendantType(blogContent) : initialValue);
+    
 
     const getPlainText = (editor: Editor) => {
         return Editor.string(editor, []);
