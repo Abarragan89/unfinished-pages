@@ -88,8 +88,6 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
         }
     };
 
-    console.log('uploading ', isUpLoading)
-
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         if (!file) return;

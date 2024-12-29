@@ -25,7 +25,7 @@ export default function BlogCard({
     isPublished = null,
     readDuration
 }: Props) {
-    console.log('blog date', date)
+    
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] border border-[var(--gray-300)] pb-2 rounded-sm bg-[var(--off-white)] relative">
             {/* Your slide content here */}
