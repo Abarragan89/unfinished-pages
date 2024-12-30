@@ -5,7 +5,6 @@ import NextImage from 'next/image';
 import axios from "axios";
 import InputLabelEl from "../FormInputs/InputLabelEl";
 import PhotoRequirements from "../FormInputs/PhotoRequirements";
-import imageCompression from 'browser-image-compression';
 
 export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: string, coverPhotoUrl: string }) {
     const [message, setMessage] = useState<string>("");
@@ -30,17 +29,15 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 return;
             }
 
-            setIsUploading(true)
-            const options = {
-                maxSizeMB: 1.5,
-                maxWidthOrHeight: 1920,
-                useWebWorker: true,
+            // 2. Check file size (max 3.75MB)
+            const maxSizeMB = 3.75;
+            if (file.size > maxSizeMB * 1024 * 1024) { // Convert MB to bytes
+                setMessage("File size must be less than 3.75MB.");
+                event.target.value = ""; // Reset the input
+                return;
             }
-            // compress the file
-            const compressedFile = await imageCompression(file, options);
-            setIsUploading(false);
 
-            // 2. Check image dimensions
+            // 3. Check image dimensions
             const img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
@@ -78,7 +75,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
                 reader.readAsDataURL(file); // Read file as Data URL
 
                 // 4. If all checks pass, set the state variable to send to post request
-                setFile(compressedFile);
+                setFile(file);
             };
             img.onerror = () => {
                 setFileIsAccepted(false);

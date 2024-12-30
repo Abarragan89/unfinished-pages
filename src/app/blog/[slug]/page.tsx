@@ -26,6 +26,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     // Fetch blog data
     const blogData = await getBlogData(blogId);
 
+    console.log('blog Data ', blogData)
+
     if (!blogData) {
         return {
             title: 'Blog Not Found',
