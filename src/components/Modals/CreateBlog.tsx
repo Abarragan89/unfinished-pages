@@ -67,7 +67,7 @@ export default function CreateBlog() {
                             loading={isCreating}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-                            className="text-[var(--off-white)]"
+                            color="gray"
                         />
                         :
                         'Create'

@@ -32,7 +32,7 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
                             loading={UIStateTrigger}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-                            className="text-[var(--off-white)]"
+                            color="gray"
                         />
                         :
                         'Save'

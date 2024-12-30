@@ -26,7 +26,8 @@ export default function SubmitButton({ isLoading, isSubmittable, children, value
                     loading={isLoading}
                     aria-label="Loading Spinner"
                     data-testid="loader"
-                    className="text-[var(--off-white)] mb-1"
+                    color="gray"
+                    className="mb-1"
                 />
                 :
                 children
