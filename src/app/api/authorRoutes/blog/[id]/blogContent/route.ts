@@ -66,7 +66,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                     })
                 )
             );
-        }, { timeout: 25000 });
+        }, { timeout: 15000 });
 
         // Return success response
         return NextResponse.json({ message: 'success' });
