@@ -468,6 +468,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
         try {
             setErrorMessage('')
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogContent`, {
+                // need to use ref to get the most updated when saveContent is called in a Timeout for Auto Save
                 content: contentRef.current,
                 readDuration,
             });
