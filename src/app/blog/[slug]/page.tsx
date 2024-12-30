@@ -75,7 +75,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
     // get related blog data
     const relatedBlogs = await getRelatedBlogs(blogData.categories, blogId) as unknown as BlogData[]
-    // const formattedBlogData: Descendant[] = formatContentToDescendantType(blogData.content as BlogContent[])
     const consolidatedData: BlogContent[] = consolidateCodeBlocks(relatedBlogs as BlogContent[]);
 
     return (
