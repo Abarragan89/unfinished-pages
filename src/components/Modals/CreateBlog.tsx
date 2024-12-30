@@ -47,12 +47,12 @@ export default function CreateBlog() {
                         className="input-browser-reset w-[260px] p-[6px] border-2 border-[var(--brown-500)] text-[.9rem]"
                         id="blog-title"
                         autoFocus
-                        maxLength={65}
+                        maxLength={70}
                         required
                     />
                     <div className="flex justify-between mx-1 text-[.95rem] mt-1">
                         <p className="text-[.9rem] text-[var(--gray-600)] italic">Title can be edited later</p>
-                        <p className="text-[var(--brown-500)]">{blogTitle.length}/65</p>
+                        <p className="text-[var(--brown-500)]">{blogTitle.length}/70</p>
                     </div>
                 </div>
                 {errorMsg && <p className="text-center text-[var(--danger)] text-[.935rem] mb-[-10px]">{errorMsg}</p>}

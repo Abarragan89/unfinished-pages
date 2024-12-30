@@ -109,7 +109,6 @@ model Blog {
   coverPhotoUrl String?
   coverPhotoAlt String? @db.VarChar(100)
   isPublished Boolean @default(false)
-  // content ContentBlock[]
   content Json?
   categories BlogCategory[]
   notifications Notification[]
