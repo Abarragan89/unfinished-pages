@@ -55,7 +55,7 @@ export async function middleware(request: NextRequest) {
     if (process.env.NODE_ENV === 'production') {
         cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net;
+        script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net https://vercel.live/_next-live/feedback/;
         style-src 'self' 'unsafe-inline';
         img-src 'self' blob: data: https://unfinished-pages.s3.us-east-2.amazonaws.com https://*.googleusercontent.com https://*.yahoo.com https://*.outlook.com https://authjs.dev/ https://ep1.adtrafficquality.google/pagead/ https://pagead2.googlesyndication.com/;
         font-src 'self';
