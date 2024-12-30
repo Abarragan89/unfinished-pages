@@ -64,7 +64,7 @@ export async function middleware(request: NextRequest) {
         form-action 'self';
         frame-ancestors 'none';
         worker-src 'self' blob:;
-        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
+        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/ https://pagead2.googlesyndication.com/;
         connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/;
         upgrade-insecure-requests;
     `;
