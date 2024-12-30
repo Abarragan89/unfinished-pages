@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation';
 import { Editor, Transforms, Element as SlateElement, Descendant, createEditor, BaseEditor, Range } from 'slate'
 import { Slate, Editable, withReact, ReactEditor, useSlate } from 'slate-react'
@@ -79,6 +79,10 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     const [isButtonAbled, setIsButtonAbled] = useState<boolean>(false)
     const [isContentSaving, setIsContentSaving] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
+    // Variables to handle and track autosaving feature
+    const AutoSaveInterval = useRef<number | NodeJS.Timeout | null>(null);
+    const contentRef = useRef<Descendant[]>([]); // Ref to hold the latest content
+    const pendingChangesRef = useRef(false); // Ref to track changes during save
 
     // Create the editor
     const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
@@ -97,7 +101,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     // Set the content to initial node or data from query
     // const [content, setContent] = useState<Descendant[]>(blogContent.length ? formatContentToDescendantType(blogContent) : initialValue);
     const [content, setContent] = useState<Descendant[]>(blogContent ? formatContentToDescendantType(blogContent) : initialValue);
-    
+
 
     const getPlainText = (editor: Editor) => {
         return Editor.string(editor, []);
@@ -432,23 +436,48 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
     const handleChange = (newValue: Descendant[]) => {
         setIsButtonAbled(true);
         setContent(newValue);
+        contentRef.current = newValue;
+
+        if (isContentSaving) {
+            pendingChangesRef.current = true;// Mark changes as pending if save is in progress
+        } else {
+            setIsButtonAbled(true); // Enable the button if no save is in progress
+        }
+
+        if (AutoSaveInterval.current) {
+            clearTimeout(AutoSaveInterval.current); // Clear the existing timeout
+        }
+        AutoSaveInterval.current = setTimeout(() => {
+            if (!isContentSaving) {
+                saveContent(); // Only save if not already saving
+            }
+        }, 5500);
     };
 
-
     const saveContent = async () => {
+        if (isContentSaving) return;
+        setIsContentSaving(true);
+        if (AutoSaveInterval.current) {
+            clearTimeout(AutoSaveInterval.current); // Clear the timeout before saving
+        }
         const wordCount = getPlainText(editor).split(" ").length;
         const wordsPerMinute = 250;
         const readLength = Math.floor(wordCount / wordsPerMinute); // Round up for partial minutes
         const readDuration = readLength === 0 ? 1 : readLength
 
         try {
-            setIsContentSaving(true);
             setErrorMessage('')
             await axios.put(`/api/authorRoutes/blog/${blogId}/blogContent`, {
-                content,
+                content: contentRef.current,
                 readDuration,
             });
-            setIsButtonAbled(false);
+            // After save, check if there were pending changes
+            if (pendingChangesRef.current) {
+                pendingChangesRef.current = false; // Clear pending changes
+                setIsButtonAbled(true); // Keep button enabled for unsaved changes
+            } else {
+                setIsButtonAbled(false); // Disable button if no pending changes
+            }
         } catch (error) {
             console.error("Error saving content:", error);
             setErrorMessage('Blog not updated. Please try again.')
@@ -456,6 +485,15 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             setIsContentSaving(false); // Ensure this always runs
         }
     };
+    // clean up use effect
+    useEffect(() => {
+        return () => {
+            // Cleanup timeout when the component unmounts
+            if (AutoSaveInterval.current) {
+                clearTimeout(AutoSaveInterval.current);
+            }
+        };
+    }, []);
 
     return (
         <>
