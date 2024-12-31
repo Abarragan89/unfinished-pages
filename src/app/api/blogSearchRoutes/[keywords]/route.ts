@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { prisma } from '../../../../../utils/prisma';
 
-// Get a Blog by category name 
+// Get a Blog by search bar name 
 export async function GET(request: NextRequest, { params }: { params: { keywords: string } }) {
     try {
 

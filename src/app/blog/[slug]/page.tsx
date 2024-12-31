@@ -26,8 +26,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     // Fetch blog data
     const blogData = await getBlogData(blogId);
 
-    console.log('blog Data ', blogData)
-
     if (!blogData) {
         return {
             title: 'Blog Not Found',
@@ -92,6 +90,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 publishDate={blogData.updatedAt.toLocaleDateString('en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
                 )}
+                isShortStory={blogData?.categories?.some((category) => category.name === 'short-stories')}
             />
 
             {/* This will be the likes/comment button bar */}

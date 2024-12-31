@@ -28,6 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { category
                 coverPhotoUrl: true,
                 likeCount: true,
                 isPublished: true,
+                categories: true,
                 _count: {
                     select: {
                         comments: true

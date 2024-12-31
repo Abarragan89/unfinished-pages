@@ -43,6 +43,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
                 publishDate={blogData.updatedAt.toLocaleDateString('en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
                 )}
+                isShortStory={blogData?.categories?.some((category) => category.name === 'short-stories')}
             />
 
             {/* This will be the likes/comment button bar */}

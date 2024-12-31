@@ -79,7 +79,7 @@ export default function BlogCard({
                     <div className="flex justify-between">
                         <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
                             <p className="text-[.8rem] italic">
-                                {isShortStory ? 'short story': '&nbsp;'}
+                                {isShortStory ? 'short story': ''}
                             </p>
                         </div>
                         <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">

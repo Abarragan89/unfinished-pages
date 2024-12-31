@@ -8,6 +8,7 @@ interface Props {
     authorImgURL: string;
     readingLength: number;
     publishDate: string;
+    isShortStory: boolean;
 }
 
 export default function BlogMetaDetails({
@@ -15,7 +16,8 @@ export default function BlogMetaDetails({
     authorName,
     authorImgURL,
     readingLength,
-    publishDate
+    publishDate,
+    isShortStory
 }: Props) {
     return (
         <>
@@ -30,9 +32,15 @@ export default function BlogMetaDetails({
                     className="rounded-[50px] w-[40px] border border-[var(--gray-300)]"
                     priority
                 />
-                <div className="ml-4">
+                <div className="ml-4 w-full">
                     <p className="text-[.95rem] leading-5">{authorName}</p>
-                    <p className="text-[.95rem] leading-5 text-[var(--gray-500)]">{readingLength} min read - {publishDate}</p>
+                    <div className="flex justify-between w-full">
+                        <p className="text-[.95rem] leading-5 text-[var(--gray-500)]">{readingLength} min read - {publishDate}</p>
+                        <p className="text-[.9rem] leading-5 text-[var(--gray-500)] italic">
+                            {isShortStory ? 'short story' : ''}
+                        </p>
+
+                    </div>
                 </div>
             </section>
         </>
