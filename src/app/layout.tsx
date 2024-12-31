@@ -27,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Adsense nonce={nonce} />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         nonce={nonce}
