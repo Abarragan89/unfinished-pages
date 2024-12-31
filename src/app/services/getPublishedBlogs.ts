@@ -20,6 +20,7 @@ export default async function getPublishedBlogs() {
                 likeCount: true,
                 isPublished: true,
                 readDuration: true,
+                categories: true,
                 _count: {
                     select: {
                         comments: true

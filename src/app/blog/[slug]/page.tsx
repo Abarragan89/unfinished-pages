@@ -146,6 +146,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                                     coverPhotoUrl={blog.coverPhotoUrl}
                                     totalCommentCount={4}
                                     readDuration={blog.readDuration}
+                                    isShortStory={blog?.categories?.some((category) => category.name === 'short-stories')}
                                 />
                             </Link>
                         )

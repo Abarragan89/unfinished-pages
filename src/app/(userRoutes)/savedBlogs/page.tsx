@@ -41,6 +41,7 @@ export default async function page() {
                                 totalCommentCount={blog?._count?.comments ?? 0}
                                 isPublished={blog.isPublished}
                                 readDuration={blog.readDuration}
+                                isShortStory={blog?.categories?.some((category) => category.name === 'short-stories')}
                             />
                         </Link>
                     )

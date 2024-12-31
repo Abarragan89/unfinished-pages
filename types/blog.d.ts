@@ -13,13 +13,18 @@ export interface BlogData {
     isPublished?: boolean;
     tags?: string;
     publishedDate?: Date;
-    categories?: []
+    categories?: Category[]
     content?: BlogContent;
     readDuration?: number;
     comments?: Comment[]
     _count?: {
         comments?: number
     }
+}
+
+export interface Category {
+    name: string;
+    displayName: string;
 }
 
 export interface NestedListChildren {
@@ -51,17 +56,17 @@ export interface BlogContent {
 }
 
 interface BlogLike {
-    id: string;           // Unique identifier for the like
-    userId: string;       // The ID of the user who liked the blog
-    blogId: string;       // The ID of the blog that was liked
+    id: string;          
+    userId: string;      
+    blogId: string;     
     user: {
-        id: string;         // The user's ID
-        name?: string;      // Optional: The user's name (assuming the User model has a name field)
-        email: string;      // The user's email
+        id: string;       
+        name?: string;    
+        email: string;    
     };
     blog: {
-        id: string;         // The blog's ID
-        title: string;      // The title of the blog
-        description?: string; // Optional: A brief description of the blog
+        id: string; 
+        title: string;  
+        description?: string;
     };
 }

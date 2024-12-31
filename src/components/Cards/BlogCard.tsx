@@ -12,6 +12,7 @@ interface Props {
     totalCommentCount: number;
     isPublished?: boolean | null
     readDuration?: number
+    isShortStory?: boolean
 }
 
 export default function BlogCard({
@@ -23,9 +24,10 @@ export default function BlogCard({
     totalCommentCount,
     // will be null for cards that do not belong to authors. Author cards will pass either true or false
     isPublished = null,
-    readDuration
+    readDuration,
+    isShortStory
 }: Props) {
-    
+
     return (
         <div className="embla__slide-inner custom-card-shadows flex-col w-[300px] mx-[20px] border border-[var(--gray-300)] pb-2 rounded-sm bg-[var(--off-white)] relative">
             {/* Your slide content here */}
@@ -74,8 +76,16 @@ export default function BlogCard({
                         <h3 className="font-medium text-[var(--brown-500)] text-[1.025rem]">{title}</h3>
                         <p className="mt-2 text-[.9rem]">{description}</p>
                     </div>
-                    <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
-                        <p className="text-[.8rem]">{date}</p>
+                    <div className="flex justify-between">
+                        <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
+                            <p className="text-[.8rem] italic">
+                                {isShortStory ? 'short story': '&nbsp;'}
+                            </p>
+                        </div>
+                        <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
+                            <p className="text-[.8rem]">{date}</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
