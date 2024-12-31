@@ -11,6 +11,7 @@ import Adsense from "@/components/AdSense";
 export const metadata: Metadata = {
   title: "Unfinished Pages",
   description: "Blog",
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -27,7 +28,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Adsense nonce={nonce} />
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         nonce={nonce}
