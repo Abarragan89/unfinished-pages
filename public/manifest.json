@@ -1,7 +1,7 @@
 {
     "name": "Unfinished Pages",
     "short_name": "Unfinished Pages",
-    "description": "Blogging platform discuss ideas and ask questions",
+    "description": "Blogging platform to discuss ideas and ask questions",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -17,11 +17,6 @@
     "theme_color": "#000000",
     "background_color": "#000000",
     "display": "standalone",
-    "splash_screens": [
-        {
-            "src": "/apple-touch-icon.png",
-            "sizes": "2048x2732",
-            "type": "image/png"
-        }
-    ]
+    "start_url": "/",
+    "scope": "/"
 }
