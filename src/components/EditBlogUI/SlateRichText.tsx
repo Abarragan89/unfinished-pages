@@ -117,7 +117,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
             case 'bulleted-list':
                 return <BulletedList {...props} />
             case 'list-item':
-                return <li {...props.attributes}>{props.children}</li>;
+                return <li className='py-1' {...props.attributes}>{props.children}</li>;
             case 'heading-one':
                 return <HeadingOne {...props} />
             case 'heading-two':
