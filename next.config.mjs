@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+import withPWA from 'next-pwa';
+
+const nextConfig = withPWA({
+    dest: 'public',
+    register: true,
+    skipWaiting: true,
+})({
     images: {
         domains: [
             'lh3.googleusercontent.com',
@@ -15,6 +21,9 @@ const nextConfig = {
             'profile.live.com',
         ],
     },
-};
+});
 
 export default nextConfig;
+
+
+
