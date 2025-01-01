@@ -58,7 +58,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
                 width={700}
                 height={394}
                 alt="Image of thing, should replace with data"
-                className="block mx-auto mb-[25px] md:mb-[40px]"
+                className="block mx-auto mb-7"
                 priority
             />
 

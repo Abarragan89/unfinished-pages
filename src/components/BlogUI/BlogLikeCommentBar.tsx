@@ -71,7 +71,7 @@ export default function BlogLikeCommentBar({ likes, blogId, commentCount, blogUr
     }
 
     return (
-        <section className="flex items-center mx-auto mb-[40px] justify-between py-[5px] max-w-[700px] my-5 px-4 text-[var(--gray-500)] border-t border-b border-[var(--gray-300)]">
+        <section className="flex items-center mx-auto mb-5 justify-between py-[5px] max-w-[700px] my-5 px-4 text-[var(--gray-500)] border-t border-b border-[var(--gray-300)]">
             <div className="flex items-center text-[var(--gray-500)">
                 {isBlogLikedByUser ?
                     <FaHeart
