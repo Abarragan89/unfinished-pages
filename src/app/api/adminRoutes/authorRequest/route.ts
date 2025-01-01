@@ -33,6 +33,7 @@ export async function PUT(request: NextRequest) {
             });
         }
         return NextResponse.json({ message: 'success' }, { status: 200 })
+        
     } catch (error) {
         console.error('Error saving Blog Content ', error);
         return NextResponse.json({ error: 'failed to parse blog content' })
