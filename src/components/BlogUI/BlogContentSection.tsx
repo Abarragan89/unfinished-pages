@@ -89,7 +89,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     ) : (
                         <ul key={index.toString()} className="list-disc ml-[50px] pb-8">
                             {block.children.map((blogBlock: BlogDetails, subIndex: number) => (
-                                <li key={index.toString() + subIndex.toString()} className="pb-4">
+                                <li key={index.toString() + subIndex.toString()} className="pb-5">
                                     {blogBlock?.children?.map((listBlockDetails: NestedListChildren, subSubIndex: number) => {
                                         if (listBlockDetails.text === '' && listBlockDetails.type !== 'link') return null;
 
@@ -130,7 +130,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="pb-4 font-bold text-[23px] sm:text-[26px]"
+                            className="pb-6 font-bold text-[23px] sm:text-[26px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -166,7 +166,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h3
                             key={index.toString()}
-                            className="text-[1.35rem] pb-4 text-[21px] sm:text-[24px]"
+                            className="text-[1.35rem] pb-6 text-[21px] sm:text-[24px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
