@@ -130,7 +130,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="pt-5 pb-2 font-bold text-[23px] sm:text-[26px]"
+                            className="pb-4 font-bold text-[23px] sm:text-[26px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -166,7 +166,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h3
                             key={index.toString()}
-                            className="text-[1.35rem] pt-5 pb-2 text-[21px] sm:text-[24px]"
+                            className="text-[1.35rem] pb-4 text-[21px] sm:text-[24px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
