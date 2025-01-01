@@ -8,7 +8,7 @@ export default async function getAuthorBlogs(userId: string) {
                 userId
             },
             orderBy: {
-                publishedDate: 'desc'
+                updatedAt: 'desc'
             },
             select: {
                 id: true,
