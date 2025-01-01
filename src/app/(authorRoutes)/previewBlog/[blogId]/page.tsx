@@ -9,6 +9,7 @@ import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
 import Image from "next/image"
 import consolidateCodeBlocks from "../../../../../utils/consolidateCodeBlocks"
 import BlogContentSection from "@/components/BlogUI/BlogContentSection"
+import { formatDate } from '../../../../../utils/formatDate'
 
 export default async function page({ params }: { params: { blogId: string } }) {
 
@@ -40,9 +41,7 @@ export default async function page({ params }: { params: { blogId: string } }) {
                 coverImgAlt={'Blog cover image'}
                 coverImgURL={blogData.coverPhotoUrl as string}
                 readingLength={blogData.readDuration}
-                publishDate={blogData.updatedAt.toLocaleDateString('en-US',
-                    { year: 'numeric', month: 'long', day: 'numeric' }
-                )}
+                publishDate={formatDate(blogData.updatedAt)}
                 isShortStory={blogData?.categories?.some((category) => category.name === 'short-stories')}
             />
 

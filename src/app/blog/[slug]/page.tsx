@@ -87,9 +87,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 coverImgAlt={'Blog cover image'}
                 coverImgURL={blogData.coverPhotoUrl as string}
                 readingLength={blogData.readDuration}
-                publishDate={blogData.updatedAt.toLocaleDateString('en-US',
-                    { year: 'numeric', month: 'long', day: 'numeric' }
-                )}
+                publishDate={formatDate(blogData.updatedAt)}
                 isShortStory={blogData?.categories?.some((category) => category.name === 'short-stories')}
             />
 
