@@ -1,11 +1,16 @@
-import { Roboto, Bilbo } from 'next/font/google'
+import { Roboto, Bilbo, Atkinson_Hyperlegible } from 'next/font/google'
 
 
-export const bodyFont = Roboto({
+export const bodyFont = Atkinson_Hyperlegible({
     subsets: ['latin'],
     display: 'swap',
-    weight: ['300', '400', '500', '700', '900']
+    weight: ['400', '700']
 })
+// export const bodyFont = Roboto({
+//     subsets: ['latin'],
+//     display: 'swap',
+//     weight: ['300', '400', '500', '700', '900']
+// })
 
 export const titleFont = Bilbo({
     subsets: ['latin'],
