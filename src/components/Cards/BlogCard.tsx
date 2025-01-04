@@ -57,8 +57,8 @@ export default function BlogCard({
                 alt="Busts of Greek philosophers"
                 className="rounded-t-sm w-full h-full"
             />
-            <div className="min-h-[192px]">
-                <div className="flex justify-between px-2 pt-1 text-[var(--gray-600)] text-[0.875rem]">
+            <div className="min-h-[208px]">
+                <div className="flex justify-between px-2 text-[var(--gray-600)] text-[0.875rem]">
                     <p>{readDuration} min read</p>
                     <div className="flex">
                         <div className="flex items-center pr-3">
@@ -73,7 +73,7 @@ export default function BlogCard({
                 </div>
                 <div className="flex flex-col justify-between h-[165px]">
                     <div className="flex-column justify-between rounded-b-sm pt-1 px-3">
-                        <h3 className="font-medium text-[var(--brown-500)] text-[1.025rem]">{title}</h3>
+                        <h3 className="font-medium text-[var(--brown-500)] text-[1rem]">{title}</h3>
                         <p className="mt-2 text-[.9rem]">{description}</p>
                     </div>
                     <div className="flex justify-between">
