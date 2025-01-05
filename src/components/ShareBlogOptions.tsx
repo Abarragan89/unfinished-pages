@@ -110,10 +110,10 @@ export default function ShareBlogOptions({ blogUrl, blogDescription, toggleShare
             <div className='relative'>
                 {showSuccessfulCopyText &&
                     <p
-                        className='absolute top-[-30px] right-[25px] text-[.875rem] bg-white border border-[var(--gray-300)] rounded-md p-[3px] px-[8px] text-[var(--gray-600)] custom-low-lifted-shadow'
+                        className='absolute top-[-30px] right-[25px] text-[.9rem] bg-white border border-[var(--gray-300)] rounded-md p-[3px] px-[8px] text-[var(--gray-600)] custom-low-lifted-shadow'
                     >Link Copied!</p>
                 }
-                <button className='text-[.875rem] flex justify-center items-center block mx-auto mt-2 hover:text-[var(--brown-300)] active:text-[var(--off-black)]' onClick={handleCopy}>
+                <button className='text-[.9rem] flex justify-center items-center block mx-auto mt-2 hover:text-[var(--brown-300)] active:text-[var(--off-black)]' onClick={handleCopy}>
                     Copy Link
                     <VscLink className='ml-1' size={16} />
                 </button>

@@ -4,7 +4,7 @@ import { RenderElementProps } from "slate-react";
 type SlateProps = RenderElementProps
 export default function DefaultBlock({ children, attributes }: SlateProps) {
     return <p {...attributes}
-        className="text-[.975rem] sm:text-[1rem]"
+        className="text-[.975rem] sm:text-[1.1rem]"
     >
         {children}
     </p>

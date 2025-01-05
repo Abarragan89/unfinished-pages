@@ -7,7 +7,7 @@ export default function HeadingTwo({ children, attributes} : SlateProps) {
     return (
         <h2
             {...attributes}
-            className="text-[1.2rem] sm:text-[1.3rem]"
+            className="text-[22px] sm:text-[24px]"
         >
             {children}
         </h2>

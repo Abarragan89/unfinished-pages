@@ -73,17 +73,17 @@ export default function BlogCard({
                 </div>
                 <div className="flex flex-col justify-between h-[187px]">
                     <div className="flex-column justify-between rounded-b-sm pt-1 px-3">
-                        <h3 className="font-medium text-[var(--brown-500)] text-[1.02rem]">{title}</h3>
-                        <p className="mt-1 text-[.95rem]">{description}</p>
+                        <h3 className="font-medium text-[var(--brown-500)] text-[1.1rem]">{title}</h3>
+                        <p className="mt-1 text-[1rem]">{description}</p>
                     </div>
                     <div className="flex justify-between">
-                        <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
-                            <p className="text-[.8rem] italic">
+                        <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.9rem]">
+                            <p className="text-[.875rem] italic">
                                 {isShortStory ? 'short story': ''}
                             </p>
                         </div>
                         <div className="flex justify-end px-2 text-[var(--gray-600)] text-[0.875rem]">
-                            <p className="text-[.8rem]">{date}</p>
+                            <p className="text-[.875rem]">{date}</p>
                         </div>
                     </div>
                 </div>

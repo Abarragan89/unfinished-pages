@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </Link>
                 ))
                     :
-                    <p className="text-center text-[1rem]">This category has no blogs.</p>
+                    <p className="text-center text-[1.1rem]">This category has no blogs.</p>
 
                 }
             </div>

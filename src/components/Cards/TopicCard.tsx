@@ -13,8 +13,8 @@ export default function TopicCard({ title, description, imgSrc, link, alt }: Blo
                 className="rounded-t-sm"
             />
             <div className=" border-t-0 rounded-b-sm p-4 pt-2">
-                <h3 className="uppercase font-medium text-[var(--brown-500)] text-[1.05rem]">{title}</h3>
-                <p className="my-2 text-[.9rem]">{description}</p>
+                <h3 className="uppercase text-[var(--brown-500)] text-[1.05rem]">{title}</h3>
+                <p className=" text-[.95rem]">{description}</p>
             </div>
         </Link>
     )
