@@ -14,7 +14,7 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
             {labelText &&
                 <div className="flex justify-between mx-1">
                     <label
-                        className="text-[.875rem]"
+                        className="text-[1rem]"
                         htmlFor={labelText}
                     >{labelText}</label>
                     {characterLimit &&
@@ -30,7 +30,7 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
                 autoFocus={autofocus}
                 maxLength={characterLimit ?? undefined}
                 onChange={(e) => handleStateChange(e.target.value)}
-                className="input-browser-reset text-[.95rem] border-2 border-[var(--gray-300)] focus:border-[var(--brown-300)] mx-auto block px-2 py-[3px] w-full"
+                className="input-browser-reset text-[1rem] border-2 border-[var(--gray-300)] focus:border-[var(--brown-300)] mx-auto block px-2 py-[3px] w-full"
             />
         </div>
     )

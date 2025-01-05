@@ -36,7 +36,7 @@ export default function SelectAreaEl({ blogCategories, setBlogCategories, toggle
 
     return (
         <fieldset className="w-full">
-            <legend className="text-[.95rem] ml-1">Categories</legend>
+            <legend className="text-[1rem] ml-1">Categories</legend>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 mx-auto bg-white border-2 border-[var(--gray-300)] rounded-md p-4">
                 {checkboxesArr.map((input) => {
                     return (
