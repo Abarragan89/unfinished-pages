@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function BlogContentSection({ blogContent }: { blogContent: BlogContent[] }) {
     return (
-        <section className="max-w-[700px] mx-auto leading-[2rem] text-[var(--off-black)] text-[18px] sm:text-[20px]">
+        <section className="max-w-[700px] mx-auto leading-[2rem] text-[var(--off-black)] text-[20px] sm:text-[22px]">
             {/* loop through descendant  */}
             {blogContent.map((block: BlogContent, index: number) => {
                 const validChildren = block.children.filter(
@@ -130,7 +130,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h2
                             key={index.toString()}
-                            className="pb-5 font-bold text-[25px] sm:text-[29px]"
+                            className="pb-5 font-bold text-[30px] sm:text-[33px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
@@ -166,7 +166,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
                     return (
                         <h3
                             key={index.toString()}
-                            className="text-[1.35rem] pb-5 text-[23px] sm:text-[26px]"
+                            className="text-[1.35rem] pb-5 text-[25px] sm:text-[28px]"
                         >
                             {block.children.map((blockDetails: BlogDetails, subIndex: number) => {
                                 if (blockDetails.type === 'link') {
