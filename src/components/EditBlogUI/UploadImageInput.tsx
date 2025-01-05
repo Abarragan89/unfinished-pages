@@ -183,8 +183,7 @@ export default function UploadImageInput({ blogId, coverPhotoUrl }: { blogId: st
             {
                 file &&
                 <>
-                    <div className="flex flex-col max-w-[270px] w-[90%] mx-auto mt-2">
-
+                    <div className="flex flex-col max-w-[285px] w-[90%] mx-auto mt-2">
                         <InputLabelEl
                             userText={imageAlt}
                             handleStateChange={setImageAlt}
