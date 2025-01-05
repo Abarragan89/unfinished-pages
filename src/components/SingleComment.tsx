@@ -120,7 +120,7 @@ export default function SingleComment({ session, commentData, blogId, blogTitle 
                                 size={20}
                                 className="hover:cursor-pointer" />
                         }
-                        <p className="text-[.93rem] ml-1">{totalCommentLikes?.toString()}</p>
+                        <p className="text-[.95rem] ml-1">{totalCommentLikes?.toString()}</p>
                     </div>
                 </div>
             </div>

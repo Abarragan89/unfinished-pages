@@ -143,7 +143,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     />
                 </div>
                 <div className="flex w-full justify-center items-center my-1">
-                    <p className="mr-3 text-[.9rem] text-[var(--brown-500)]">Zoom</p>
+                    <p className="mr-3 text-[.95rem] text-[var(--brown-500)]">Zoom</p>
                     <div className="my-3 w-[200px]">
                         <Slider
                             onChange={handleSliderChange}
@@ -174,7 +174,7 @@ export default function EditProfilePicModal({ userImage, userId }: { userImage: 
                     </div>
                 </div>
                 {/* Button Div  */}
-                {message && <p className="text-[var(--danger)] text-center text-[.935rem]">{message}</p>}
+                {message && <p className="text-[var(--danger)] text-center text-[.95rem]">{message}</p>}
                 <div className="flex justify-around mt-4">
                     <label
                         className={`block w-[90%] w-fit px-4 mx-auto custom-small-btn bg-[var(--off-black)]`}

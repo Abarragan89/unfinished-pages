@@ -33,7 +33,7 @@ export default function ConfirmWithText({ onConfirmHandler, confirmText, urlPara
                 />
                 {errorMsg &&
                     <p
-                        className="text-[.9rem] text-center text-[var(--danger)]"
+                        className="text-[.95rem] text-center text-[var(--danger)]"
                     >{errorMsg}</p>
                 }
                 <button

@@ -29,7 +29,7 @@ export default function DeletePhotoSubMenu({ photoUrl, onClickHandler, closeMenu
     return (
         <menu
             ref={deleteSubMenu}
-            className="absolute top-[5px] right-[-30px] z-40 w-fit bg-[var(--off-black)] py-[5px] px-3 rounded-lg text-[.9rem] text-[var(--off-white)]"
+            className="absolute top-[5px] right-[-30px] z-40 w-fit bg-[var(--off-black)] py-[5px] px-3 rounded-lg text-[.95rem] text-[var(--off-white)]"
         >
 
             <p

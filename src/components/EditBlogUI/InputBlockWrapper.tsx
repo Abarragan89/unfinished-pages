@@ -39,7 +39,7 @@ export default function InputBlockWrapper({ children, subtitle, isButtonAble, sa
                     }
                 </button>
             }
-            {errorMsg && <p className="text-[var(--danger)] text-[.9rem] absolute top-[40px] right-[15px] bg-red-950 px-2 py-[2px] m-1 rounded-md">{errorMsg}</p>}
+            {errorMsg && <p className="text-[var(--danger)] text-[.95rem] absolute top-[40px] right-[15px] bg-red-950 px-2 py-[2px] m-1 rounded-md">{errorMsg}</p>}
             {children}
         </section>
     )

@@ -33,10 +33,10 @@ export default function BlogMetaDetails({
                     priority
                 />
                 <div className="ml-4 w-full">
-                    <p className="text-[.95rem] leading-5">{authorName}</p>
+                    <p className="text-[1rem] leading-5">{authorName}</p>
                     <div className="flex justify-between w-full">
-                        <p className="text-[.95rem] leading-5 text-[var(--gray-500)]">{readingLength} min read - {publishDate}</p>
-                        <p className="text-[.9rem] leading-5 text-[var(--gray-500)] italic">
+                        <p className="text-[1rem] leading-5 text-[var(--gray-500)]">{readingLength} min read - {publishDate}</p>
+                        <p className="text-[.95rem] leading-5 text-[var(--gray-500)] italic">
                             {isShortStory ? 'short story' : ''}
                         </p>
 

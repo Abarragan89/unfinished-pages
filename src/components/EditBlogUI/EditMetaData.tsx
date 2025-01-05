@@ -61,7 +61,7 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 {/* Textarea Input */}
                 <div className="flex flex-col mt-5">
                     <div className="flex justify-between mx-1 tracking-wide">
-                        <label htmlFor="blog-title" className="text-[.95rem]">Title</label>
+                        <label htmlFor="blog-title" className="text-[1rem]">Title</label>
                         <p className="text-[.9rem] text-center">{blogTitle.length}/70</p>
                     </div>
                     <textarea
@@ -78,12 +78,12 @@ export default function EditMetaData({ title, description, blogId, categories, t
                 {/* Textarea Input */}
                 <div className="flex flex-col mt-4">
                     <div className="flex justify-between mx-1 tracking-wide">
-                        <label htmlFor="blog-title" className="text-[.95rem]">Description</label>
+                        <label htmlFor="blog-title" className="text-[1rem]">Description</label>
                         <p className="text-[.9rem]">{blogDescription.length}/150</p>
                     </div>
                     <textarea
                         onChange={(e) => { setBlogDescription(e.target.value); setIsDetailsSavable(true) }}
-                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[.95rem]"
+                        className="input-browser-reset py-[5px] px-[10px] border-2 border-[var(--gray-300)] text-[1rem]"
                         id="blog-title"
                         maxLength={150}
                         value={blogDescription}

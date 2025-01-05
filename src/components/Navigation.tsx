@@ -21,7 +21,7 @@ export default function Navigation({ userData }: { userData: UserData | null }) 
     const avatarMenuRef = useRef<HTMLLIElement | null>(null);
     const searchedBlogsList = useRef<HTMLUListElement | null>(null);
 
-    const liStyle = "mx-3 text-center text-[.93rem] border-b-[1px] text-[var(--white)] border-transparent hover:cursor-pointer"
+    const liStyle = "mx-3 text-center text-[.95rem] border-b-[1px] text-[var(--white)] border-transparent hover:cursor-pointer"
 
     function closeMenu() {
         setShowAvatarMenu(prev => !prev)

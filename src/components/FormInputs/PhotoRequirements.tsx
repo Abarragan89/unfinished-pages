@@ -6,7 +6,7 @@ export default function PhotoRequirements() {
     return (
         <div className="flex flex-col justify-center items-center">
             <p className="font-bold">Cover Photo Requirements</p>
-            <ul className="text-[.9rem]">
+            <ul className="text-[.95rem]">
                 <li className="my-1 flex items-center">
                     <IoIosCheckboxOutline size={18} className="text-[var(--green-700)] mr-2" />
                     <span className='mr-1'>Format:</span>jpg, png, jpeg, or webp
@@ -23,7 +23,7 @@ export default function PhotoRequirements() {
             </ul>
 
             <p className="font-bold mt-2">Tips</p>
-            <ul className="text-[.9rem]">
+            <ul className="text-[.95rem]">
                 <li className="my-1">Find royalty-free images at
                     <Link href="https://pixabay.com/" target="_blank" rel="noopener noreferrer" className="underline inline-block mx-1 text-[var(--success)]">
                         Pixabay

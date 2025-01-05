@@ -42,7 +42,7 @@ export default function SelectAreaEl({ blogCategories, setBlogCategories, toggle
                     return (
                         <label
                             htmlFor={input.id}
-                            className="flex items-center cursor-pointer text-[.9rem] text-[var(--black)]"
+                            className="flex items-center cursor-pointer text-[1rem] text-[var(--black)]"
                             key={input.id}
                         >
                             <div className="w-[20px] h-[20px] bg-[var(--white)] border border-[var(--gray-500)] rounded-[50px] relative">

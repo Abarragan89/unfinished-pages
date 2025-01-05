@@ -44,7 +44,7 @@ export default function LoginForm() {
                 <form>
                     <div className="relative">
                         <input onChange={(e) => setUserEmail(e.target.value)}
-                            className="input-browser-reset text-[.925rem] w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
+                            className="input-browser-reset w-[190px] ps-[40px] py-[2px] border border-[var(--brown-500)] text-[.95rem]" placeholder="email" />
                         <IoIosMail size={34} className="rounded-md absolute top-[-2px] text-[var(--brown-500)]" />
                     </div>
                     <div className="flex justify-center">

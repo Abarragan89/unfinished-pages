@@ -74,7 +74,7 @@ export default function InsertSlateLink({ addLinkHandler }: Props) {
                     {isVideo && <a href="https://www.youtube.com/watch?v=8JUyOwn40SI" rel="noopener noreferrer" target="_blank" className="absolute top-[-2px] right-1 underline text-[.875rem] hover:italic text-[var(--success)]">See how here</a>}
                 </div>
                 {errorMsg &&
-                    <p className="text-center text-red-600 text-[.9rem] mt-2 tracking-wide">{errorMsg}</p>
+                    <p className="text-center text-red-600 text-[.95rem] mt-2 tracking-wide">{errorMsg}</p>
                 }
                 <button type="submit" className={`custom-small-btn bg-[var(--off-black)] mx-auto block ${errorMsg ? 'mt-2' : 'mt-4'}`}>
                     {isVideo ?
