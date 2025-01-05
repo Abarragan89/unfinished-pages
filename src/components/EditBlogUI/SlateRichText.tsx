@@ -422,7 +422,7 @@ export default function SlateRichText({ blogId, blogContent }: Props) {
                 style={isBlockActive(editor, iconType) ? toolBarItemChosen : undefined}
                 onMouseDown={(e) => {
                     if (iconType === 'link' && !isLinkActive(editor)) {
-                        router.push(`${pathname}?showModal=addLink`, { scroll: false })
+                        router.push(`${pathname}?showModal=addLink`, { scroll: false})
                     } else {
                         e.preventDefault();
                         toggleBlock(editor, iconType)

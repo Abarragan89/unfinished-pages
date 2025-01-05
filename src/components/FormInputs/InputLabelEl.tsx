@@ -12,9 +12,9 @@ export default function InputLabelEl({ handleStateChange, userText, autofocus = 
         <div className="flex flex-col w-fit mx-auto mt-2 w-full">
 
             {labelText &&
-                <div className="flex justify-between mx-1">
+                <div className="flex justify-between mx-1 items-baseline">
                     <label
-                        className="text-[1rem]"
+                        className="text-[.95rem]"
                         htmlFor={labelText}
                     >{labelText}</label>
                     {characterLimit &&
