@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /
+Allow: /blog/
+Allow: /categories/
+
+Sitemap: https://unfinishedpages.com/sitemap.xml
