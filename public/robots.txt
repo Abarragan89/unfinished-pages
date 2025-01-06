@@ -1,6 +1,13 @@
 User-agent: *
-Disallow: /
+Allow: /
 Allow: /blog/
 Allow: /categories/
+Disallow: /authorRequests/
+Disallow: /editBlog/
+Disallow: /myBlogs
+Disallow: /previewBlog/
+Disallow: /notifications
+Disallow: /saveBlogs
+Disallow: /settings
 
-Sitemap: https://unfinishedpages.com/sitemap.xml
+Sitemap: https://www.unfinishedpages.com/sitemap.xml
