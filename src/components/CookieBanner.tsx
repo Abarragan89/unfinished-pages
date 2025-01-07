@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from "react";
-import Script from 'next/script';
 
 declare global {
     interface Window {
@@ -62,13 +61,6 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
                     </div>
                 </section>
             }
-            {usersChoice === 'true' && (
-                <Script
-                    strategy="afterInteractive"
-                    nonce={nonce}
-                    src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-                />
-            )}
         </>
     )
 }

@@ -8,6 +8,8 @@ import { Suspense } from "react";
 import { headers } from 'next/headers';
 // import Adsense from "@/components/AdSense";
 import CookieBanner from "@/components/CookieBanner";
+import Script from 'next/script';
+
 
 export const metadata: Metadata = {
   title: "Unfinished Pages",
@@ -42,6 +44,11 @@ export default function RootLayout({
             <Footer />
           </Suspense>
         </NextAuthProvider>
+        <Script
+          strategy="afterInteractive"
+          nonce={nonce}
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+        />
       </body>
     </html>
   );
