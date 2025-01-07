@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { NextAuthProvider } from "@/components/NextAuthProvider";
 import { Suspense } from "react";
 import { headers } from 'next/headers';
-import Adsense from "@/components/AdSense";
+// import Adsense from "@/components/AdSense";
 
 export const metadata: Metadata = {
   title: "Unfinished Pages",
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Adsense nonce={nonce} />
+        {/* <Adsense nonce={nonce} /> */}
       </head>
       <body
         nonce={nonce}

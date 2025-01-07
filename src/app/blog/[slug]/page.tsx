@@ -5,9 +5,7 @@ import { BlogData } from "../../../../types/blog";
 import BlogCard from "@/components/Cards/BlogCard";
 import CommentSection from "@/components/CommentSection";
 import getBlogData from "@/app/services/getBlogData";
-import formatContentToDescendantType from "../../../../utils/formatBlogContent"
 import { BlogContent } from "../../../../types/blog"
-import { Descendant } from "slate"
 import ScrollToTop from "@/components/ScrollToTop"
 import BlogMetaDetails from "@/components/BlogUI/BlogMetaDetails"
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
