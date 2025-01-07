@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Static entries (Homepage)
         const staticEntries: MetadataRoute.Sitemap = [
             {
-                url: 'https://unfinishedpages.com',
+                url: 'https://www.unfinishedpages.com',
                 lastModified: new Date(),
                 changeFrequency: 'yearly',
                 priority: 1,
@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         // Map blog categories to sitemap
         const blogCategories = categorySlugs!.map((category: string) => ({
-            url: `https://unfinishedpages.com/category/${category}`,
+            url: `https://www.unfinishedpages.com/category/${category}`,
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.8,
@@ -41,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         // Map blog data to sitemap entries
         const blogEntries = allBlogs.map((blog: { title: string; updatedAt: Date, id: string }) => ({
-            url: `https://unfinishedpages.com/blog/${cleanTitleForURL(blog.title)}-${blog.id}`,
+            url: `https://www.unfinishedpages.com/blog/${cleanTitleForURL(blog.title)}-${blog.id}`,
             lastModified: new Date(blog.updatedAt),
             changeFrequency: 'weekly' as const,
             priority: 0.5,
