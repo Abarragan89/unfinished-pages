@@ -25,20 +25,13 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
     useEffect(() => {
         // If they consent, then run google analytics
         if (usersChoice === 'true') {
-            <Script
-                strategy="afterInteractive"
-                nonce={nonce}
-                src={`https://www.googletagmanager.com/gtag/js?id=G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-                onLoad={() => {
-                    window.dataLayer = window.dataLayer || [];
-                    // @ts-expect-error: dataLayer coming from  google analytics
-                    function gtag() { dataLayer.push(...args); }
-                    // @ts-expect-error: dataLayer coming from  gtag in google analytics
-                    gtag('js', new Date());
-                    // @ts-expect-error: dataLayer coming from  gtag in google analytics
-                    gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID);
-                }}
-            />
+            window.dataLayer = window.dataLayer || [];
+            // @ts-expect-error: dataLayer coming from  google analytics
+            function gtag() { dataLayer.push(args); }
+            // @ts-expect-error: dataLayer coming from  google analytics
+            gtag('js', new Date());
+            // @ts-expect-error: dataLayer coming from  google analytics
+            gtag('config', 'G-CFXBVMX5EJ');
         }
 
     }, [usersChoice])
@@ -65,6 +58,13 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
                     </div>
                 </section>
             }
+            {usersChoice === 'true' && (
+                <Script
+                    strategy="afterInteractive"
+                    nonce={nonce}
+                    src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+                />
+            )}
         </>
     )
 }
