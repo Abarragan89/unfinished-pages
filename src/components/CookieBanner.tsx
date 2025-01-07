@@ -31,7 +31,7 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
             // @ts-expect-error: dataLayer coming from  google analytics
             gtag('js', new Date());
             // @ts-expect-error: dataLayer coming from  google analytics
-            gtag('config', 'G-CFXBVMX5EJ');
+            gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
         }
 
     }, [usersChoice])
