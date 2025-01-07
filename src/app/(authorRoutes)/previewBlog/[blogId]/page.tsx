@@ -1,8 +1,6 @@
 import getPreviewBlogContent from '@/app/services/getPreviewBlogContent'
 import { headers } from 'next/headers'
-import formatContentToDescendantType from "../../../../../utils/formatBlogContent"
 import { BlogContent } from "../../../../../types/blog"
-import { Descendant } from "slate"
 import ScrollToTop from "@/components/ScrollToTop"
 import BlogMetaDetails from "@/components/BlogUI/BlogMetaDetails"
 import BlogLikeCommentBar from "@/components/BlogUI/BlogLikeCommentBar"
