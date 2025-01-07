@@ -30,7 +30,7 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
         if (usersChoice === 'true') {
             window.dataLayer = window.dataLayer || [];
             // @ts-expect-error: dataLayer coming from  google analytics
-            function gtag() { dataLayer.push(args); }
+            function gtag() { dataLayer.push(arguments); }
             // @ts-expect-error: dataLayer coming from  google analytics
             gtag('js', new Date());
             // @ts-expect-error: dataLayer coming from  google analytics
