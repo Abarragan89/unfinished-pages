@@ -7,6 +7,7 @@ import { NextAuthProvider } from "@/components/NextAuthProvider";
 import { Suspense } from "react";
 import { headers } from 'next/headers';
 // import Adsense from "@/components/AdSense";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata: Metadata = {
   title: "Unfinished Pages",
@@ -37,6 +38,7 @@ export default function RootLayout({
           <Suspense>
             <Header />
             {children}
+            <CookieBanner nonce={nonce} />
             <Footer />
           </Suspense>
         </NextAuthProvider>
