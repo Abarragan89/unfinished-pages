@@ -10,7 +10,7 @@ declare global {
 
 export default function CookieBanner({ nonce }: { nonce: string }) {
 
-    const [usersChoice, setUsersChoice] = useState<string | null>('')
+    const [usersChoice, setUsersChoice] = useState<string | null>(localStorage.getItem('cookieConsent'))
 
     function acceptedCookiePolicy() {
         localStorage.setItem('cookieConsent', 'true')
@@ -23,8 +23,6 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
     }
 
     useEffect(() => {
-        // get cookie choice 
-        setUsersChoice(localStorage.getItem('cookieConsent'))
         // If they consent, then run google analytics
         if (usersChoice === 'true') {
             <Script
@@ -34,7 +32,7 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
                 onLoad={() => {
                     window.dataLayer = window.dataLayer || [];
                     // @ts-expect-error: dataLayer coming from  google analytics
-                    function gtag() { dataLayer.push(...arguments); }
+                    function gtag() { dataLayer.push(...args); }
                     // @ts-expect-error: dataLayer coming from  gtag in google analytics
                     gtag('js', new Date());
                     // @ts-expect-error: dataLayer coming from  gtag in google analytics
@@ -50,7 +48,7 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
             {!usersChoice &&
                 <section className="fixed bottom-10 w-[90%] max-w-[550px] right-10 bg-[var(--off-white)] border border-[--gray-500] rounded-md p-4 custom-low-lifted-shadow">
                     <h5 className="text-center text-[1.3rem] pb-1 text-[var(--brown-500)]">We Use Cookies</h5>
-                    <p className="text-center pb-4 text-[.95rem]">We use cookies to enhance your experience. By clicking "Accept", you consent to the use of non-essential cookies. You can learn more in our
+                    <p className="text-center pb-4 text-[.95rem]">We use cookies to enhance your experience. By clicking &quot;Accept&quot;, you consent to the use of non-essential cookies. You can learn more in our
                         [Privacy Policy]
                         and
                         [Cookie Policy].
