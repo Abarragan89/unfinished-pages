@@ -10,7 +10,7 @@ declare global {
 
 export default function CookieBanner({ nonce }: { nonce: string }) {
 
-    const [usersChoice, setUsersChoice] = useState<string | null>(localStorage.getItem('cookieConsent'))
+    const [usersChoice, setUsersChoice] = useState<string | null>('')
 
     function acceptedCookiePolicy() {
         localStorage.setItem('cookieConsent', 'true')
@@ -21,6 +21,10 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
         localStorage.setItem('cookieConsent', 'false')
         setUsersChoice('false')
     }
+
+    useEffect(() => {
+        setUsersChoice(localStorage.getItem('cookieConsent'));
+    }, []);
 
     useEffect(() => {
         // If they consent, then run google analytics
