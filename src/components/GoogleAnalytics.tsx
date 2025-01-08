@@ -6,8 +6,7 @@ import { useEffect } from "react";
 
 declare global {
     interface Window {
-        //@ts-nocheck: using any for gtag
-        gtag: any
+        gtag: (purpose: string, measure: string, options?: {}) => void;
     }
 }
 
