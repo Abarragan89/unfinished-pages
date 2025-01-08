@@ -11,68 +11,57 @@ declare global {
 
 export default function CookieBanner({ nonce }: { nonce: string }) {
 
-    const [usersChoice, setUsersChoice] = useState<string | null>('')
+    const [usersChoice, setUsersChoice] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     function acceptedCookiePolicy() {
-        localStorage.setItem('cookieConsent', 'true')
-        setUsersChoice('true')
+        localStorage.setItem('cookieConsent', 'granted')
+        setUsersChoice('granted')
     }
 
     function rejectedCookiePolicy() {
-        localStorage.setItem('cookieConsent', 'false')
-        setUsersChoice('false')
+        localStorage.setItem('cookieConsent', 'denied')
+        setUsersChoice('denied')
     }
 
     useEffect(() => {
         setUsersChoice(localStorage.getItem('cookieConsent'));
+        setIsLoading(false)
     }, []);
 
     useEffect(() => {
-        // If they consent, then run google analytics
-        if (usersChoice === 'true') {
-            // window.dataLayer = window.dataLayer || [];
-            // // @ts-expect-error: dataLayer coming from  google analytics
-            // function gtag(...args) { dataLayer.push(args); }
-            // gtag('js', new Date());
-            // gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
+        if (usersChoice !== null) {
+            if (typeof window !== 'undefined' && window.gtag) {
+                window.gtag('consent', 'update', {
+                    analytics_storage: usersChoice
+                })
+            }
         }
-
     }, [usersChoice])
 
+    // only show banner is local storage is loaded and has not yet consented
+    if (isLoading || usersChoice !== null) {
+        return null
+    }
+
     return (
-        <>
-            {!usersChoice &&
-                <section className="fixed bottom-10 w-[90%] max-w-[550px] right-10 bg-[var(--off-white)] border border-[--gray-500] rounded-md p-4 custom-low-lifted-shadow">
-                    <h5 className="text-center text-[1.3rem] pb-1 text-[var(--brown-500)]">We Use Cookies</h5>
-                    <p className="text-center pb-4 text-[.95rem]">We use cookies to enhance your experience. By clicking &quot;Accept&quot;, you consent to the use of non-essential cookies. You can learn more in our
-                        [Privacy Policy]
-                        and
-                        [Cookie Policy].
-                    </p>
-                    <div className="flex justify-center">
-                        <button
-                            onClick={rejectedCookiePolicy}
-                            className="custom-small-btn bg-[var(--gray-500)] mr-4 opacity-80"
-                        >Decline</button>
-                        <button
-                            onClick={acceptedCookiePolicy}
-                            className="custom-small-btn bg-[var(--off-black)] ml-4 bg-[var(--success)]"
-                        >Accept</button>
-                    </div>
-                </section>
-            }
-            <Script
-                strategy="afterInteractive"
-                nonce={nonce}
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
-            <Script id="google-analytics" strategy="afterInteractive">
-                {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag() { dataLayer.push(arguments); }
-                        gtag('js', new Date());
-                        gtag('config', G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID});
-                `}
-            </Script>
-        </>
+        <section className="fixed bottom-10 w-[90%] max-w-[550px] right-10 bg-[var(--off-white)] border border-[--gray-500] rounded-md p-4 custom-low-lifted-shadow">
+            <h5 className="text-center text-[1.3rem] pb-1 text-[var(--brown-500)]">We Use Cookies</h5>
+            <p className="text-center pb-4 text-[.95rem]">We use cookies to enhance your experience. By clicking &quot;Accept&quot;, you consent to the use of non-essential cookies. You can learn more in our
+                [Privacy Policy]
+                and
+                [Cookie Policy].
+            </p>
+            <div className="flex justify-center">
+                <button
+                    onClick={rejectedCookiePolicy}
+                    className="custom-small-btn bg-[var(--gray-500)] mr-4 opacity-80"
+                >Decline</button>
+                <button
+                    onClick={acceptedCookiePolicy}
+                    className="custom-small-btn bg-[var(--off-black)] ml-4 bg-[var(--success)]"
+                >Accept</button>
+            </div>
+        </section>
     )
 }
