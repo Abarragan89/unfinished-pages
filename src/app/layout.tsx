@@ -35,7 +35,7 @@ export default function RootLayout({
           strategy="afterInteractive"
           nonce={nonce}
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
           {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag() { dataLayer.push(arguments); }
