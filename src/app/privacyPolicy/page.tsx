@@ -41,7 +41,7 @@ export default function page() {
             <ul className="list-inside list-disc opacity-90 space-y-2">
                 <li>To monitor and analyze website performance and traffic</li>
                 <li>To improve website content and user experience</li>
-                <li>To communicate with you (if you’ve provided contact information)</li>
+                <li>To communicate with you (if you&apos;ve provided contact information)</li>
                 <li>To comply with legal obligations</li>
             </ul>
 
@@ -113,7 +113,7 @@ export default function page() {
             <p>If you are a California resident, you have the right to:</p>
             <ul className="list-inside list-disc opacity-90 space-y-2">
                 <li>Request details about the personal information we collect.</li>
-                <li>Opt-out of the sale of personal data (even though we don’t sell data).</li>
+                <li>Opt-out of the sale of personal data (even though we don&apos;t sell data).</li>
             </ul>
 
             <h2 className="text-2xl font-semibold">8. Data Security</h2>
@@ -124,8 +124,8 @@ export default function page() {
 
             <h2 className="text-2xl font-semibold">9. Changes to This Privacy Policy</h2>
             <p className="opacity-90">
-                We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Effective
-                Date."
+                We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated Effective
+                Date.
             </p>
 
             <h2 className="text-2xl font-semibold">10. Contact Us</h2>
