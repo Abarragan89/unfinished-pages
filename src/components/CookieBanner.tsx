@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
+import Script from 'next/script';
 
 declare global {
     interface Window {
@@ -28,11 +29,11 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
     useEffect(() => {
         // If they consent, then run google analytics
         if (usersChoice === 'true') {
-            window.dataLayer = window.dataLayer || [];
-            // @ts-expect-error: dataLayer coming from  google analytics
-            function gtag(...args) { dataLayer.push(args); }
-            gtag('js', new Date());
-            gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
+            // window.dataLayer = window.dataLayer || [];
+            // // @ts-expect-error: dataLayer coming from  google analytics
+            // function gtag(...args) { dataLayer.push(args); }
+            // gtag('js', new Date());
+            // gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
         }
 
     }, [usersChoice])
@@ -59,6 +60,20 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
                     </div>
                 </section>
             }
+            <Script
+                strategy="afterInteractive"
+                nonce={nonce}
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
+                onReady={() => {
+                    if (usersChoice === 'true') {
+                        window.dataLayer = window.dataLayer || [];
+                        // @ts-expect-error: dataLayer coming from  google analytics
+                        function gtag(...args) { dataLayer.push(...args); }
+                        gtag('js', new Date());
+                        gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
+                    }
+                }}
+            />
         </>
     )
 }
