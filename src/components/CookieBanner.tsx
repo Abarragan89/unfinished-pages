@@ -63,17 +63,14 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
             <Script
                 strategy="afterInteractive"
                 nonce={nonce}
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
-                onReady={() => {
-                    if (usersChoice === 'true') {
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}>
+                {`
                         window.dataLayer = window.dataLayer || [];
-                        // @ts-expect-error: dataLayer coming from  google analytics
-                        function gtag(...args) { dataLayer.push(...args); }
+                        function gtag() { dataLayer.push(arguments); }
                         gtag('js', new Date());
-                        gtag('config', `G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`);
-                    }
-                }}
-            />
+                        gtag('config', G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID});
+                `}
+            </Script>
         </>
     )
 }
