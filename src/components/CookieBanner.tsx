@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import Script from 'next/script';
+import Head from 'next/head'
 
 declare global {
     interface Window {
@@ -40,6 +41,20 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
 
     return (
         <>
+            <Head>
+                <Script
+                    strategy="afterInteractive"
+                    nonce={nonce}
+                    src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag() { dataLayer.push(arguments); }
+                        gtag('js', new Date());
+                        gtag('config', G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID});
+                `}
+                </Script>
+            </Head>
             {!usersChoice &&
                 <section className="fixed bottom-10 w-[90%] max-w-[550px] right-10 bg-[var(--off-white)] border border-[--gray-500] rounded-md p-4 custom-low-lifted-shadow">
                     <h5 className="text-center text-[1.3rem] pb-1 text-[var(--brown-500)]">We Use Cookies</h5>
@@ -63,8 +78,8 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
             <Script
                 strategy="afterInteractive"
                 nonce={nonce}
-                id="google-analytics"
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}>
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+            <Script id="google-analytics" strategy="afterInteractive">
                 {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag() { dataLayer.push(arguments); }
