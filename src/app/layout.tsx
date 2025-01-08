@@ -37,11 +37,11 @@ export default function RootLayout({
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
         <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
           {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag() { dataLayer.push(arguments); }
-                        gtag('js', new Date());
-                        gtag('config', G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID});
-                `}
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', ${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID});
+          `}
         </Script>
       </head>
       <body
