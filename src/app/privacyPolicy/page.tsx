@@ -33,7 +33,7 @@ export default function page() {
                 </li>
             </ul>
             <p className="opacity-90">
-                This data is collected through Google Analytics to improve our website's functionality and user experience.
+                This data is collected through Google Analytics to improve our website&apos;s functionality and user experience.
             </p>
 
             <h2 className="text-2xl font-semibold">2. How We Use Your Information</h2>
