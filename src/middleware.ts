@@ -65,25 +65,25 @@ export async function middleware(request: NextRequest) {
         frame-ancestors 'none';
         worker-src 'self' blob:;
         frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/ https://pagead2.googlesyndication.com/ https://td.doubleclick.net/ https://vercel.live/;
-        connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/ https://www.google-analytics.com/ https://stats.g.doubleclick.net/;
+        connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/ https://www.google-analytics.com/ https://stats.g.doubleclick.net/ https://analytics.google.com/ wss://ws-us3.pusher.com/;
         upgrade-insecure-requests;
     `;
     } else if (process.env.NODE_ENV === 'development') {
-        cspHeader = `
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'nonce-${nonce}' 'unsafe-eval' http://localhost:3000 https://pagead2.googlesyndication.com/ https://cdn.jsdelivr.net https://www.googletagmanager.com/gtag/;
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' blob: data: http://localhost:3000 https://unfinished-pages.s3.us-east-2.amazonaws.com https://*.googleusercontent.com https://*.yahoo.com https://*.outlook.com https://authjs.dev/ https://ep1.adtrafficquality.google/pagead/ https://pagead2.googlesyndication.com/;
-        font-src 'self';
-        object-src 'none';
-        worker-src 'self' blob:;
-        base-uri 'self';
-        form-action 'self';
-        frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
-        connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/ https://www.googletagmanager.com/gtag/;
-        frame-ancestors 'none';
-        upgrade-insecure-requests;
-    `;
+    //     cspHeader = `
+    //     default-src 'self';
+    //     script-src 'self' 'unsafe-inline' 'nonce-${nonce}' 'unsafe-eval' http://localhost:3000 https://pagead2.googlesyndication.com/ https://cdn.jsdelivr.net https://www.googletagmanager.com/gtag/;
+    //     style-src 'self' 'unsafe-inline';
+    //     img-src 'self' blob: data: http://localhost:3000 https://unfinished-pages.s3.us-east-2.amazonaws.com https://*.googleusercontent.com https://*.yahoo.com https://*.outlook.com https://authjs.dev/ https://ep1.adtrafficquality.google/pagead/ https://pagead2.googlesyndication.com/;
+    //     font-src 'self';
+    //     object-src 'none';
+    //     worker-src 'self' blob:;
+    //     base-uri 'self';
+    //     form-action 'self';
+    //     frame-src https://www.youtube.com/ https://googleads.g.doubleclick.net/ https://ep2.adtrafficquality.google/ https://www.google.com/;
+    //     connect-src 'self' blob: https://ep1.adtrafficquality.google/ https://csi.gstatic.com/ https://www.googletagmanager.com/gtag/;
+    //     frame-ancestors 'none';
+    //     upgrade-insecure-requests;
+    // `;
     }
 
     const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim();
