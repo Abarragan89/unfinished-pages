@@ -63,6 +63,7 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
             <Script
                 strategy="afterInteractive"
                 nonce={nonce}
+                id="google-analytics"
                 src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}>
                 {`
                         window.dataLayer = window.dataLayer || [];

@@ -49,15 +49,6 @@ export default function InsertSlateLink({ addLinkHandler }: Props) {
         }
     }
 
-    function labelForVideo() {
-        return (
-            <div>
-                <p>Enter Iframe Embed</p>
-                <a>See How Here</a>
-            </div>
-        )
-    }
-
     return (
         <ModalWrapper
             title={isVideo ? 'Add YouTube Video' : 'Add Link'}
