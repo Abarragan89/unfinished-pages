@@ -43,7 +43,7 @@ export default function RootLayout({
           <Suspense>
             <Header />
             {children}
-            <CookieBanner nonce={nonce} />
+            <CookieBanner />
             <Footer />
           </Suspense>
         </NextAuthProvider>

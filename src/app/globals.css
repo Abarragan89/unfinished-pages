@@ -33,9 +33,9 @@
     --gray-600: rgb(104, 102, 102);
     --gray-500: rgb(123, 120, 120);
     --gray-300: rgb(108, 106, 106);
+    --paper-color: rgb(15, 15, 15);
     --gray-100: rgb(48, 48, 48);
     --paper-color: rgb(47, 43, 31);
-    --paper-color: rgb(15, 15, 15);
     --off-white: rgb(33, 33, 33);
     --off-black: rgb(242, 232, 222);
     --black: rgb(25, 25, 25);
@@ -248,3 +248,10 @@ body {
 .custom-banner-text-shadow {
   text-shadow: -2px 3px black;
 }
+
+/* This is for elements fixed positions (initially cookie banner) */
+.custom-slide-in-from-bottom {
+  animation: slide-up;
+}
+
+

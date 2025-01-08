@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import Script from 'next/script';
-import Head from 'next/head'
+import Link from "next/link";
 
 declare global {
     interface Window {
@@ -9,7 +8,7 @@ declare global {
     }
 }
 
-export default function CookieBanner({ nonce }: { nonce: string }) {
+export default function CookieBanner() {
 
     const [usersChoice, setUsersChoice] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -45,12 +44,22 @@ export default function CookieBanner({ nonce }: { nonce: string }) {
     }
 
     return (
-        <section className="fixed bottom-10 w-[90%] max-w-[550px] right-10 bg-[var(--off-white)] border border-[--gray-500] rounded-md p-4 custom-low-lifted-shadow">
-            <h5 className="text-center text-[1.3rem] pb-1 text-[var(--brown-500)]">We Use Cookies</h5>
-            <p className="text-center pb-4 text-[.95rem]">We use cookies to enhance your experience. By clicking &quot;Accept&quot;, you consent to the use of non-essential cookies. You can learn more in our
-                [Privacy Policy]
-                and
-                [Cookie Policy].
+        <section className="fixed bottom-10 w-[90%] max-w-[490px] right-10 bg-[var(--off-white)] border border-[var(--gray-500)] rounded-md py-4 px-2 custom-low-lifted-shadow">
+            <h5 className="text-center text-[1.3rem] text-[var(--brown-500)] font-bold">Our Cookies 🍪</h5>
+            <p className="text-center pb-4 text-[.95rem]">By clicking &quot;Accept&quot;, you consent to the use of non-essential cookies. <span className="font-bold">We do not sell, trade, or rent your personal information to others.</span> You can learn more in our
+                <Link
+                    href='/privacyPolicy'
+                    className="mx-1 text-[var(--success)] underline hover:cursor-pointer"
+                >
+                Privacy Policy
+                </Link>
+                and 
+                <Link
+                href='/cookiePolicy'
+                className="mx-1 text-[var(--success)] underline hover:cursor-pointer"
+                >
+                Cookie Policy
+                </Link>
             </p>
             <div className="flex justify-center">
                 <button
