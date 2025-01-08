@@ -32,7 +32,7 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID, nonce }: { GA_MEASU
             <Script
                 strategy="afterInteractive"
                 nonce={nonce}
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string}`} />
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
             <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
                 {`
                         window.dataLayer = window.dataLayer || [];
@@ -44,7 +44,7 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID, nonce }: { GA_MEASU
                             'analytics_storage': 'denied'
                         })
 
-                        gtag('config', ${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string}, {
+                        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}', {
                             page_path: window.location.pathname
                         });
                 `}
