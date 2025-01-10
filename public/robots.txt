@@ -9,5 +9,6 @@ Disallow: /previewBlog/
 Disallow: /notifications
 Disallow: /saveBlogs
 Disallow: /settings
+Disallow: /*showModal=*
 
 Sitemap: https://www.unfinishedpages.com/sitemap.xml
