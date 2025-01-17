@@ -6,7 +6,7 @@ export default function BlogContentSection({ blogContent }: { blogContent: BlogC
     return (
         <section className="max-w-[700px] mx-auto leading-[2rem] text-[var(--off-black)] text-[19px] sm:text-[21px]">
             {/* loop through descendant  */}
-            {blogContent.map((block: BlogContent, index: number) => {
+            {blogContent?.map((block: BlogContent, index: number) => {
                 const validChildren = block.children.filter(
                     (blockDetails: BlogDetails) => blockDetails.text?.trim() !== ""
                 );
