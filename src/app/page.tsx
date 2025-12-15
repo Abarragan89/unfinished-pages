@@ -127,7 +127,9 @@ export default async function Home() {
         <CardSection heading="Featured Blogs">
           <Carousel>
             {blogData && blogData.map((blog: BlogData) => (
-              <Link key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`} className="embla__slide">
+              <Link
+                key={blog.id} href={`/blog/${cleanTitleForURL(blog.title as string)}-${blog.id}`}
+                className="embla__slide">
                 <BlogCard
                   title={blog.title}
                   description={blog.description}

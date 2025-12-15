@@ -123,7 +123,7 @@ export async function DELETE(request: NextRequest) {
         const key = getS3Key(imageUrl);
         // Delete the file from S3 with key
         if (key && typeof key === 'string') await deleteFileFromS3(key);
-        
+
 
         return NextResponse.json({ message: 'File deleted successfully' }, { status: 200 });
     } catch (error) {

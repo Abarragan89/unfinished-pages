@@ -15,7 +15,7 @@ export default function page() {
             </p>
 
             <h2 className="text-2xl font-semibold">1. Information We Collect</h2>
-            <p className="opacity-90">We may collect personal and non-personal information from you when you visit our site, including:</p>
+            <p className="opacity-90">We may collect non-personal information from you when you visit our site, including:</p>
             <ul className="list-inside list-disc opacity-90 space-y-2">
                 <li>
                     <strong>Personal Information:</strong> Information you voluntarily provide, such as your name, email address, or
